@@ -2,6 +2,7 @@
 {
   config,
   lib,
+  neovim-nightly-overlay,
   pkgs,
   ...
 }: let
@@ -80,6 +81,7 @@ in {
     };
     programs.neovim = {
       enable = true;
+      package = neovim-nightly-overlay.packages.${pkgs.system}.default;
 
       withNodeJs = true;
       withPython3 = true;

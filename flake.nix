@@ -4,6 +4,7 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,6 +18,7 @@
   outputs = inputs @ {
     self,
     flake-parts,
+    neovim-nightly-overlay,
     pre-commit-hooks,
     ...
   }:
@@ -32,6 +34,7 @@
       perSystem = {
         system,
         pkgs,
+        inputs,
         self',
         ...
       }: {
