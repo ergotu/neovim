@@ -6,16 +6,10 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    neovim-nightly = {
-      type = "github";
-      owner = "nix-community";
-      repo = "neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     pre-commit-hooks = {
@@ -29,7 +23,6 @@
     self,
     flake-parts,
     flake-utils,
-    neovim-nightly,
     pre-commit-hooks,
     ...
   }:
@@ -49,7 +42,6 @@
         ...
       }: let
         extraPackages = [
-          # Dependent packages used by default plugins
           pkgs.doq
           pkgs.tree-sitter
           pkgs.cargo
@@ -71,8 +63,13 @@
             #lua
             ''
               vim.loader.enable()
-              vim.opt.rtp:append("${./.}")
+
+              -- lazy.nvim resets rtp for performance reasons, so we need to pass the path of the configuration
               vim.g.rtp_path = "${./.}"
+              -- add source to rtp_path so we can load our configuration
+              vim.opt.rtp:append(vim.g.rtp_path)
+
+              -- load configuration
               require("ergotu")
             '';
         };
@@ -90,6 +87,12 @@
             wrapperArgs = pkgs.lib.escapeShellArgs ["--suffix" "PATH" ":" "${packagesPath}"];
           };
       in {
+        packages = {
+          default = self.packages.${system}.neovim;
+
+          neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped neovimConfig;
+        };
+
         checks = {
           pre-commit-check = pre-commit-hooks.lib.${system}.run {
             src = ./.;
@@ -101,15 +104,21 @@
           };
         };
 
-        packages = {
-          default = self.packages.${system}.neovim;
-
-          neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped neovimConfig;
-        };
-
         devShells = {
           default = with pkgs;
-            mkShell {inherit (self'.checks.pre-commit-check) shellHook;};
+            mkShell {
+              inherit (self'.checks.pre-commit-check) shellHook;
+              packages = [
+                self'.packages.default
+
+                pkgs.lua-language-server
+                pkgs.stylua
+                pkgs.selene
+
+                pkgs.nil
+                pkgs.alejandra
+              ];
+            };
         };
       };
     };

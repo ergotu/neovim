@@ -1,6 +1,3 @@
--- The existence of the /etc/NIXOS file officializes that it is a NixOS partition
-vim.g.nix = vim.loop.fs_stat("/etc/NIXOS") and true or false
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -52,7 +49,6 @@ require("lazy").setup({
     notify = false, -- notify on update
   }, -- automatically check for plugin updates
   performance = {
-    reset_packpath = not vim.g.nix,
     rtp = {
       paths = { vim.g.rtp_path },
       -- disable some rtp plugins
