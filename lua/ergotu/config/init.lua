@@ -129,12 +129,28 @@ function M.get_kind_filter(buf)
   return type(M.kind_filter) == "table" and type(M.kind_filter.default) == "table" and M.kind_filter.default or nil
 end
 
+local lazy_clipboard
+
 M.did_init = false
 function M.init()
   if M.did_init then
     return
   end
   M.did_init = true
+
+  -- defer built-in clipboard handling: "xsel" and "pbcopy" can be slow
+  lazy_clipboard = vim.opt.clipboard
+  vim.opt.clipboard = ""
+
+  vim.api.nvim_create_autocmd("User", {
+    group = vim.api.nvim_create_augroup("Ergotu", { clear = true }),
+    pattern = "VeryLazy",
+    callback = function()
+      if lazy_clipboard ~= nil then
+        vim.opt.clipboard = lazy_clipboard
+      end
+    end,
+  })
 
   Util.lazy_notify()
   Util.root.setup()
