@@ -35,17 +35,17 @@ return {
       },
       form = {
         win_opts = {
-          winblend = 0,
+          winblend = vim.g.floating_window_options.winblend,
         },
       },
       confirm = {
         win_opts = {
-          winblend = 0,
+          winblend = vim.g.floating_window_options.winblend,
         },
       },
       task_win = {
         win_opts = {
-          winblend = 0,
+          winblend = vim.g.floating_window_options.winblend,
         },
       },
     },

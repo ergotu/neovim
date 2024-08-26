@@ -224,7 +224,7 @@ return {
     opts = {
       -- options for mason ui
       ui = {
-        border = "rounded",
+        border = vim.g.floating_window_options.border,
       },
       ensure_installed = {
         "stylua",
