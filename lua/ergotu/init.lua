@@ -1,3 +1,6 @@
+-- The existence of the /etc/NIXOS file officializes that it is a NixOS partition
+vim.g.nix = vim.loop.fs_stat("/etc/NIXOS") and true or false
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
