@@ -111,10 +111,12 @@
               packages = [
                 self'.packages.default
 
+                # LUA LSP and tools
                 pkgs.lua-language-server
                 pkgs.stylua
                 pkgs.selene
 
+                # Nix LSP and formatter
                 pkgs.nil
                 pkgs.alejandra
               ];
