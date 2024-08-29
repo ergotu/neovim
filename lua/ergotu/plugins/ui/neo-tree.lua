@@ -74,6 +74,7 @@ return {
     })
   end,
   opts = {
+    popup_border_style = vim.g.floating_window_options.border,
     sources = { "filesystem", "buffers", "git_status" },
     open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
     filesystem = {

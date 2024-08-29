@@ -4,6 +4,12 @@ return {
   enabled = true,
   opts = {
     current_line_blame = true,
+    current_line_blame_opts = {
+      virt_text_pos = "right_align",
+    },
+    preview_config = {
+      border = vim.g.floating_window_options.border,
+    },
     signs = {
       add = { text = "▎" },
       change = { text = "▎" },
