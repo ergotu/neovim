@@ -77,7 +77,7 @@ return {
         { name = "nvim_lsp" },
         { name = "path" },
       }, {
-        { name = "buffer" },
+        Util.cmp.buffer_source,
       }),
       formatting = {
         format = function(_, item)

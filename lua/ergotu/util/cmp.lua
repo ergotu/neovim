@@ -117,4 +117,19 @@ function M.visible()
   return cmp and cmp.core.view:visible()
 end
 
+M.buffer_source = {
+  name = "buffer",
+  option = {
+    get_bufnrs = function()
+      local buf = vim.api.nvim_get_current_buf()
+      local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+      if byte_size > vim.g.bigfile_size then
+        return {}
+      end
+      return { buf }
+    end,
+    indexing_interval = 1000,
+  },
+}
+
 return M
