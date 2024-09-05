@@ -35,6 +35,14 @@ return {
                 enable = true,
               },
               validate = { enable = true },
+              schemas = {
+                {
+                  fileMatch = { "*.hujson" },
+                  schema = {
+                    allowTrailingCommas = true,
+                  },
+                },
+              },
             },
           },
         },
