@@ -6,7 +6,7 @@ return {
     opts = {
       -- make sure mason installs the server
       servers = {
-        tsserver = {
+        ts_ls = {
           enabled = false,
         },
         vtsls = {
@@ -101,8 +101,8 @@ return {
         },
       },
       setup = {
-        tsserver = function()
-          -- disable tsserver
+        ts_ls = function()
+          -- disable ts_ls
           return true
         end,
         vtsls = function(_, opts)
