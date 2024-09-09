@@ -1,5 +1,4 @@
 return {
-  enabled = true,
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
