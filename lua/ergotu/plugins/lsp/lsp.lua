@@ -208,6 +208,10 @@ return {
           return false
         end)
       end
+
+      local windowOpts = require("lspconfig.ui.windows").default_options
+      windowOpts.border = vim.g.floating_window_options.border
+      windowOpts.winblend = vim.g.floating_window_options.winblend
     end,
   },
 

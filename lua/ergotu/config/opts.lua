@@ -9,7 +9,7 @@ vim.g.loaded_ruby_provider = 0
 
 vim.g.floating_window_options = {
   border = "rounded",
-  winblend = 10,
+  winblend = 0,
 }
 
 -- Enable Autoformatting

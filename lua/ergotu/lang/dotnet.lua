@@ -5,15 +5,6 @@ return {
     opts = { ensure_installed = { "c_sharp" } },
   },
   {
-    "nvimtools/none-ls.nvim",
-    optional = true,
-    opts = function(_, opts)
-      local nls = require("null-ls")
-      opts.sources = opts.sources or {}
-      table.insert(opts.sources, nls.builtins.formatting.csharpier)
-    end,
-  },
-  {
     "stevearc/conform.nvim",
     optional = true,
     opts = {
