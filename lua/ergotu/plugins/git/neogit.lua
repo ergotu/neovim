@@ -1,7 +1,6 @@
 return {
   {
     "NeogitOrg/neogit",
-    enabled = false,
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim", -- optional - Diff integration
@@ -9,6 +8,12 @@ return {
       -- Only one of these is needed, not both.
       "nvim-telescope/telescope.nvim", -- optional
     },
-    config = true,
+    cmd = "Neogit",
+    keys = {
+      { "<leader>g<Enter>", "<cmd>Neogit<cr>", desc = "Neogit" },
+    },
+    opts = {
+      kind = "split_below_all",
+    },
   },
 }

@@ -39,6 +39,7 @@ return {
         lsp_trouble = true,
         mason = true,
         markdown = true,
+        neogit = true,
         render_markdown = true,
         mini = true,
         native_lsp = {
