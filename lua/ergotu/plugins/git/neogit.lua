@@ -11,6 +11,7 @@ return {
     cmd = "Neogit",
     keys = {
       { "<leader>g<Enter>", "<cmd>Neogit<cr>", desc = "Neogit" },
+      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
     },
     opts = {
       kind = "split_below_all",
