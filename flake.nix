@@ -22,7 +22,6 @@
   outputs = inputs @ {
     self,
     flake-parts,
-    flake-utils,
     pre-commit-hooks,
     ...
   }:
