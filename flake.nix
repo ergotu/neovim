@@ -100,6 +100,7 @@
               statix.enable = true;
               alejandra.enable = true;
               stylua.enable = true;
+              commitizen.enable = true;
             };
           };
         };
