@@ -117,7 +117,7 @@
                 pkgs.selene
 
                 # Nix LSP and formatter
-                pkgs.nil
+                pkgs.nixd
                 pkgs.alejandra
               ];
             };
