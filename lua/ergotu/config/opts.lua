@@ -27,7 +27,7 @@ vim.g.statuscolumn = {
 -- mini.animate will also be disabled.
 vim.g.bigfile_size = 1024 * 1024 * 1.5 -- 1.5 MB
 
-vim.g.trouble_lualine = true
+vim.g.trouble_lualine = false
 
 local opt = vim.opt
 

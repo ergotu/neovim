@@ -71,7 +71,6 @@ return {
           },
           { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
           { Util.lualine.pretty_path() },
-          { Util.lualine.get_attached_clients },
         },
         lualine_x = {
           -- stylua: ignore
@@ -107,6 +106,7 @@ return {
               hint = icons.diagnostics.Hint,
             },
           },
+          { Util.lualine.get_attached_clients },
         },
         lualine_y = {
           { "progress", separator = " ", padding = { left = 1, right = 0 } },
