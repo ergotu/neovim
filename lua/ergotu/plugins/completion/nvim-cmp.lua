@@ -4,15 +4,9 @@ return {
   version = false, -- last release is way too old
   event = "InsertEnter",
   dependencies = {
-    {
-      "hrsh7th/cmp-nvim-lsp",
-    },
-    {
-      "hrsh7th/cmp-buffer",
-    },
-    {
-      "hrsh7th/cmp-path",
-    },
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
   },
   -- Not all LSP servers add brackets when completing a function.
   -- To better deal with this, we add a custom option to cmp,
