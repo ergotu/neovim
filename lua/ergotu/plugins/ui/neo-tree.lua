@@ -121,7 +121,7 @@ return {
   },
   config = function(_, opts)
     require("neo-tree").setup(opts)
-    vim.api.nvim_create_autocmd("BufClose", {
+    vim.api.nvim_create_autocmd("BufLeave", {
       pattern = "Neogit*",
       callback = function()
         if package.loaded["neo-tree.sources.git_status"] then

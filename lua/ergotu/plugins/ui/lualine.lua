@@ -75,15 +75,9 @@ return {
         lualine_x = {
           -- stylua: ignore
           {
-            function() return require("noice").api.status.command.get() end,
-            cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-            color = function () return Util.ui.fg("Statement")  end,
-          },
-          -- stylua: ignore
-          {
             function() return require("noice").api.status.mode.get() end,
             cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-            color = function() return Util.ui.fg("Constant") end,
+            color = function () return Util.ui.fg("Statement")  end,
           },
           -- stylua: ignore
           {
