@@ -108,6 +108,7 @@ return {
 
   {
     "MeanderingProgrammer/render-markdown.nvim",
+    enabled = not vim.g.use_markview,
     dependencies = {
       {
         "echasnovski/mini.icons",
@@ -134,6 +135,43 @@ return {
             m.enable()
           else
             m.disable()
+          end
+        end,
+      })
+    end,
+  },
+
+  {
+    "OXY2DEV/markview.nvim",
+    enabled = vim.g.use_markview,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    ft = { "markdown", "norg", "rmd", "org" },
+    opts = {
+      modes = { "n", "no", "c" },
+      hybrid_modes = { "n" },
+      callbacks = {
+        on_enable = function(_, win)
+          vim.wo[win].conceallevel = 2
+          vim.wo[win].concealcursor = "nc"
+        end,
+      },
+    },
+    config = function(_, opts)
+      require("markview").setup(opts)
+      Util.toggle.map("<leader>um", {
+        name = "Render Markdown",
+        get = function()
+          return require("markview").state.enable
+        end,
+        set = function(state)
+          local mc = require("markview").commands
+          if state then
+            mc.enableAll()
+          else
+            mc.disableAll()
           end
         end,
       })
