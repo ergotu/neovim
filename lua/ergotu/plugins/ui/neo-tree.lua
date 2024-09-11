@@ -121,6 +121,14 @@ return {
   },
   config = function(_, opts)
     require("neo-tree").setup(opts)
+    vim.api.nvim_create_autocmd("BufClose", {
+      pattern = "Neogit*",
+      callback = function()
+        if package.loaded["neo-tree.sources.git_status"] then
+          require("neo-tree.sources.git_status").refresh()
+        end
+      end,
+    })
     vim.api.nvim_create_autocmd("TermClose", {
       pattern = "*lazygit",
       callback = function()
