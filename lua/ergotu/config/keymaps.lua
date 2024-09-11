@@ -133,7 +133,7 @@ Util.toggle.map("<leader>uw", Util.toggle("wrap", { name = "Wrap" }))
 Util.toggle.map("<leader>uL", Util.toggle("relativenumber", { name = "Relative Number" }))
 Util.toggle.map("<leader>ud", Util.toggle.diagnostics)
 Util.toggle.map("<leader>ul", Util.toggle.number)
-Util.toggle.map( "<leader>uc", Util.toggle("conceallevel", { values = { 0, vim.o.conceallevel > 0 and vim.o.conceallevel or 2 } }))
+Util.toggle.map("<leader>uc", Util.toggle("conceallevel", { values = { 0, vim.o.conceallevel > 0 and vim.o.conceallevel or 2 } }))
 Util.toggle.map("<leader>uT", Util.toggle.treesitter)
 Util.toggle.map("<leader>ub", Util.toggle("background", { values = { "light", "dark" }, name = "Background" }))
 if vim.lsp.inlay_hint then
