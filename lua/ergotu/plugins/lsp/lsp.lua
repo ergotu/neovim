@@ -2,7 +2,6 @@ return {
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
-    priority = 100,
     event = "LazyFile",
     dependencies = {
       {
@@ -219,7 +218,6 @@ return {
   {
     "williamboman/mason.nvim",
     enabled = not vim.g.nix,
-    priority = 100,
     cmd = "Mason",
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
     build = ":MasonUpdate",
