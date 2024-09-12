@@ -48,6 +48,7 @@ return {
         desc = "Diff against origin/master",
       },
     },
+    cmd = "DiffviewOpen",
     opts = {},
   },
 }
