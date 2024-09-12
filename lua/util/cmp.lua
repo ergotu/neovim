@@ -1,4 +1,4 @@
----@class ergotu.util.cmp
+---@class util.cmp
 
 local M = {}
 

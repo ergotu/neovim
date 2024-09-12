@@ -2,14 +2,14 @@ local LazyUtil = require("lazy.core.util")
 
 ---@class util
 ---@field config UtilOptions
----@field toggle ergotu.util.toggle
----@field plugin ergotu.util.plugin
----@field ui ergotu.util.plugin
----@field lsp ergotu.util.lsp
----@field cmp ergotu.util.cmp
----@field root ergotu.util.root
----@field telescope ergotu.util.telescope
----@field lualine ergotu.util.lualine
+---@field toggle util.toggle
+---@field plugin util.plugin
+---@field ui util.plugin
+---@field lsp util.lsp
+---@field cmp util.cmp
+---@field root util.root
+---@field telescope util.telescope
+---@field lualine util.lualine
 local M = {}
 
 ---@type table<string, string|string[]>
@@ -36,11 +36,11 @@ setmetatable(M, {
       local key = type(dep) == "table" and dep[2] or k
       M.deprecate([[Util.]] .. k, [[Util.]] .. mod .. "." .. key)
       ---@diagnostic disable-next-line: no-unknown
-      t[mod] = require("ergotu.util." .. mod)
+      t[mod] = require("util." .. mod)
       return t[mod][key]
     end
     ---@diagnostic disable-next-line: no-unknown
-    t[k] = require("ergotu.util." .. k)
+    t[k] = require("util." .. k)
     return t[k]
   end,
 })

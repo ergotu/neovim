@@ -251,7 +251,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function()
-      local Keys = require("ergotu.util.lsp.keymaps").get()
+      local Keys = require("util.lsp.keymaps").get()
       -- stylua: ignore
       vim.list_extend(Keys, {
         { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },

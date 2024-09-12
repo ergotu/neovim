@@ -1,4 +1,4 @@
-_G.Util = require("ergotu.util")
+_G.Util = require("util")
 
 ---@class Config: UtilOptions
 local M = {}

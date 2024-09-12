@@ -8,7 +8,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function()
-      local keys = require("ergotu.util.lsp.keymaps").get()
+      local keys = require("util.lsp.keymaps").get()
       keys[#keys + 1] = {
         "<leader>cr",
         function()

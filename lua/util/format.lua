@@ -1,4 +1,4 @@
----@class ergotu.util.format
+---@class util.format
 ---@overload fun(opts?: {force?:boolean})
 local M = setmetatable({}, {
   __call = function(m, ...)

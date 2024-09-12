@@ -3,7 +3,7 @@
 ---@class LazyVimGlobals
 vim.g = {}
 
-_G.Util = require("ergotu.util")
+_G.Util = require("util")
 
 ---@class vim.api.create_autocmd.callback.args
 ---@field id number

@@ -1,6 +1,6 @@
 local Plugin = require("lazy.core.plugin")
 
----@class ergotu.util.plugin
+---@class util.plugin
 local M = {}
 
 M.lazy_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }

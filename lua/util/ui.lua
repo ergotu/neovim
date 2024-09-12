@@ -1,4 +1,4 @@
----@class ergotu.util.ui
+---@class util.ui
 local M = {}
 
 ---@alias Sign {name:string, text:string, texthl:string, priority:number}

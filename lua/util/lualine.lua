@@ -1,4 +1,4 @@
----@class ergotu.util.lualine
+---@class util.lualine
 
 local M = {}
 

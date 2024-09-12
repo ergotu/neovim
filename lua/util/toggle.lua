@@ -1,15 +1,15 @@
----@class ergotu.util.toggle
+---@class util.toggle
 local M = {}
 
----@class ergotu.util.Toggle
+---@class util.Toggle
 ---@field name string
 ---@field get fun():boolean
 ---@field set fun(state:boolean)
 
----@class ergotu.util.Toggle.wrap: ergotu.util.Toggle
+---@class util.Toggle.wrap: util.Toggle
 ---@operator call:boolean
 
----@param toggle ergotu.util.Toggle
+---@param toggle util.Toggle
 function M.wrap(toggle)
   return setmetatable(toggle, {
     __call = function()
@@ -22,11 +22,11 @@ function M.wrap(toggle)
       end
       return state
     end,
-  }) --[[@as ergotu.util.Toggle.wrap]]
+  }) --[[@as util.Toggle.wrap]]
 end
 
 ---@param lhs string
----@param toggle ergotu.util.Toggle
+---@param toggle util.Toggle
 function M.map(lhs, toggle)
   local t = M.wrap(toggle)
   Util.safe_keymap_set("n", lhs, function()

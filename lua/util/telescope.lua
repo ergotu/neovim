@@ -1,13 +1,13 @@
----@class ergotu.util.telescope
+---@class util.telescope
 
----@overload fun(command:string, opts?:ergotu.util.telescope.Opts): fun()
+---@overload fun(command:string, opts?:util.telescope.Opts): fun()
 local M = setmetatable({}, {
   __call = function(m, ...)
     return m.wrap(...)
   end,
 })
 
----@class ergotu.util.telescope.Opts: table<string, any>
+---@class util.telescope.Opts: table<string, any>
 ---@field root? boolean
 ---@field cwd? string
 ---@field buf? number
@@ -15,7 +15,7 @@ local M = setmetatable({}, {
 ---@field follow? boolean
 
 ---@param builtin string
----@param opts ergotu.util.telescope.Opts
+---@param opts util.telescope.Opts
 function M.open(builtin, opts)
   opts = opts or {}
   opts.follow = opts.follow ~= false
@@ -43,7 +43,7 @@ function M.open(builtin, opts)
 end
 
 ---@param command? string
----@param opts? ergotu.util.telescope.Opts
+---@param opts? util.telescope.Opts
 function M.wrap(command, opts)
   opts = opts or {}
   return function()

@@ -1,5 +1,5 @@
 ---@diagnostic disable: param-type-mismatch, inject-field
----@class ergotu.util.lsp.keymaps
+---@class util.lsp.keymaps
 local M = {}
 
 ---@type LazyKeysLspSpec[]|nil

@@ -1,127 +1,148 @@
 {
-  description = "Provide nixosModules for ergotu/neovim";
+  description = "My neovim config";
 
   inputs = {
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-    };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
-    home-manager = {
-      url = "github:nix-community/home-manager";
+
+    nv = {
+      url = "github:NicoElbers/nv";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
   };
 
-  outputs = inputs @ {
-    self,
-    flake-parts,
-    pre-commit-hooks,
+  outputs = {
+    nixpkgs,
+    nv,
     ...
-  }:
-    flake-parts.lib.mkFlake {inherit inputs;}
-    {
-      flake = {
-        homeManagerModules = {
-          nvimdots = ./nixos;
-        };
-      };
-
-      systems = ["aarch64-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin"];
-      perSystem = {
-        system,
-        pkgs,
-        self',
-        ...
-      }: let
-        extraPackages = [
-          pkgs.doq
-          pkgs.tree-sitter
-          pkgs.cargo
-          pkgs.clang
-          pkgs.cmake
-          pkgs.gcc
-          pkgs.gnumake
-          pkgs.go
-          pkgs.lua51Packages.luarocks
-          pkgs.ninja
-          pkgs.pkg-config
-          pkgs.yarn
-        ];
-        packagesPath = pkgs.lib.makeBinPath extraPackages;
-
-        initFile = pkgs.writeTextFile {
-          name = "init.lua";
-          text =
-            #lua
-            ''
-              vim.loader.enable()
-
-              -- lazy.nvim resets rtp for performance reasons, so we need to pass the path of the configuration
-              vim.g.rtp_path = "${./.}"
-              -- add source to rtp_path so we can load our configuration
-              vim.opt.rtp:append(vim.g.rtp_path)
-
-              -- load configuration
-              require("ergotu")
-            '';
-        };
-
-        neovimConfig =
-          pkgs.neovimUtils.makeNeovimConfig {
-            customRC = "luafile ${initFile}";
-          }
-          // {
-            viAlias = true;
-            vimAlias = true;
-            withNodeJs = false;
-            withPython3 = false;
-            withRuby = false;
-            wrapperArgs = pkgs.lib.escapeShellArgs ["--suffix" "PATH" ":" "${packagesPath}"];
-          };
-      in {
-        packages = {
-          default = self.packages.${system}.neovim;
-
-          neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped neovimConfig;
-        };
-
-        checks = {
-          pre-commit-check = pre-commit-hooks.lib.${system}.run {
-            src = ./.;
-            hooks = {
-              statix.enable = true;
-              alejandra.enable = true;
-              stylua.enable = true;
-              commitizen.enable = true;
+  }: let
+    # Copied from flake utils
+    eachSystem = with builtins;
+      systems: f: let
+        # Merge together the outputs for all systems.
+        op = attrs: system: let
+          ret = f system;
+          op = attrs: key:
+            attrs
+            // {
+              ${key} =
+                (attrs.${key} or {})
+                // {${system} = ret.${key};};
             };
-          };
-        };
+        in
+          foldl' op attrs (attrNames ret);
+      in
+        foldl' op {}
+        (systems
+          ++ # add the current system if --impure is used
+          (
+            if builtins ? currentSystem
+            then
+              if elem currentSystem systems
+              then []
+              else [currentSystem]
+            else []
+          ));
 
-        devShells = {
-          default = with pkgs;
-            mkShell {
-              inherit (self'.checks.pre-commit-check) shellHook;
-              packages = [
-                self'.packages.default
+    forEachSystem = eachSystem nixpkgs.lib.platforms.all;
+    # Easily configure a custom name, this will affect the name of the standard
+    # executable, you can add as many aliases as you'd like in the configuration.
+    name = "nv";
 
-                # LUA LSP and tools
-                pkgs.lua-language-server
-                pkgs.stylua
-                pkgs.selene
+    # Any custom package config you would like to do.
+    extra_pkg_config = {
+      # allow_unfree = true;
+    };
 
-                # Nix LSP and formatter
-                pkgs.nixd
-                pkgs.alejandra
-              ];
-            };
-        };
+    configuration = {pkgs, ...}: let
+      patchUtils = nv.patchUtils.${pkgs.system};
+    in {
+      # The path to your neovim configuration.
+      luaPath = ./.;
+
+      # Plugins you use in your configuration.
+      plugins = with pkgs.vimPlugins; [];
+
+      # Runtime dependencies. This is thing like tree-sitter, lsps or programs
+      # like ripgrep.
+      runtimeDeps = with pkgs; [];
+
+      # Environment variables set during neovim runtime.
+      environmentVariables = {};
+
+      # Aliases for the patched config
+      aliases = ["vim" "vi"];
+
+      # Extra wrapper args you want to pass.
+      # Look here if you don't know what those are:
+      # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
+      extraWrapperArgs = [];
+
+      # Extra python packages for the neovim provider.
+      # This must be a list of functions returning lists.
+      python3Packages = [];
+
+      # Wrapper args but then for the python provider.
+      extraPython3WrapperArgs = [];
+
+      # Extra lua packages for the neovim lua runtime.
+      luaPackages = [];
+
+      # Extra shared libraries available at runtime.
+      sharedLibraries = [];
+
+      # Extra lua configuration put at the top of your init.lua
+      # This cannot replace your init.lua, if none exists in your configuration
+      # this will not be writtern.
+      # Must be provided as a list of strings.
+      extraConfig = [];
+
+      # Custom subsitutions you want the patcher to make. Custom subsitutions
+      # can be generated using
+      customSubs = with patchUtils; [];
+      # For example, if you want to add a plugin with the short url
+      # "cool/plugin" which is in nixpkgs as plugin-nvim you would do:
+      # ++ (patchUtils.githubUrlSub "cool/plugin" plugin-nvim);
+      # If you would want to replace the string "replace_me" with "replaced"
+      # you would have to do:
+      # ++ (patchUtils.stringSub "replace_me" "replaced")
+      # For more examples look here: https://github.com/NicoElbers/nv/blob/main/subPatches.nix
+
+      settings = {
+        # Enable the NodeJs provider
+        withNodeJs = false;
+
+        # Enable the ruby provider
+        withRuby = false;
+
+        # Enable the perl provider
+        withPerl = false;
+
+        # Enable the python3 provider
+        withPython3 = false;
+
+        # Any extra name
+        extraName = "";
+
+        # The default config directory for neovim
+        configDirName = "nvim";
+
+        # Any other neovim package you would like to use, for example nightly
+        neovim-unwrapped = null;
+
+        # Whether to add custom subsitution made in the original repo, makes for
+        # a better out of the box experience
+        patchSubs = true;
+
+        # Whether to add runtime dependencies to the back of the path
+        suffix-path = false;
+
+        # Whether to add shared libraries dependencies to the back of the path
+        suffix-LD = false;
       };
     };
+  in
+    forEachSystem (system: {
+      packages.default =
+        nv.configWrapper.${system} {inherit configuration extra_pkg_config name;};
+    });
 }
