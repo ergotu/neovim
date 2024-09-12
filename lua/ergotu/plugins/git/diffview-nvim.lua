@@ -31,7 +31,7 @@ return {
       {
         "<leader>gdH",
         "<cmd>DiffviewOpen<cr>",
-        desc = "Repo History",
+        desc = "Repo History (HEAD)",
       },
       {
         "<leader>gdm",
