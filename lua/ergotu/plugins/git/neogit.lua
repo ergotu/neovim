@@ -15,6 +15,10 @@ return {
     },
     opts = {
       kind = "split_below_all",
+      integrations = {
+        telescope = true,
+        diffview = true,
+      },
     },
   },
 }
