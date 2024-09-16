@@ -14,8 +14,8 @@ return {
       { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
       { "<leader>gp", "<cmd>Neogit pull<cr>", desc = "Neogit Pull" },
       { "<leader>gP", "<cmd>Neogit push<cr>", desc = "Neogit Push" },
-      { "<leader>gC", "<cmd>Neogit commit<cr>", desc = "Neogit Commit" },
-      { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Show Branches" },
+      { "<leader>gc", "<cmd>Neogit commit<cr>", desc = "Neogit Commit" },
+      { "<leader>gB", "<cmd>Telescope git_branches<cr>", desc = "Show Branches" },
     },
     opts = {
       kind = "split_below_all",
