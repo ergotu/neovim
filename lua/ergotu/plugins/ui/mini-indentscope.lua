@@ -6,6 +6,13 @@ return {
     -- symbol = "▏",
     symbol = "▎",
     options = { try_as_border = true },
+    draw = {
+      delay = 100,
+      priority = 2,
+      animation = function(s, n)
+        return s / n * 20
+      end,
+    },
   },
   init = function()
     vim.api.nvim_create_autocmd("FileType", {
