@@ -61,7 +61,7 @@ function M.color(name, bg)
   ---@type {foreground?:number}?
   ---@diagnostic disable-next-line: deprecated
   local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name, link = false })
-    or vim.api.nvim_get_hl_by_name(name, true)
+    or vim.api.nvim_get_hl(0, { name = name })
   ---@diagnostic disable-next-line: undefined-field
   ---@type string?
   local color = nil
