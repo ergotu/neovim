@@ -1,6 +1,46 @@
 local have_make = vim.fn.executable("make") == 1
 local have_cmake = vim.fn.executable("cmake") == 1
 
+local function open(builtin, opts)
+  opts = opts or {}
+  opts.follow = opts.follow ~= false
+  if opts.cwd and opts.cwd ~= vim.uv.cwd() then
+    local function open_cwd_dir()
+      local action_state = require("telescope.actions.state")
+      local line = action_state.get_current_line()
+      open(
+        builtin,
+        vim.tbl_deep_extend("force", {}, opts or {}, {
+          root = false,
+          default_text = line,
+        })
+      )
+    end
+    ---@diagnostic disable-next-line: inject-field
+    opts.attach_mappings = function(_, map)
+      -- opts.desc is overridden by telescope, until it's changed there is this fix
+      map("i", "<a-c>", open_cwd_dir, { desc = "Open cwd Directory" })
+      return true
+    end
+  end
+
+  require("telescope.builtin")[builtin](opts)
+end
+
+local function telescope(command, opts)
+  opts = opts or {}
+  return function()
+    command = command ~= "auto" and command or "find_files"
+    opts = opts or {}
+    opts = vim.deepcopy(opts)
+
+    if not opts.cwd and opts.root ~= false then
+      opts.cwd = Util.root({ buf = opts.buf })
+    end
+
+    open(command, vim.deepcopy(opts))
+  end
+end
 return {
   {
     "nvim-telescope/telescope.nvim",
@@ -39,25 +79,25 @@ return {
         "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
         desc = "Switch Buffer",
       },
-      { "<leader>/", Util.telescope("live_grep"), desc = "Grep (Root Dir)" },
+      { "<leader>/", telescope("live_grep"), desc = "Grep (Root Dir)" },
       { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-      { "<leader><space>", Util.telescope("find_files"), desc = "Find Files (Root Dir)" },
+      { "<leader><space>", telescope("find_files"), desc = "Find Files (Root Dir)" },
       -- find
       { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
       {
         "<leader>fc",
-        Util.telescope("find_files", { cwd = vim.fn.stdpath("config") }),
+        telescope("find_files", { cwd = vim.fn.stdpath("config") }),
         desc = "Find Config File",
       },
-      { "<leader>ff", Util.telescope("find_files"), desc = "Find Files (Root Dir)" },
-      { "<leader>fF", Util.telescope("find_files", { root = false }), desc = "Find Files (cwd)" },
+      { "<leader>ff", telescope("find_files"), desc = "Find Files (Root Dir)" },
+      { "<leader>fF", telescope("find_files", { root = false }), desc = "Find Files (cwd)" },
       { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Find Files (git-files)" },
       { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
-      { "<leader>fR", Util.telescope("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
+      { "<leader>fR", telescope("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
       {
         "<leader>fw",
         function()
-          Util.telescope("find_files", { default_text = vim.fn.expand("<cword>") })()
+          telescope("find_files", { default_text = vim.fn.expand("<cword>") })()
         end,
         desc = "Find Files (Current word)",
       },
@@ -72,8 +112,8 @@ return {
       { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
       { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document Diagnostics" },
       { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics" },
-      { "<leader>sg", Util.telescope("live_grep"), desc = "Grep (Root Dir)" },
-      { "<leader>sG", Util.telescope("live_grep", { root = false }), desc = "Grep (cwd)" },
+      { "<leader>sg", telescope("live_grep"), desc = "Grep (Root Dir)" },
+      { "<leader>sG", telescope("live_grep", { root = false }), desc = "Grep (cwd)" },
       { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
       { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
       { "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Jumplist" },
@@ -84,13 +124,13 @@ return {
       { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
       { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
       { "<leader>sq", "<cmd>Telescope quickfix<cr>", desc = "Quickfix List" },
-      { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (Root Dir)" },
-      { "<leader>sW", Util.telescope("grep_string", { root = false, word_match = "-w" }), desc = "Word (cwd)" },
-      { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (Root Dir)" },
-      { "<leader>sW", Util.telescope("grep_string", { root = false }), mode = "v", desc = "Selection (cwd)" },
+      { "<leader>sw", telescope("grep_string", { word_match = "-w" }), desc = "Word (Root Dir)" },
+      { "<leader>sW", telescope("grep_string", { root = false, word_match = "-w" }), desc = "Word (cwd)" },
+      { "<leader>sw", telescope("grep_string"), mode = "v", desc = "Selection (Root Dir)" },
+      { "<leader>sW", telescope("grep_string", { root = false }), mode = "v", desc = "Selection (cwd)" },
       {
         "<leader>uC",
-        Util.telescope("colorscheme", { enable_preview = true }),
+        telescope("colorscheme", { enable_preview = true }),
         desc = "Colorscheme with Preview",
       },
       {

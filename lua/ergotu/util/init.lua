@@ -8,7 +8,6 @@ local LazyUtil = require("lazy.core.util")
 ---@field lsp ergotu.util.lsp
 ---@field cmp ergotu.util.cmp
 ---@field root ergotu.util.root
----@field telescope ergotu.util.telescope
 ---@field lualine ergotu.util.lualine
 local M = {}
 
