@@ -1,5 +1,3 @@
-local Plugin = require("lazy.core.plugin")
-
 ---@class ergotu.util.plugin
 local M = {}
 
