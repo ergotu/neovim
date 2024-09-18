@@ -46,12 +46,14 @@
           pkgs.cargo
           pkgs.clang
           pkgs.cmake
+          pkgs.fd
           pkgs.gcc
           pkgs.git
           pkgs.gnumake
           pkgs.go
           pkgs.lua51Packages.luarocks
           pkgs.ninja
+          pkgs.ripgrep
           pkgs.pkg-config
           pkgs.yarn
         ];
