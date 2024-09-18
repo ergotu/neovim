@@ -47,6 +47,7 @@
           pkgs.clang
           pkgs.cmake
           pkgs.gcc
+          pkgs.git
           pkgs.gnumake
           pkgs.go
           pkgs.lua51Packages.luarocks
