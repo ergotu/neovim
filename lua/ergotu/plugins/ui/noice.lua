@@ -23,6 +23,24 @@ return {
           },
           view = "mini",
         },
+        {
+          filter = {
+            event = "notify",
+            find = "No information available",
+          },
+          opts = {
+            skip = true,
+          },
+        },
+        {
+          filter = {
+            event = "msg_show",
+            find = "written",
+          },
+          opts = {
+            skip = true,
+          },
+        },
       },
       messages = {
         view = "mini",
