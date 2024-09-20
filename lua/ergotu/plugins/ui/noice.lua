@@ -46,12 +46,19 @@ return {
         view = "mini",
         view_warn = "mini",
       },
+      views = {
+        hover = {
+          border = {
+            style = vim.g.floating_window_options.border,
+          },
+          position = { row = 2, col = 2 },
+        },
+      },
       presets = {
         bottom_search = true,
         command_palette = true,
         long_message_to_split = true,
         inc_rename = true,
-        lsp_doc_border = true,
       },
     },
     -- stylua: ignore
