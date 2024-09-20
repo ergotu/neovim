@@ -166,7 +166,7 @@ end
 -- Setup function to create user command and autocommands
 function M.setup()
   vim.api.nvim_create_user_command("Root", function()
-    print("Current root: " .. M.get())
+    Util.info("Current root: " .. M.get(), { title = "Root Finder" })
   end, { desc = "Show the root for the current buffer" })
 
   vim.api.nvim_create_autocmd({ "LspAttach", "BufWritePost", "DirChanged", "BufEnter" }, {
