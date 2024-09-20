@@ -44,7 +44,7 @@ return {
       },
       messages = {
         view = "mini",
-        viewWarn = "mini",
+        view_warn = "mini",
       },
       presets = {
         bottom_search = true,
