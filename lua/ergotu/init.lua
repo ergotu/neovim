@@ -45,8 +45,19 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
+  install = {
+    colorscheme = { "catppuccin-mocha" },
+  },
   ui = {
+    size = {
+      width = 0.8,
+      height = 0.9,
+    },
     border = vim.g.floating_window_options.border,
+    title = "Lazy.nvim",
+  },
+  diff = {
+    cmd = "diffview.nvim",
   },
   checker = {
     enabled = true, -- check for plugin updates periodically
