@@ -146,7 +146,6 @@ return {
     enabled = vim.g.use_markview,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
     },
     ft = { "markdown", "norg", "rmd", "org" },
     opts = {

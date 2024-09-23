@@ -1,11 +1,6 @@
 ---@diagnostic disable: undefined-field
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = {
-    {
-      "nvim-tree/nvim-web-devicons",
-    },
-  },
   event = "VeryLazy",
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
