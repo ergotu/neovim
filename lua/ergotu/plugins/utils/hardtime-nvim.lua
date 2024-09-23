@@ -5,7 +5,18 @@ return {
     event = "LazyFile",
     opts = {
       disable_mouse = false,
-      disabled_filetypes = { "qf", "netrw", "neo-tree", "lazy", "mason", "oil", "Neogit*", "GitGraph", "gitsigns*" },
+      disabled_filetypes = {
+        "qf",
+        "netrw",
+        "neo-tree",
+        "lazy",
+        "mason",
+        "oil",
+        "Neogit*",
+        "GitGraph",
+        "gitsigns*",
+        "minifiles",
+      },
     },
   },
 }
