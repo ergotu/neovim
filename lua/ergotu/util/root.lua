@@ -91,36 +91,45 @@ M.detectors = {
 
 -- Function to detect the roots of a project
 --- @param opts? { buf?: number, all?: boolean }
---- @return string[]
+--- @return table
 function M.detect(opts)
   opts = opts or {}
   local buf = opts.buf or vim.api.nvim_get_current_buf()
   local detectors = vim.g.root or M.spec
   local roots = {}
+  local details = {}
 
   for _, detector in ipairs(detectors) do
     local root
+    local detail = { detector = detector, result = nil }
     if type(detector) == "string" then
       if M.detectors[detector] then
         root = M.detectors[detector](buf)
+        detail.result = root
       elseif vim.fn.exists(detector) == 1 then
         root = vim.fn[detector](buf)
+        detail.result = root
       end
     elseif type(detector) == "table" then
       root = M.detectors.pattern(buf, detector)
+      detail.result = root
     elseif type(detector) == "function" then
       local result = detector(buf)
       if type(result) == "string" then
         root = result
+        detail.result = root
       elseif type(result) == "table" then
         for _, path in ipairs(result) do
           if exists(path) then
             root = path
+            detail.result = root
             break
           end
         end
       end
     end
+
+    table.insert(details, detail)
 
     if root then
       table.insert(roots, root)
@@ -130,7 +139,7 @@ function M.detect(opts)
     end
   end
 
-  return roots
+  return { roots = roots, details = details }
 end
 
 -- Main function to find the root of a project
@@ -141,7 +150,8 @@ function M.get(opts)
   local buf = opts.buf or vim.api.nvim_get_current_buf()
   local root = M.cache[buf]
   if not root then
-    local roots = M.detect({ buf = buf, all = false })
+    local result = M.detect({ buf = buf, all = false })
+    local roots = result.roots
     root = roots[1] or vim.uv.cwd()
     M.cache[buf] = root
   end
@@ -168,6 +178,19 @@ function M.setup()
   vim.api.nvim_create_user_command("Root", function()
     Util.info("Current root: " .. M.get(), { title = "Root Finder" })
   end, { desc = "Show the root for the current buffer" })
+
+  vim.api.nvim_create_user_command("Info", function()
+    local buf = vim.api.nvim_get_current_buf()
+    local result = M.detect({ buf = buf, all = true })
+    local details = result.details
+    local lines = { "Root Detection Info:" }
+    for _, detail in ipairs(details) do
+      local detector = type(detail.detector) == "table" and vim.inspect(detail.detector) or tostring(detail.detector)
+      local result = detail.result or "nil"
+      table.insert(lines, string.format("Detector: %s, Result: %s", detector, result))
+    end
+    Util.info(table.concat(lines, "\n"), { title = "Root Detection Info" })
+  end, { desc = "Show details of all root detectors" })
 
   vim.api.nvim_create_autocmd({ "LspAttach", "BufWritePost", "DirChanged", "BufEnter" }, {
     group = vim.api.nvim_create_augroup("lazyvim_root_cache", { clear = true }),
