@@ -57,7 +57,10 @@ M.detectors = {
   ---@param buf number
   ---@return table[]|nil
   lsp = function(buf)
-    local clients = vim.lsp.get_clients({ bufnr = buf })
+    local clients = Util.lsp.get_clients({ bufnr = buf })
+    clients = vim.tbl_filter(function(client)
+      return not vim.tbl_contains(vim.g.root_lsp_ignore or {}, client.name)
+    end, clients)
     local details = {}
     for _, client in ipairs(clients) do
       if client.config.root_dir then
