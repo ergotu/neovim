@@ -7,7 +7,7 @@ local M = setmetatable({}, {
 })
 
 -- Default specification for root detection
-M.spec = { "lsp", "vcs", { ".git", "lua" }, "cwd" }
+M.spec = { "lsp", { ".git", "lua" }, "cwd" }
 
 -- Cache to store detected roots per buffer
 M.cache = {}
@@ -85,24 +85,6 @@ M.detectors = {
         if exists(vim.fn.join({ path, pattern }, "/")) then
           return path
         end
-      end
-      path = vim.fn.fnamemodify(path, ":h")
-    end
-    return nil
-  end,
-
-  --- Detect root using VCS directories
-  ---@param buf number
-  ---@return string|nil
-  vcs = function(buf)
-    local path = vim.fn.expand("%:p:h", buf)
-    while path and path ~= "/" do
-      if
-        exists(vim.fn.join({ path, ".git" }, "/"))
-        or exists(vim.fn.join({ path, ".hg" }, "/"))
-        or exists(vim.fn.join({ path, ".svn" }, "/"))
-      then
-        return path
       end
       path = vim.fn.fnamemodify(path, ":h")
     end
