@@ -138,6 +138,8 @@ function M.init()
   end
   M.did_init = true
 
+  Util.lazy_notify()
+
   -- defer built-in clipboard handling: "xsel" and "pbcopy" can be slow
   lazy_clipboard = vim.opt.clipboard
   vim.opt.clipboard = ""
@@ -152,7 +154,6 @@ function M.init()
     end,
   })
 
-  Util.lazy_notify()
   Util.root.setup()
   Util.plugin.setup()
 end
