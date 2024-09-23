@@ -4,9 +4,7 @@ return {
     "neovim/nvim-lspconfig",
     event = "LazyFile",
     dependencies = {
-      {
-        "mason.nvim",
-      },
+      "mason.nvim",
       {
         "williamboman/mason-lspconfig.nvim",
         enabled = not vim.g.nix,

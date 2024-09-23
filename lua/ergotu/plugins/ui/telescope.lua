@@ -41,15 +41,14 @@ local function telescope(command, opts)
     open(command, vim.deepcopy(opts))
   end
 end
+
 return {
   {
     "nvim-telescope/telescope.nvim",
     version = false,
     cmd = "Telescope",
     dependencies = {
-      {
-        "nvim-lua/plenary.nvim",
-      },
+      "nvim-lua/plenary.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = have_make and "make"
@@ -255,9 +254,7 @@ return {
       {
         "nvim-telescope/telescope.nvim",
         dependencies = {
-          {
-            "nvim-lua/plenary.nvim",
-          },
+          "nvim-lua/plenary.nvim",
         },
       },
     },

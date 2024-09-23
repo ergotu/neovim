@@ -13,9 +13,7 @@ end
 return {
   "mfussenegger/nvim-dap",
   dependencies = {
-    {
-      "rcarriga/nvim-dap-ui",
-    },
+    "rcarriga/nvim-dap-ui",
     -- Virtual text for the debugger
     {
       "theHamsta/nvim-dap-virtual-text",

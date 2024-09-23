@@ -1,9 +1,7 @@
 return {
   "jay-babu/mason-nvim-dap.nvim",
   dependencies = {
-    {
-      "mason.nvim",
-    },
+    "mason.nvim",
   },
   cmd = { "DapInstall", "DapUninstall" },
   opts = {

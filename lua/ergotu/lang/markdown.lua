@@ -110,12 +110,8 @@ return {
     "MeanderingProgrammer/render-markdown.nvim",
     enabled = not vim.g.use_markview,
     dependencies = {
-      {
-        "echasnovski/mini.icons",
-      },
-      {
-        "nvim-treesitter/nvim-treesitter",
-      },
+      "echasnovski/mini.icons",
+      "nvim-treesitter/nvim-treesitter",
     },
     opts = {
       file_types = { "markdown", "norg", "rmd", "org" },
@@ -193,9 +189,7 @@ return {
     },
     dependencies = {
       -- Required.
-      {
-        "nvim-lua/plenary.nvim",
-      },
+      "nvim-lua/plenary.nvim",
     },
     opts = {
       workspaces = {
