@@ -17,10 +17,10 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+require("ergotu.config").init()
+
 require("ergotu.config.opts")
 require("ergotu.config.autocmds")
-
-require("ergotu.config").init()
 require("lazy").setup({
   spec = {
     { import = "ergotu.plugins.colorscheme" },
