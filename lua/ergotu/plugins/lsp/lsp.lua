@@ -89,6 +89,11 @@ return {
         Util.lsp.keymaps.on_attach(client, buffer)
       end)
 
+      -- setup lightbulb
+      Util.lsp.on_attach(function(client, buffer)
+        Util.lsp.lightbulb.attach_lightbulb(buffer, client.id)
+      end)
+
       Util.lsp.setup()
       Util.lsp.on_dynamic_capability(Util.lsp.on_attach)
 

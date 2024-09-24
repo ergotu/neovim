@@ -1,8 +1,14 @@
 ---@class ergotu.util.lsp
 ---@field keymaps ergotu.util.lsp.keymaps
+---@field lightbulb ergotu.util.lsp.lightbulb
 local M = {}
 
-M.keymaps = require("ergotu.util.lsp.keymaps")
+setmetatable(M, {
+  __index = function(t, k)
+    t[k] = require("ergotu.util.lsp." .. k)
+    return t[k]
+  end,
+})
 
 ---@alias lsp.Client.filter {id?: number, bufnr?: number, name?: string, method?: string, filter?:fun(client: lsp.Client):boolean}
 
