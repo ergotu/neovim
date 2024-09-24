@@ -63,6 +63,16 @@ M.detectors = {
     end, clients)
     local details = {}
     for _, client in ipairs(clients) do
+      -- Check for workspace folders
+      if client.workspace_folders then
+        for _, workspace in ipairs(client.workspace_folders) do
+          table.insert(
+            details,
+            { name = client.name, root = vim.uri_to_fname(workspace.uri), workspace = workspace.name }
+          )
+        end
+      end
+      -- Fallback to root_dir if no workspace folders are found
       if client.config.root_dir then
         table.insert(details, { name = client.name, root = client.config.root_dir })
       end
@@ -220,6 +230,9 @@ function M.setup()
       if detector == "lsp" and type(result) == "table" then
         for _, lsp_detail in ipairs(result) do
           table.insert(lines, string.format("LSP: %s, Root: %s", lsp_detail.name, lsp_detail.root))
+          if lsp_detail.workspace then
+            table.insert(lines, string.format("└╴Workspace: %s", lsp_detail.workspace))
+          end
         end
       else
         table.insert(lines, string.format("Detector: %s, Result: %s", detector, result))
