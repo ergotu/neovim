@@ -1,6 +1,13 @@
 Util.on_very_lazy(function()
   vim.filetype.add({
     extension = { hujson = "jsonc" },
+    filename = {
+      [".eslintrc.json"] = "jsonc",
+    },
+    pattern = {
+      ["tsconfig*.json"] = "jsonc",
+      [".*/%.vscode/.*%.json"] = "jsonc",
+    },
   })
 end)
 return {
