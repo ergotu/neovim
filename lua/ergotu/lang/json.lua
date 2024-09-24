@@ -1,6 +1,6 @@
 Util.on_very_lazy(function()
   vim.filetype.add({
-    extension = { hujson = "hujson" },
+    extension = { hujson = "jsonc" },
   })
 end)
 return {
