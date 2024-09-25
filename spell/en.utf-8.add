@@ -35,3 +35,6 @@ keymaps
 Treesitter
 kubernetes
 fluxcd
+Tailscale
+ACL
+ACLs
