@@ -31,6 +31,8 @@ vim.g.trouble_lualine = false
 
 vim.g.use_markview = false
 
+vim.g.prettier_needs_config = true
+
 local opt = vim.opt
 
 opt.autowrite = true -- Enable auto write
