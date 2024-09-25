@@ -23,4 +23,11 @@ return {
       vim.api.nvim_win_set_config(win, { zindex = 100 })
     end,
   },
+  init = function()
+    if not Util.has("noice.nvim") then
+      Util.on_very_lazy(function()
+        vim.notify = require("notify")
+      end)
+    end
+  end,
 }
