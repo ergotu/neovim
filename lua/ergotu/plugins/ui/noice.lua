@@ -2,6 +2,7 @@ return {
   -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
   {
     "folke/noice.nvim",
+    priority = 100,
     event = "VeryLazy",
     opts = {
       lsp = {
@@ -9,6 +10,9 @@ return {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
           ["cmp.entry.get_documentation"] = true,
+        },
+        message = {
+          enabled = true,
         },
       },
       routes = {
@@ -47,6 +51,10 @@ return {
         view = "mini",
         view_warn = "mini",
         view_error = "notify",
+      },
+      notify = {
+        enabled = true,
+        view = "mini",
       },
       views = {
         hover = {
