@@ -172,45 +172,4 @@ return {
       })
     end,
   },
-
-  {
-    "epwalsh/obsidian.nvim",
-    version = "*", -- recommended, use latest release instead of latest commit
-    lazy = true,
-    event = {
-      "BufReadPre " .. vim.fn.expand("~") .. "/vaults/personal/*.md",
-      "BufNewFile " .. vim.fn.expand("~") .. "/vaults/personal/*.md",
-    },
-    dependencies = {
-      -- Required.
-      "nvim-lua/plenary.nvim",
-    },
-    opts = {
-      workspaces = {
-        {
-          name = "personal",
-          path = "~/vaults/personal",
-        },
-        {
-          name = "work",
-          path = "~/vaults/work",
-        },
-        {
-          name = "no-vault",
-          path = function()
-            return assert(vim.fn.getcwd())
-            -- return assert(vim.fs.dirname(vim.api.nvim_buf_get_name(0)))
-          end,
-          overrides = {
-            notes_subdit = vim.NIL, -- Have to use vim.NIL instead of 'nil'
-            new_notes_location = "current_dir",
-            templates = {
-              folder = vim.NIL,
-            },
-            disable_frontmatter = true,
-          },
-        },
-      },
-    },
-  },
 }
