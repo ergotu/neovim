@@ -112,8 +112,6 @@
             mkShell {
               inherit (self'.checks.pre-commit-check) shellHook;
               packages = [
-                self'.packages.default
-
                 # LUA LSP and tools
                 pkgs.lua-language-server
                 pkgs.stylua
