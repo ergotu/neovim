@@ -17,6 +17,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+    };
   };
 
   outputs = inputs @ {
@@ -27,6 +32,10 @@
   }:
     flake-parts.lib.mkFlake {inherit inputs;}
     {
+      imports = [
+        inputs.devenv.flakeModule
+      ];
+
       flake = {
         homeManagerModules = {
           nvimdots = ./nixos;
@@ -95,8 +104,8 @@
           neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped neovimConfig;
         };
 
-        checks = {
-          pre-commit-check = pre-commit-hooks.lib.${system}.run {
+        devenv.shells.default = {
+          pre-commit = {
             src = ./.;
             hooks = {
               statix.enable = true;
@@ -105,23 +114,25 @@
               commitizen.enable = true;
             };
           };
-        };
 
-        devShells = {
-          default = with pkgs;
-            mkShell {
-              inherit (self'.checks.pre-commit-check) shellHook;
-              packages = [
-                # LUA LSP and tools
-                pkgs.lua-language-server
-                pkgs.stylua
-                pkgs.selene
-
-                # Nix LSP and formatter
-                pkgs.nixd
-                pkgs.alejandra
-              ];
+          languages = {
+            nix = {
+              enable = true;
+              lsp.package = pkgs.nixd;
             };
+            lua.enable = true;
+          };
+
+          packages = [
+            # LUA LSP and tools
+            pkgs.lua-language-server
+            pkgs.stylua
+            pkgs.selene
+
+            # Nix LSP and formatter
+            pkgs.nixd
+            pkgs.alejandra
+          ];
         };
       };
     };
