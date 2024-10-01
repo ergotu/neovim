@@ -22,12 +22,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.pre-commit-hooks.follows = "pre-commit-hooks";
     };
+    nix2container = {
+      url = "github:nlewo/nix2container";
+      inputs = {nixpkgs.follows = "nixpkgs";};
+    };
   };
 
   outputs = inputs @ {
     self,
     flake-parts,
-    pre-commit-hooks,
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;}
@@ -46,10 +49,10 @@
       perSystem = {
         system,
         pkgs,
-        self',
         ...
       }: let
         extraPackages = [
+          pkgs.ast-grep
           pkgs.doq
           pkgs.tree-sitter
           pkgs.cargo
