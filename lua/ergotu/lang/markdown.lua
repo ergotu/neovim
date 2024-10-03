@@ -117,7 +117,6 @@ return {
       file_types = { "markdown", "norg", "rmd", "org" },
       preset = "lazy",
     },
-    ft = { "markdown", "norg", "rmd", "org" },
     config = function(_, opts)
       require("render-markdown").setup(opts)
       Util.toggle.map("<leader>um", {
