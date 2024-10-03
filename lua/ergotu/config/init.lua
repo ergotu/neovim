@@ -156,6 +156,7 @@ function M.init()
 
   Util.root.setup()
   Util.plugin.setup()
+  Util.format.setup()
 end
 
 return M
