@@ -178,3 +178,25 @@ map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
 map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+
+-- better yank and delete
+-- do not copy an empty line
+local function handle_yank_delete(key)
+  local line = vim.fn.getline(".")
+  if key == "yy" and line ~= "" then
+    vim.cmd("normal! yy")
+  elseif key == "dd" then
+    if line:match("^%s*$") then
+      vim.api.nvim_feedkeys('"_dd', "n", false)
+    else
+      vim.cmd("normal! dd")
+    end
+  end
+end
+
+vim.keymap.set("n", "yy", function()
+  handle_yank_delete("yy")
+end, { noremap = true, silent = true })
+vim.keymap.set("n", "dd", function()
+  handle_yank_delete("dd")
+end, { noremap = true, silent = true })
