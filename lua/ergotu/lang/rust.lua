@@ -35,7 +35,7 @@ return {
 
   {
     "mrcjkb/rustaceanvim",
-    version = "^4", -- Recommended
+    version = false,
     ft = { "rust" },
     opts = {
       server = {
