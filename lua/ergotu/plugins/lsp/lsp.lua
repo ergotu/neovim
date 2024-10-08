@@ -211,9 +211,10 @@ return {
         end)
       end
 
-      local windowOpts = require("lspconfig.ui.windows").default_options
-      windowOpts.border = vim.g.floating_window_options.border
-      windowOpts.winblend = vim.g.floating_window_options.winblend
+      -- set up border for hover window
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+        border = vim.g.floating_window_options.border,
+      })
     end,
   },
 
