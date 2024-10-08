@@ -19,7 +19,7 @@ return {
         end,
       },
       dim_inactive = {
-        enabled = false,
+        enabled = true,
       },
       integrations = {
         aerial = true,
