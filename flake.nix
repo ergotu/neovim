@@ -58,6 +58,7 @@
           pkgs.cargo
           pkgs.clang
           pkgs.cmake
+          pkgs.curl
           pkgs.fd
           pkgs.gcc
           pkgs.git
