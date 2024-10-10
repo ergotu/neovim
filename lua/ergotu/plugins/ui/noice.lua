@@ -14,6 +14,9 @@ return {
         message = {
           enabled = true,
         },
+        hover = {
+          enabled = false,
+        },
       },
       routes = {
         {
