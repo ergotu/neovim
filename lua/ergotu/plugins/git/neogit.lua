@@ -15,9 +15,11 @@ return {
       { "<leader>gp", "<cmd>Neogit pull<cr>", desc = "Neogit Pull" },
       { "<leader>gP", "<cmd>Neogit push<cr>", desc = "Neogit Push" },
       { "<leader>gc", "<cmd>Neogit commit<cr>", desc = "Neogit Commit" },
+      { "<leader>gl", "<cmd>Neogit log<cr>", desc = "Neogit Log" },
       { "<leader>gB", "<cmd>Telescope git_branches<cr>", desc = "Show Branches" },
     },
     opts = {
+      graph_style = "unicode",
       kind = "split_below_all",
       integrations = {
         telescope = true,
