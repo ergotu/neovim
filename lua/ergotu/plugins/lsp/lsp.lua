@@ -210,11 +210,6 @@ return {
           return false
         end)
       end
-
-      -- set up border for hover window
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = vim.g.floating_window_options.border,
-      })
     end,
   },
 

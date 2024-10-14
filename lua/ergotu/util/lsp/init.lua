@@ -40,6 +40,11 @@ function M.on_attach(on_attach, name)
       if client and (not name or client.name == name) then
         return on_attach(client, buffer)
       end
+
+      -- set up border for hover window
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+        border = vim.g.floating_window_options.border,
+      })
     end,
   })
 end
