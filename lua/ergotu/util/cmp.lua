@@ -1,5 +1,4 @@
 ---@class ergotu.util.cmp
-
 local M = {}
 
 ---@alias Placeholder {n:number, text:string}

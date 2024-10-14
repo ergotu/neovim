@@ -1,5 +1,4 @@
 ---@class ergotu.util.lualine
-
 local M = {}
 
 ---@param component any
