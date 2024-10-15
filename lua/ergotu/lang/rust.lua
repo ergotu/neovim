@@ -1,7 +1,7 @@
 return {
   -- Extend auto completion
   {
-    "hrsh7th/nvim-cmp",
+    "nvim-cmp",
     dependencies = {
       {
         "Saecki/crates.nvim",

@@ -1,6 +1,7 @@
 -- auto completion
 return {
-  "hrsh7th/nvim-cmp",
+  "iguanacucumber/magazine.nvim",
+  name = "nvim-cmp",
   version = false, -- last release is way too old
   event = "InsertEnter",
   dependencies = {
