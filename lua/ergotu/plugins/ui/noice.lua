@@ -23,9 +23,12 @@ return {
           filter = {
             event = "msg_show",
             any = {
-              { find = "%d+L, %d+B" },
               { find = "; after #%d+" },
               { find = "; before #%d+" },
+              { find = "fewer lines" },
+              { find = "written" },
+              { find = "Conflict %[%d+" },
+              { find = "Col %d+" },
             },
           },
           view = "mini",
@@ -39,15 +42,15 @@ return {
             skip = true,
           },
         },
-        {
-          filter = {
-            event = "msg_show",
-            find = "written",
-          },
-          opts = {
-            skip = true,
-          },
-        },
+        { filter = { event = "msg_show", find = "search hit BOTTOM" }, skip = true },
+        { filter = { event = "msg_show", find = "search hit TOP" }, skip = true },
+        { filter = { event = "emsg", find = "E23" }, skip = true },
+        { filter = { event = "emsg", find = "E20" }, skip = true },
+        { filter = { find = "No signature help" }, skip = true },
+        { filter = { find = "E37" }, skip = true },
+        { filter = { find = "E31" }, skip = true },
+        { filter = { find = "E162" }, view = "mini" },
+        { filter = { find = "Error detected while processing BufReadPost Autocommands for" }, skip = true },
       },
       messages = {
         enabled = true,
