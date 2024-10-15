@@ -1,6 +1,6 @@
 return {
   {
-    "NeogitOrg/neogit",
+    "ergotu/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim", -- optional - Diff integration
@@ -21,6 +21,7 @@ return {
     opts = {
       graph_style = "unicode",
       kind = "split_below_all",
+      console_truncate = false,
       integrations = {
         telescope = true,
         diffview = true,
