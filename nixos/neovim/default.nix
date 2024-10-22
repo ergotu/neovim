@@ -92,7 +92,7 @@ in {
         ]
         ++ optionals cfg.withBuildTools [
           pkgs.cargo
-          pkgs.clang
+          pkgs.zig
           pkgs.cmake
           pkgs.gcc
           pkgs.gnumake

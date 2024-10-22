@@ -56,7 +56,7 @@
           pkgs.doq
           pkgs.tree-sitter
           pkgs.cargo
-          pkgs.clang
+          pkgs.zig
           pkgs.cmake
           pkgs.curl
           pkgs.fd
