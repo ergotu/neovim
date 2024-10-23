@@ -86,3 +86,8 @@ MDM
 CRD
 RBAC
 auth
+Istio
+SES
+ehplatform
+redis
+S3
