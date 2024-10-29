@@ -1,6 +1,6 @@
 return {
   {
-    "ergotu/neogit",
+    "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim", -- optional - Diff integration
@@ -16,6 +16,7 @@ return {
       { "<leader>gP", "<cmd>Neogit push<cr>", desc = "Neogit Push" },
       { "<leader>gc", "<cmd>Neogit commit<cr>", desc = "Neogit Commit" },
       { "<leader>gl", "<cmd>Neogit log<cr>", desc = "Neogit Log" },
+      { "<leader>gr", "<cmd>Neogit rebase<cr>", desc = "Neogit Rebase" },
       { "<leader>gB", "<cmd>Telescope git_branches<cr>", desc = "Show Branches" },
     },
     opts = {
