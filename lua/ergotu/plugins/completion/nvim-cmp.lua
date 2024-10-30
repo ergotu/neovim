@@ -22,7 +22,13 @@ return {
     vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
     local cmp = require("cmp")
     local defaults = require("cmp.config.default")()
+
     local auto_select = true
+    local icons = Util.config.icons.kinds
+    local widths = {
+      abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
+      menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
+    }
 
     return {
       auto_brackets = {}, -- configure any filetype to auto add brackets
@@ -78,15 +84,9 @@ return {
       }),
       formatting = {
         format = function(_, item)
-          local icons = Util.config.icons.kinds
           if icons[item.kind] then
             item.kind = icons[item.kind] .. item.kind
           end
-
-          local widths = {
-            abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
-            menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
-          }
 
           for key, width in pairs(widths) do
             if item[key] and vim.fn.strdisplaywidth(item[key]) > width then
