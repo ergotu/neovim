@@ -82,7 +82,7 @@ return {
         { name = "nvim_lsp", priority = 500 },
         { name = "calc", priority = 200 },
         { name = "path", priority = 300 },
-        { name = "rg", keyword_length = 3, priority = 400 },
+        { name = "rg", keyword_length = 3, option = { cwd = Util.root.cwd() }, priority = 400 },
       }, {
         Util.cmp.buffer_source,
       }),
