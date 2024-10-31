@@ -37,7 +37,7 @@ end
 --- Get the current working directory
 ---@return string
 function M.cwd()
-  return M.realpath(vim.loop.cwd()) or ""
+  return M.realpath(vim.uv.cwd()) or ""
 end
 
 --- Get the real path of a given path
@@ -47,7 +47,7 @@ function M.realpath(path)
   if path == "" or path == nil then
     return nil
   end
-  path = vim.loop.fs_realpath(path) or path
+  path = vim.uv.fs_realpath(path) or path
   return Util.norm(path)
 end
 
@@ -84,7 +84,7 @@ M.detectors = {
   ---@param _ number
   ---@return string
   cwd = function(_)
-    return vim.fn.getcwd()
+    return vim.uv.cwd() or ""
   end,
 
   --- Detect root using patterns
