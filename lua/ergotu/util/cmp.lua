@@ -118,6 +118,7 @@ end
 
 M.buffer_source = {
   name = "buffer",
+  priority = 500,
   option = {
     get_bufnrs = function()
       local buf = vim.api.nvim_get_current_buf()

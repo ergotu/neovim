@@ -18,7 +18,7 @@ return {
       end,
     }
     if Util.has("nvim-snippets") then
-      table.insert(opts.sources, { name = "snippets" })
+      table.insert(opts.sources, { name = "snippets", priority = 1000 })
     end
   end,
 }

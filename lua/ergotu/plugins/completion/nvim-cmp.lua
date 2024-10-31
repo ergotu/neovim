@@ -8,6 +8,8 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
+    "hrsh7th/cmp-calc",
+    "lukas-reineke/cmp-rg",
   },
   -- Not all LSP servers add brackets when completing a function.
   -- To better deal with this, we add a custom option to cmp,
@@ -77,8 +79,10 @@ return {
         end,
       }),
       sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "path" },
+        { name = "nvim_lsp", priority = 500 },
+        { name = "calc", priority = 200 },
+        { name = "path", priority = 300 },
+        { name = "rg", keyword_length = 3, priority = 400 },
       }, {
         Util.cmp.buffer_source,
       }),
