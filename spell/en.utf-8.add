@@ -91,3 +91,14 @@ SES
 ehplatform
 redis
 S3
+IaC
+k8s
+GitOps
+Grafana
+k9s
+Robusta
+MemoryDB
+MinIO
+PostgrSQL
+OSS
+Valkey
