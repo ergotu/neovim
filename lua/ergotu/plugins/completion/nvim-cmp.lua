@@ -1,6 +1,7 @@
 -- auto completion
 return {
   "iguanacucumber/magazine.nvim",
+  cond = not vim.g.use_blink,
   name = "nvim-cmp",
   version = false, -- last release is way too old
   event = "InsertEnter",

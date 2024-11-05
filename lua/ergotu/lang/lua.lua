@@ -33,6 +33,28 @@ return {
       table.insert(opts.sources, { name = "lazydev", group_index = 0 })
     end,
   },
+  -- Add lazydev source to blink
+  {
+    "saghen/blink.cmp",
+    opts = {
+      sources = {
+        completion = {
+          -- add lazydev to your completion providers
+          enabled_providers = { "lazydev" },
+        },
+        providers = {
+          lsp = {
+            -- dont show LuaLS require statements when lazydev has items
+            fallback_for = { "lazydev" },
+          },
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+          },
+        },
+      },
+    },
+  },
   {
     "stevearc/conform.nvim",
     opts = {

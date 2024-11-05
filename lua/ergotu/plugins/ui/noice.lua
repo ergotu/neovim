@@ -17,6 +17,9 @@ return {
         hover = {
           enabled = false,
         },
+        signature = {
+          enabled = not vim.g.use_blink,
+        },
       },
       routes = {
         {
