@@ -35,7 +35,13 @@ return {
       trigger = { signature_help = { enabled = true } },
       sources = {
         completion = {
-          enabled_providers = { "lsp", "path", "buffer" },
+          enabled_providers = { "lsp", "path", "buffer", "ripgrep" },
+        },
+        providers = {
+          ripgrep = {
+            module = "blink-cmp-rg",
+            name = "Ripgrep",
+          },
         },
       },
       keymap = {
