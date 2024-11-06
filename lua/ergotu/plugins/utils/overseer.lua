@@ -1,12 +1,5 @@
 return {
   {
-    "catppuccin",
-    optional = true,
-    opts = {
-      integrations = { overseer = true },
-    },
-  },
-  {
     "stevearc/overseer.nvim",
     cmd = {
       "OverseerOpen",
