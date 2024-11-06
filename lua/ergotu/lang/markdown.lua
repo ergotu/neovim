@@ -113,6 +113,7 @@ return {
       "echasnovski/mini.icons",
       "nvim-treesitter/nvim-treesitter",
     },
+    ft = { "markdown", "norg", "rmd", "org" },
     opts = {
       file_types = { "markdown", "norg", "rmd", "org" },
       preset = "lazy",
