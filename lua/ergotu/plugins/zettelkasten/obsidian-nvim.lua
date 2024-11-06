@@ -15,6 +15,8 @@ return {
     event = {
       "BufReadPre " .. vim.fn.expand("~") .. "/vaults/personal/*.md",
       "BufNewFile " .. vim.fn.expand("~") .. "/vaults/personal/*.md",
+      "BufReadPre " .. vim.fn.expand("~") .. "/vaults/aws-for-developers/*.md",
+      "BufNewFile " .. vim.fn.expand("~") .. "/vaults/aws-for-developers/*.md",
     },
     dependencies = {
       -- Required.
@@ -59,10 +61,20 @@ return {
           path = "~/vaults/personal",
         },
         {
+          name = "aws-for-developers",
+          path = "~/vaults/aws-for-developers",
+          overrides = {
+            preferred_link_style = "markdown",
+            note_id_func = function(title)
+              return title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+            end,
+            disable_frontmatter = true,
+          },
+        },
+        {
           name = "no-vault",
           path = function()
-            return assert(vim.fn.getcwd())
-            -- return assert(vim.fs.dirname(vim.api.nvim_buf_get_name(0)))
+            return assert(Util.root.cwd())
           end,
           overrides = {
             notes_subdit = vim.NIL, -- Have to use vim.NIL instead of 'nil'
@@ -83,7 +95,7 @@ return {
         local suffix = ""
         if title ~= nil then
           -- If title is given, transform it into valid file name.
-          suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+          suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", "")
         else
           -- If title is nil, just add 4 random uppercase letters to the suffix.
           for _ = 1, 4 do
