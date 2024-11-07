@@ -176,6 +176,11 @@ if vim.lsp.inlay_hint then
   Util.toggle.map("<leader>uh", Util.toggle.inlay_hints)
 end
 
+-- git
+map("n","<leader>gO", function ()
+  Snacks.gitbrowse()
+end, { desc = "Git Browse"})
+
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
