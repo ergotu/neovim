@@ -24,7 +24,14 @@ return {
       end,
     })
 
-    Util.toggle.map("<leader>ua", {
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "bigfile",
+      callback = function()
+        vim.b.minianimate_disable = true
+      end,
+    })
+
+    Snacks.toggle({
       name = "Mini Animate",
       get = function()
         return not vim.g.minianimate_disable
