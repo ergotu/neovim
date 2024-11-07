@@ -75,7 +75,7 @@ return {
 
        -- Toggles
         local config = require('gitsigns.config').config
-        Util.toggle.map("<leader>gdd", {
+        Snacks.toggle({
         name = "Deleted",
         get = function()
           return require("gitsigns.config").config.show_deleted
@@ -87,8 +87,8 @@ return {
             gs.toggle_deleted(false)
           end
         end
-        })
-        Util.toggle.map("<leader>gdL", {
+        }):map("<leader>gdd")
+        Snacks.toggle({
         name = "Line Hightlight",
         get = function()
           return config.linehl
@@ -100,8 +100,8 @@ return {
             gs.toggle_linehl(false)
           end
         end
-        })
-        Util.toggle.map("<leader>gdw", {
+        }):map("<leader>gdL")
+        Snacks.toggle({
         name = "Word Hightlight",
         get = function()
           return config.word_diff
@@ -113,7 +113,7 @@ return {
             gs.toggle_word_diff(false)
           end
         end
-        })
+        }):map("<leader>gdw")
     end,
   },
 }

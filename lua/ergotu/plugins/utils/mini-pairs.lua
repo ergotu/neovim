@@ -14,7 +14,7 @@ return {
     markdown = true,
   },
   config = function(_, opts)
-    Util.toggle.map("<leader>up", {
+    Snacks.toggle({
       name = "Mini Pairs",
       get = function()
         return not vim.g.minipairs_disable
@@ -22,7 +22,8 @@ return {
       set = function(state)
         vim.g.minipairs_disable = not state
       end,
-    })
+    }):map("<leader>up")
+
     local pairs = require("mini.pairs")
     pairs.setup(opts)
     local open = pairs.open

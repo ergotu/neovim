@@ -160,21 +160,21 @@ map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
 -- toggle options
-Util.toggle.map("<leader>uf", Util.toggle.format())
-Util.toggle.map("<leader>uF", Util.toggle.format(true))
-Util.toggle.map("<leader>us", Util.toggle("spell", { name = "Spelling" }))
-Util.toggle.map("<leader>uw", Util.toggle("wrap", { name = "Wrap" }))
-Util.toggle.map("<leader>uL", Util.toggle("relativenumber", { name = "Relative Number" }))
-Util.toggle.map("<leader>ud", Util.toggle.diagnostics)
-Util.toggle.map("<leader>ul", Util.toggle.number)
-Util.toggle.map(
-  "<leader>uc",
-  Util.toggle("conceallevel", { values = { 0, vim.o.conceallevel > 0 and vim.o.conceallevel or 2 } })
-)
-Util.toggle.map("<leader>uT", Util.toggle.treesitter)
-Util.toggle.map("<leader>ub", Util.toggle("background", { values = { "light", "dark" }, name = "Background" }))
+Util.toggle.format():map("<leader>uf")
+Util.toggle.format(true):map("<leader>uF")
+Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+Snacks.toggle.diagnostics():map("<leader>ud")
+Snacks.toggle.line_number():map("<leader>ul")
+Snacks.toggle.line_number():map("<leader>ul")
+Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+Snacks.toggle
+  .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+  :map("<leader>uc")
+Snacks.toggle.treesitter():map("<leader>uT")
+Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
 if vim.lsp.inlay_hint then
-  Util.toggle.map("<leader>uh", Util.toggle.inlay_hints)
+  Snacks.toggle.inlay_hints():map("<leader>uh")
 end
 
 -- git
@@ -212,7 +212,7 @@ map("n", "<leader>w", "<c-w>", { desc = "Windows", remap = true })
 map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
 map("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
-Util.toggle.map("<leader>wm", Util.toggle.maximize)
+Util.toggle.maximize():map("<leader>wm")
 
 -- tabs
 map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
