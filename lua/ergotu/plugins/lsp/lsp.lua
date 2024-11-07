@@ -97,8 +97,6 @@ return {
       Util.lsp.setup()
       Util.lsp.on_dynamic_capability(Util.lsp.on_attach)
 
-      Util.lsp.words.setup(opts.document_highlight)
-
       -- inlay hints
       if opts.inlay_hints.enabled then
         Util.lsp.on_supports_method("textDocument/inlayHint", function(_, buffer)
