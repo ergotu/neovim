@@ -159,8 +159,6 @@ map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
 map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
--- stylua: ignore start
-
 -- toggle options
 Util.toggle.map("<leader>uf", Util.toggle.format())
 Util.toggle.map("<leader>uF", Util.toggle.format(true))
@@ -169,7 +167,10 @@ Util.toggle.map("<leader>uw", Util.toggle("wrap", { name = "Wrap" }))
 Util.toggle.map("<leader>uL", Util.toggle("relativenumber", { name = "Relative Number" }))
 Util.toggle.map("<leader>ud", Util.toggle.diagnostics)
 Util.toggle.map("<leader>ul", Util.toggle.number)
-Util.toggle.map("<leader>uc", Util.toggle("conceallevel", { values = { 0, vim.o.conceallevel > 0 and vim.o.conceallevel or 2 } }))
+Util.toggle.map(
+  "<leader>uc",
+  Util.toggle("conceallevel", { values = { 0, vim.o.conceallevel > 0 and vim.o.conceallevel or 2 } })
+)
 Util.toggle.map("<leader>uT", Util.toggle.treesitter)
 Util.toggle.map("<leader>ub", Util.toggle("background", { values = { "light", "dark" }, name = "Background" }))
 if vim.lsp.inlay_hint then
@@ -177,9 +178,9 @@ if vim.lsp.inlay_hint then
 end
 
 -- git
-map("n","<leader>gO", function ()
+map("n", "<leader>gO", function()
   Snacks.gitbrowse()
-end, { desc = "Git Browse"})
+end, { desc = "Git Browse" })
 
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
@@ -189,11 +190,13 @@ map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 map("n", "<leader>uI", "<cmd>InspectTree<cr>", { desc = "Inspect Tree" })
 
 -- toggleterm
-local terminal = function() require("toggleterm").toggle() end
-map("n", "<leader>ft", terminal, {desc = "Terminal (Root Dir)"} )
-map("n", "<leader>fT", terminal, {desc = "Terminal (CWD)"} )
-map("n", "<c-/>", terminal, {desc = "Terminal (Root Dir)"} )
-map("n", "<c-_>", terminal, {desc = "which_key_ignore"} )
+local terminal = function()
+  require("toggleterm").toggle()
+end
+map("n", "<leader>ft", terminal, { desc = "Terminal (Root Dir)" })
+map("n", "<leader>fT", terminal, { desc = "Terminal (CWD)" })
+map("n", "<c-/>", terminal, { desc = "Terminal (Root Dir)" })
+map("n", "<c-_>", terminal, { desc = "which_key_ignore" })
 
 -- Terminal Mappings
 map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
