@@ -190,20 +190,20 @@ map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 map("n", "<leader>uI", "<cmd>InspectTree<cr>", { desc = "Inspect Tree" })
 
 -- toggleterm
-local terminal = function()
-  require("toggleterm").toggle()
-end
-map("n", "<leader>ft", terminal, { desc = "Terminal (Root Dir)" })
-map("n", "<leader>fT", terminal, { desc = "Terminal (CWD)" })
-map("n", "<c-/>", terminal, { desc = "Terminal (Root Dir)" })
-map("n", "<c-_>", terminal, { desc = "which_key_ignore" })
+map("n", "<leader>fT", function()
+  Snacks.terminal()
+end, { desc = "Terminal (cwd)" })
+map("n", "<leader>ft", function()
+  Snacks.terminal(nil, { cwd = Util.root() })
+end, { desc = "Terminal (root)" })
+map("n", "<c-/>", function()
+  Snacks.terminal(nil, { cwd = Util.root() })
+end, { desc = "Terminal (root)" })
+map("n", "<c-_>", function()
+  Snacks.terminal(nil, { cwd = Util.root() })
+end, { desc = "which_key_ignore" })
 
 -- Terminal Mappings
-map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
-map("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to Left Window" })
-map("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to Lower Window" })
-map("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to Upper Window" })
-map("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to Right Window" })
 map("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
 map("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
 
