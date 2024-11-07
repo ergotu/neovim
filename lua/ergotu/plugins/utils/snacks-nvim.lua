@@ -40,5 +40,20 @@ return {
         desc = "Dismiss All Notifications",
       },
     },
+    init = function()
+      -- Setup globals for debugging
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "VeryLazy",
+        callback = function()
+          _G.dd = function(...)
+            Snacks.debug.inspect(...)
+          end
+          _G.bt = function()
+            Snacks.debug.backtrace()
+          end
+          vim.pring = _G.dd -- Override print to use snacks for := command
+        end,
+      })
+    end,
   },
 }
