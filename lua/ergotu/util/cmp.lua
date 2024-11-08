@@ -130,8 +130,7 @@ M.buffer_source = {
   option = {
     get_bufnrs = function()
       local buf = vim.api.nvim_get_current_buf()
-      local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
-      if byte_size > vim.g.bigfile_size then
+      if vim.api.nvim_get_option_value("filetype", { buf = buf }) == "bigfile" then
         return {}
       end
       return { buf }
