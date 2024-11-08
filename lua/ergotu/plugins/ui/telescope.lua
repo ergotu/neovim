@@ -1,5 +1,9 @@
-local have_make = vim.fn.executable("make") == 1
-local have_cmake = vim.fn.executable("cmake") == 1
+local build_cmd ---@type string?
+for _, cmd in pairs({ "make", "cmake", "gmake" }) do
+  if vim.fn.executable(cmd) == 1 then
+    build_cmd = cmd
+  end
+end
 
 local function open(builtin, opts)
   opts = opts or {}
@@ -51,9 +55,9 @@ return {
       "nvim-lua/plenary.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
-        build = have_make and "make"
+        build = (build_cmd ~= "cmake") and "make"
           or "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-        enabled = have_make or have_cmake,
+        enabled = build_cmd ~= nil,
         config = function(plugin)
           Util.on_load("telescope.nvim", function()
             local ok, err = pcall(require("telescope").load_extension, "fzf")
