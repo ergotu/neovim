@@ -32,7 +32,14 @@ function M.format(component, text, hl_group)
   return component:format_hl(lualine_hl_group) .. text .. component:get_default_hl()
 end
 
----@param opts? {relative: "cwd"|"root", modified_hl: string?, directory_hl: string?, filename_hl: string?, modified_sign: string?, readonly_icon: string?, length: number?}
+---@param opts? {
+---relative: "cwd"|"root",
+---modified_hl: string?,
+---directory_hl: string?,
+---filename_hl: string?,
+---modified_sign: string?,
+---readonly_icon: string?,
+---length: number? }
 function M.pretty_path(opts)
   opts = vim.tbl_extend("force", {
     relative = "cwd",
