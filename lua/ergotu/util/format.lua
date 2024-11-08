@@ -17,6 +17,30 @@ function M.enabled(buf)
   return gaf == nil or gaf
 end
 
+---@param buf? boolean
+function M.snacks_toggle(buf)
+  return Snacks.toggle({
+    name = "Auto Format (" .. (buf and "Buffer" or "Global") .. ")",
+    get = function()
+      if not buf then
+        return vim.g.autoformat == nil or vim.g.autoformat
+      end
+      return Util.format.enabled()
+    end,
+    set = function(enable)
+      if enable == nil then
+        enable = true
+      end
+      if buf then
+        vim.b.autoformat = enable
+      else
+        vim.g.autoformat = enable
+        vim.b.autoformat = nil
+      end
+    end,
+  })
+end
+
 function M.info(buf)
   buf = buf or vim.api.nvim_get_current_buf()
   local gaf = vim.g.autoformat == nil or vim.g.autoformat
