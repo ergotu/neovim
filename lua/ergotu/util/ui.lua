@@ -34,6 +34,11 @@ local skip_check = assert(vim.uv.new_check())
 function M.foldexpr()
   local buf = vim.api.nvim_get_current_buf()
 
+  -- disable folding if there are no treesitter highlights
+  if not vim.b[buf].ts_highlight then
+    return "0"
+  end
+
   -- still in the same tick and no parser
   if M.skip_foldexpr[buf] then
     return "0"
