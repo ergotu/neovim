@@ -17,7 +17,12 @@ return {
       ---@type snacks.Config
       return {
         toggle = { map = Util.safe_keymap_set },
-        notifier = { enabled = not Util.has("noice.nvim") },
+        statuscolumn = {
+          folds = {
+            open = true,
+            git_hl = true,
+          },
+        },
         terminal = {
           win = {
             height = 0.2,
