@@ -86,7 +86,11 @@ return {
       { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       { "<leader><space>", telescope("find_files"), desc = "Find Files (Root Dir)" },
       -- find
-      { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
+      {
+        "<leader>fb",
+        "<cmd>Telescope buffers sort_mru=true sort_lastused=true ignore_current_buffer=true<cr>",
+        desc = "Buffers",
+      },
       {
         "<leader>fc",
         telescope("find_files", { cwd = vim.fn.stdpath("config") }),
