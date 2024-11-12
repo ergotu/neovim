@@ -58,6 +58,7 @@ function M.pretty_path(opts)
       return ""
     end
 
+    path = Util.norm(path)
     local root = Util.root.get({ normalize = true })
     local cwd = Util.root.cwd()
 
