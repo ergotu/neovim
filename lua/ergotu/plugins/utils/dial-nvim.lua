@@ -117,6 +117,9 @@ return {
           ordinal_numbers,
           weekdays,
           months,
+          capitalized_boolean,
+          augend.constant.alias.bool,
+          logical_alias,
         },
         typescript = {
           augend.integer.alias.decimal, -- nonnegative and negative decimal number
