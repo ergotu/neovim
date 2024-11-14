@@ -1,54 +1,23 @@
 ---@class ergotu.util.ui
 local M = {}
 
+function M.foldexpr()
+  local buf = vim.api.nvim_get_current_buf()
+  if vim.b[buf].ts_folds == nil then
+    -- If we dont have a filetype, don't check for treesitter
+    if vim.bo[buf].filetype == "" then
+      return "0"
+    end
+    vim.b[buf].ts_folds = pcall(vim.treesitter.get_parser, buf)
+  end
+  return vim.b[buf].ts_folds and vim.treesitter.foldexpr()
+end
+
 ---@return {fg?:string}?
 function M.fg(name)
   local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
   local fg = hl and hl.fg or hl.foreground
   return fg and { fg = string.format("#%06x", fg) } or nil
-end
-
-M.skip_foldexpr = {} ---@type table<number,boolean>
-local skip_check = assert(vim.uv.new_check())
-
-function M.foldexpr()
-  local buf = vim.api.nvim_get_current_buf()
-
-  -- disable folding if there are no treesitter highlights
-  if not vim.b[buf].ts_highlight then
-    return "0"
-  end
-
-  -- still in the same tick and no parser
-  if M.skip_foldexpr[buf] then
-    return "0"
-  end
-
-  -- don't use treesitter folds for non-file buffers
-  if vim.bo[buf].buftype ~= "" then
-    return "0"
-  end
-
-  -- as long as we don't have a filetype, don't bother
-  -- checking if treesitter is available (it won't)
-  if vim.bo[buf].filetype == "" then
-    return "0"
-  end
-
-  local ok = pcall(vim.treesitter.get_parser, buf)
-
-  if ok then
-    return vim.treesitter.foldexpr()
-  end
-
-  -- no parser available, so mark it as skip
-  -- in the next tick, all skip marks will be reset
-  M.skip_foldexpr[buf] = true
-  skip_check:start(function()
-    M.skip_foldexpr = {}
-    skip_check:stop()
-  end)
-  return "0"
 end
 
 function M.maximize()
