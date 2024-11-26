@@ -23,7 +23,7 @@ return {
         filetypes = {
           "help",
           "alpha",
-          "dashboard",
+          "snacks_dashboard",
           "neo-tree",
           "Trouble",
           "trouble",

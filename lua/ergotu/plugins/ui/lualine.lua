@@ -27,7 +27,7 @@ return {
         globalstatus = vim.o.laststatus == 3,
         disabled_filetypes = {
           statusline = {
-            "dashboard",
+            "snacks_dashboard",
             "neo-tree",
             "trouble",
           },

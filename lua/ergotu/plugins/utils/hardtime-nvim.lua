@@ -6,6 +6,7 @@ return {
     opts = {
       disable_mouse = false,
       disabled_filetypes = {
+        "snacks_dashboard",
         "qf",
         "netrw",
         "neo-tree",
