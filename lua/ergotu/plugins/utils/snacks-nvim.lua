@@ -16,6 +16,10 @@ return {
     opts = function()
       ---@type snacks.Config
       return {
+        notifier = { enabled = true },
+        quickfile = { enabled = true },
+        bigfile = { enabled = true },
+        words = { enabled = true },
         toggle = { map = Util.safe_keymap_set },
         statuscolumn = {
           folds = {
