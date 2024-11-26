@@ -21,6 +21,19 @@ return {
         autocomplete = {
           border = vim.g.floating_window_options.border,
           winblend = vim.g.floating_window_options.winblend,
+          draw = {
+            gap = 1,
+            padding = { 1, 0 },
+            columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+            components = {
+              kind_icon = {
+                text = function(ctx)
+                  return ctx.kind_icon .. ctx.icon_gap
+                end,
+                width = { fill = true },
+              },
+            },
+          },
         },
         documentation = {
           auto_show = true,
