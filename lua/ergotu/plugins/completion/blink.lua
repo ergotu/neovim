@@ -5,7 +5,12 @@ return {
     version = "*",
     opts_extend = { "sources.completion.enabled_providers" },
     dependencies = {
-      -- { "saghen/blink.compat", opts = {} },
+      {
+        "saghen/blink.compat",
+        optional = true,
+        opts = {},
+        version = "*",
+      },
     },
     event = "InsertEnter",
     ---@module 'blink.cmp'
@@ -14,7 +19,6 @@ return {
       nerd_font_variant = "mono",
       windows = {
         autocomplete = {
-          draw = "reversed",
           border = vim.g.floating_window_options.border,
           winblend = vim.g.floating_window_options.winblend,
         },
@@ -66,6 +70,22 @@ return {
         ["<Down>"] = { "select_next", "fallback" },
       },
     },
+    ---@param opts blink.cmp.Config | { sources: { compat: string[] } }
+    config = function(_, opts)
+      -- setup compat sources
+      local enabled = opts.sources.completion.enabled_providers
+      for _, source in ipairs(opts.sources.compat or {}) do
+        opts.sources.providers[source] = vim.tbl_deep_extend(
+          "force",
+          { name = source, module = "blink.compat.source" },
+          opts.sources.providers[source] or {}
+        )
+        if type(enabled) == "table" and not vim.tbl_contains(enabled, source) then
+          table.insert(enabled, source)
+        end
+      end
+      require("blink.cmp").setup(opts)
+    end,
   },
   -- add icons
   {
