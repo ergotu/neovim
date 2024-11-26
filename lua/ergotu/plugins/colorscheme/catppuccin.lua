@@ -78,6 +78,7 @@ return {
         overseer = true,
         rainbow_delimiters = true,
         semantic_tokens = true,
+        snacks = true,
         telescope = true,
         treesitter = true,
         treesitter_context = true,
