@@ -1,5 +1,6 @@
 return {
-  { "Hoffs/omnisharp-extended-lsp.nvim", lazy = true },
+  { "Decodetalkers/csharpls-extended-lsp.nvim", lazy = true },
+
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "c_sharp" } },
@@ -21,30 +22,21 @@ return {
   },
   {
     "williamboman/mason.nvim",
-    opts = { ensure_installed = { "csharpier", "netcoredbg" } },
+    opts = { ensure_installed = { "csharpier", "netcoredbg", "csharp-language-server" } },
   },
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        omnisharp = {
+        csharp_ls = {
           handlers = {
             ["textDocument/definition"] = function(...)
-              return require("omnisharp_extended").handler(...)
+              return require("csharpls_extended").handler(...)
+            end,
+            ["textDocument/typeDefinition"] = function(...)
+              return require("csharpls_extended").handler(...)
             end,
           },
-          keys = {
-            {
-              "gd",
-              function()
-                require("omnisharp_extended").telescope_lsp_definitions()
-              end,
-              desc = "Goto Definition",
-            },
-          },
-          enable_roslyn_analyzers = true,
-          organize_imports_on_format = true,
-          enable_import_completion = true,
         },
       },
     },
@@ -59,9 +51,6 @@ return {
           type = "executable",
           command = vim.fn.exepath("netcoredbg"),
           args = { "--interpreter=vscode" },
-          options = {
-            detached = false,
-          },
         }
       end
       for _, lang in ipairs({ "cs", "fsharp", "vb" }) do
