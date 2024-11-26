@@ -181,9 +181,16 @@ if vim.lsp.inlay_hint then
 end
 
 -- git
-map("n", "<leader>gO", function()
+map({ "n", "x" }, "<leader>gO", function()
   Snacks.gitbrowse()
-end, { desc = "Git Browse" })
+end, { desc = "Git Browse (open)" })
+map({ "n", "x" }, "<leader>gY", function()
+  Snacks.gitbrowse({
+    open = function(url)
+      vim.fn.setreg("+", url)
+    end,
+  })
+end, { desc = "Git Browse (copy)" })
 
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
