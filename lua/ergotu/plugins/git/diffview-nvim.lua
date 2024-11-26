@@ -43,7 +43,7 @@ return {
       {
         "<leader>gdM",
         function()
-          vim.cmd("DiffviewOpen HEAD..origin/" .. get_default_branch_name())
+          vim.cmd("DiffviewOpen origin/" .. get_default_branch_name() .. "..HEAD")
         end,
         desc = "Diff against origin/master",
       },

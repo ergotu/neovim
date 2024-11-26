@@ -92,7 +92,7 @@ M.detectors = {
   ---@param patterns string[]
   ---@return string|nil
   pattern = function(buf, patterns)
-    local path = vim.fn.expand("%:p:h", buf)
+    local path = M.bufpath(buf) or vim.uv.cwd()
     while path and path ~= "/" do
       for _, pattern in ipairs(patterns) do
         if exists(vim.fn.join({ path, pattern }, "/")) then

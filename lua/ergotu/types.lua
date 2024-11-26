@@ -1,6 +1,6 @@
 ---@meta
 
----@class LazyVimGlobals
+---@class UtilGlobals
 vim.g = {}
 
 _G.Util = require("ergotu.util")

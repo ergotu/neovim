@@ -123,6 +123,7 @@ function M.get_kind_filter(buf)
     return
   end
   if type(M.kind_filter[ft]) == "table" then
+    ---@diagnostic disable-next-line: return-type-mismatch
     return M.kind_filter[ft]
   end
   ---@diagnostic disable-next-line: return-type-mismatch
