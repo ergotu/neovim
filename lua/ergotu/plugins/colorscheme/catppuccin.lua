@@ -29,17 +29,11 @@ return {
         flash = true,
         grug_far = true,
         gitsigns = true,
-        headlines = true,
-        illuminate = {
-          enabled = true,
-          lsp = false,
-        },
         indent_blankline = {
           enabled = true,
           scope_color = "mauve",
           colored_indent_levels = true,
         },
-        leap = true,
         lsp_trouble = true,
         mason = true,
         markdown = true,
