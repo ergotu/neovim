@@ -13,15 +13,17 @@ return {
       },
     },
     event = "InsertEnter",
+
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
       nerd_font_variant = "mono",
-      windows = {
-        autocomplete = {
+      completion = {
+        menu = {
           border = vim.g.floating_window_options.border,
           winblend = vim.g.floating_window_options.winblend,
           draw = {
+            treesitter = true,
             gap = 1,
             padding = { 1, 0 },
             columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
@@ -60,6 +62,7 @@ return {
       },
       sources = {
         completion = {
+          compat = {},
           enabled_providers = { "lsp", "path", "buffer" },
         },
       },
@@ -104,7 +107,8 @@ return {
   {
     "saghen/blink.cmp",
     opts = function(_, opts)
-      opts.kind_icons = Util.config.icons.kinds
+      opts.appearance = opts.appearance or {}
+      opts.appearance.kind_icons = Util.config.icons.kinds
     end,
   },
 }
