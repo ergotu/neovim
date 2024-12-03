@@ -47,6 +47,13 @@ return {
         end,
         desc = "Diff against origin/master",
       },
+      {
+        "<leader>gD",
+        function()
+          vim.cmd("DiffviewOpen")
+        end,
+        desc = "Open Diffview",
+      },
     },
     cmd = "DiffviewOpen",
     opts = function()
