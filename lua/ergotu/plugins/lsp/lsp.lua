@@ -1,3 +1,4 @@
+local methods = vim.lsp.protocol.Methods
 return {
   -- lspconfig
   {
@@ -55,6 +56,9 @@ return {
         document_highlight = {
           enabled = true,
         },
+        folding = {
+          enabled = vim.fn.has("nvim-0.11"),
+        },
         -- add any global capabilities here
         capabilities = {
           workspace = {
@@ -95,12 +99,19 @@ return {
         Util.lsp.lightbulb.attach_lightbulb(buffer, client.id)
       end)
 
+      -- set up border for hover window
+      Util.lsp.on_attach(function(client, buffer)
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+          border = vim.g.floating_window_options.border,
+        })
+      end)
+
       Util.lsp.setup()
       Util.lsp.on_dynamic_capability(Util.lsp.on_attach)
 
       -- inlay hints
       if opts.inlay_hints.enabled then
-        Util.lsp.on_supports_method("textDocument/inlayHint", function(_, buffer)
+        Util.lsp.on_supports_method(methods.textDocument_inlayHint, function(_, buffer)
           if
             vim.api.nvim_buf_is_valid(buffer)
             and vim.bo[buffer].buftype == ""
@@ -113,12 +124,21 @@ return {
 
       -- code lens
       if opts.codelens.enabled and vim.lsp.codelens then
-        Util.lsp.on_supports_method("textDocument/codeLens", function(_, buffer)
+        Util.lsp.on_supports_method(methods.textDocument_codeLens, function(_, buffer)
           vim.lsp.codelens.refresh()
           vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
             buffer = buffer,
             callback = vim.lsp.codelens.refresh,
           })
+        end)
+      end
+
+      -- LSP folding
+      if opts.folding.enabled then
+        Util.lsp.on_attach(function(_, _)
+          Util.lsp.on_supports_method(methods.textDocument_foldingRange, function(_, _)
+            vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+          end)
         end)
       end
 
