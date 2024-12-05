@@ -136,6 +136,8 @@
             # Nix LSP and formatter
             pkgs.nixd
             pkgs.alejandra
+
+            pkgs.cmake
           ];
         };
       };
