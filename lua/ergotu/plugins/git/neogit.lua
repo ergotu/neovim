@@ -22,7 +22,6 @@ return {
     opts = {
       graph_style = "unicode",
       kind = "split_below_all",
-      console_truncate = false,
       integrations = {
         telescope = true,
         diffview = true,
