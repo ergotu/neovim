@@ -258,3 +258,6 @@ end, { noremap = true, silent = true })
 vim.keymap.set("n", "dd", function()
   handle_yank_delete("dd")
 end, { noremap = true, silent = true })
+
+-- duplicate line and comment out the original
+map("n", "yc", "yygccp")
