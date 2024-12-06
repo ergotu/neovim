@@ -252,10 +252,10 @@ local function handle_yank_delete(key)
   end
 end
 
-vim.keymap.set("n", "yy", function()
+map("n", "yy", function()
   handle_yank_delete("yy")
 end, { noremap = true, silent = true })
-vim.keymap.set("n", "dd", function()
+map("n", "dd", function()
   handle_yank_delete("dd")
 end, { noremap = true, silent = true })
 
