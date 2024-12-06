@@ -137,6 +137,7 @@
             pkgs.nixd
             pkgs.alejandra
 
+            pkgs.gcc
             pkgs.cmake
           ];
         };
