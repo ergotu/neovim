@@ -6,6 +6,9 @@ return {
     event = "VeryLazy",
     opts = {
       lsp = {
+        progress = {
+          enabled = false,
+        },
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
@@ -57,13 +60,9 @@ return {
       },
       messages = {
         enabled = true,
-        view = "mini",
-        view_warn = "mini",
-        view_error = "notify",
       },
       notify = {
         enabled = true,
-        view = "mini",
       },
       views = {
         hover = {
