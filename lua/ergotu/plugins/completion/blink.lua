@@ -20,6 +20,11 @@ return {
     opts = {
       nerd_font_variant = "mono",
       completion = {
+        accept = {
+          auto_brackets = {
+            enabled = true,
+          },
+        },
         menu = {
           border = vim.g.floating_window_options.border,
           winblend = vim.g.floating_window_options.winblend,
@@ -48,11 +53,6 @@ return {
           winblend = vim.g.floating_window_options.winblend,
         },
         ghost_text = {
-          enabled = true,
-        },
-      },
-      accept = {
-        auto_brackets = {
           enabled = true,
         },
       },
