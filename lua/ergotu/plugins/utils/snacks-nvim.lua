@@ -15,6 +15,10 @@ return {
     lazy = false,
     opts = function()
       ---@type snacks.Config
+      -- Toggle the profiler
+      Snacks.toggle.profiler():map("<leader>pp")
+      -- Toggle the profiler highlights
+      Snacks.toggle.profiler_highlights():map("<leader>ph")
       return {
         notifier = { enabled = true },
         quickfile = { enabled = true },
@@ -111,6 +115,13 @@ return {
         end,
         desc = "Dismiss All Notifications",
       },
+      {
+        "<leader>ps",
+        function()
+          Snacks.profiler.scratch()
+        end,
+        desc = "Profiler Scratch Bufer",
+      },
     },
     config = function(_, opts)
       local notify = vim.notify
@@ -136,6 +147,7 @@ return {
         end,
       })
 
+      -- Fancy LspProgress notifications
       ---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
       local progress = vim.defaulttable()
       vim.api.nvim_create_autocmd("LspProgress", {
@@ -179,6 +191,12 @@ return {
           })
         end,
       })
+    end,
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = function(_, opts)
+      table.insert(opts.sections.lualine_x, Snacks.profiler.status())
     end,
   },
 }
