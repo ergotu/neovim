@@ -1,3 +1,18 @@
+## 1.2.0 (2024-12-11)
+
+### Feat
+
+- **snacks**: add profiler
+- **snacks**: have snacks deal with LspProgress notifications
+- **keymaps**: add keymap to duplicate line and comment out first
+
+### Fix
+
+- **neogit**: disable foldexpr when ft is neogitconsole
+- **dot**: kitty ft with bash treesitter
+- **treesitter**: change incremental_selection keymap
+- **keymaps**: move to the safe_keymap_set function
+
 ## 1.1.0 (2024-12-06)
 
 ### Feat
