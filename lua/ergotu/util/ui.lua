@@ -8,6 +8,9 @@ function M.foldexpr()
     if vim.bo[buf].filetype == "" then
       return "0"
     end
+    if vim.b[buf].filetype == "neogitconsole" then
+      return "0"
+    end
     vim.b[buf].ts_folds = pcall(vim.treesitter.get_parser, buf)
   end
   return vim.b[buf].ts_folds and vim.treesitter.foldexpr()
