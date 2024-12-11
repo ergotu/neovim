@@ -10,7 +10,6 @@ return {
     },
     cmd = "Neogit",
     keys = {
-      { "<leader>g<Enter>", "<cmd>Neogit<cr>", desc = "Neogit" },
       { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
       { "<leader>gp", "<cmd>Neogit pull<cr>", desc = "Neogit Pull" },
       { "<leader>gP", "<cmd>Neogit push<cr>", desc = "Neogit Push" },

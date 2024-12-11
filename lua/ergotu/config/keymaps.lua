@@ -184,6 +184,13 @@ if vim.lsp.inlay_hint then
   Snacks.toggle.inlay_hints():map("<leader>uh")
 end
 
+-- lazygit
+if vim.fn.executable("lazygit") == 1 then
+  map("n", "<leader>g<Enter>", function()
+    Snacks.lazygit()
+  end, { desc = "Lazygit (Root Dir)" })
+end
+
 -- git
 map({ "n", "x" }, "<leader>gO", function()
   Snacks.gitbrowse()
