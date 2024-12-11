@@ -5,24 +5,6 @@ Util.on_very_lazy(function()
 end)
 return {
   {
-    "folke/zen-mode.nvim",
-    keys = {
-      {
-        "<leader>uz",
-        function()
-          require("zen-mode").toggle()
-        end,
-        desc = "Toggle Zen Mode",
-      },
-    },
-    opts = {
-      window = {
-        background = 0.75,
-        width = 0.5,
-      },
-    },
-  },
-  {
     "stevearc/conform.nvim",
     optional = true,
     opts = {

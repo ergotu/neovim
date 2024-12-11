@@ -23,6 +23,13 @@ return {
         notifier = { enabled = true },
         quickfile = { enabled = true },
         bigfile = { enabled = true },
+        indent = {
+          enabled = true,
+          char = "▎",
+          scope = {
+            underlined = true,
+          },
+        },
         words = { enabled = true },
         toggle = { map = Util.safe_keymap_set },
         dashboard = {
@@ -84,6 +91,11 @@ return {
             },
           },
         },
+        zen = {
+          win = {
+            width = 0.6,
+          },
+        },
       }
     end,
     keys = {
@@ -121,6 +133,13 @@ return {
           Snacks.profiler.scratch()
         end,
         desc = "Profiler Scratch Bufer",
+      },
+      {
+        "<leader>uz",
+        function()
+          Snacks.zen()
+        end,
+        desc = "Toggle Zen Mode",
       },
     },
     config = function(_, opts)
