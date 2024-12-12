@@ -27,9 +27,17 @@ return {
           enabled = true,
           char = "▎",
           scope = {
-            underlined = true,
+            underline = true,
+          },
+          chunk = {
+            enabled = true,
+            char = {
+              corner_top = "╭",
+              corner_bottom = "╰",
+            },
           },
         },
+        scope = { enabled = true },
         words = { enabled = true },
         toggle = { map = Util.safe_keymap_set },
         dashboard = {
