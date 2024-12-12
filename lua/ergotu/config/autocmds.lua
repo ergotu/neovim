@@ -139,3 +139,9 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
+
+vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
+  group = augroup("wshada_on_buf_delete"),
+  desc = "Write to ShaDa when deleting/wiping out buffers",
+  command = "wshada",
+})
