@@ -57,7 +57,7 @@ return {
           enabled = true,
         },
         folding = {
-          enabled = vim.fn.has("nvim-0.11"),
+          enabled = false,
         },
         -- add any global capabilities here
         capabilities = {
@@ -134,7 +134,7 @@ return {
       end
 
       -- LSP folding
-      if opts.folding.enabled then
+      if opts.folding.enabled and vim.fn.has("nvim-0.11") then
         Util.lsp.on_attach(function(_, _)
           Util.lsp.on_supports_method(methods.textDocument_foldingRange, function(_, _)
             vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
