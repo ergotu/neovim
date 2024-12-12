@@ -49,7 +49,7 @@ require("lazy").setup({
     { import = "ergotu.plugins.treesitter" },
     { import = "ergotu.plugins.ui" },
     { import = "ergotu.plugins.utils" },
-    { import = "ergotu.plugins.ai" },
+    -- { import = "ergotu.plugins.ai" },
     { import = "ergotu.plugins.zettelkasten" },
     { import = "ergotu.lang" },
   },
