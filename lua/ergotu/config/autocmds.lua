@@ -4,6 +4,25 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("util_nvim_" .. name, { clear = true })
 end
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("treesitter_folding"),
+  desc = "Enable Treesitter Folding",
+  callback = function(args)
+    local buf = args.buf
+    local ft = vim.bo[buf].filetype
+
+    if ft ~= "bigfile" and ft ~= "neogitconsole" and pcall(vim.treesitter.start, buf) then
+      vim.api.nvim_buf_call(buf, function()
+        vim.wo[0][0].foldmethod = "expr"
+        vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.cmd.normal("zx")
+      end)
+    end
+
+    vim.wo[0][0].foldmethod = "indent"
+  end,
+})
+
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("checktime"),

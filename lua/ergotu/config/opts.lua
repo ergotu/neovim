@@ -48,8 +48,8 @@ opt.fillchars = {
   eob = " ",
 }
 opt.foldlevel = 99
-opt.foldexpr = "v:lua.require'ergotu.util'.ui.foldexpr()"
-opt.foldmethod = "expr"
+-- opt.foldexpr = "v:lua.require'ergotu.util'.ui.foldexpr()"
+-- opt.foldmethod = "expr"
 opt.foldtext = ""
 opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 opt.formatoptions = "jcroqlnt" -- tcqj
