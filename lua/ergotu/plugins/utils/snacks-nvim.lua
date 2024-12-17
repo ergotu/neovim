@@ -16,9 +16,9 @@ return {
     opts = function()
       ---@type snacks.Config
       -- Toggle the profiler
-      Snacks.toggle.profiler():map("<leader>pp")
+      Snacks.toggle.profiler():map("<leader>dpp")
       -- Toggle the profiler highlights
-      Snacks.toggle.profiler_highlights():map("<leader>ph")
+      Snacks.toggle.profiler_highlights():map("<leader>dph")
       return {
         notifier = { enabled = true },
         quickfile = { enabled = true },
@@ -120,6 +120,13 @@ return {
           Snacks.scratch.select()
         end,
         desc = "Select Scratch Buffer",
+      },
+      {
+        "<leader>dps",
+        function()
+          Snacks.profiler.scratch()
+        end,
+        desc = "Profiler Scratch Buffer",
       },
       {
         "<leader>n",
