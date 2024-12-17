@@ -52,10 +52,6 @@ return {
         codelens = {
           enabled = true,
         },
-        -- Enable lsp cursor word highlighting
-        document_highlight = {
-          enabled = true,
-        },
         folding = {
           enabled = false,
         },
