@@ -19,6 +19,11 @@ return {
     ---@type blink.cmp.Config
     opts = {
       nerd_font_variant = "mono",
+      snippets = {
+        expand = function(snippet, _)
+          return Util.cmp.expand(snippet)
+        end,
+      },
       completion = {
         accept = {
           auto_brackets = {
