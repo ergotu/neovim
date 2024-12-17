@@ -118,6 +118,10 @@
               commitizen.enable = true;
             };
           };
+          enterShell = ''
+            export PATH=${packagesPath}:$PATH
+          '';
+          env.NIX_PATH = "nixpkgs=${inputs.nixpkgs}";
 
           languages = {
             nix = {
@@ -127,19 +131,13 @@
             lua.enable = true;
           };
 
-          packages = [
-            # LUA LSP and tools
-            pkgs.lua-language-server
-            pkgs.stylua
-            pkgs.selene
-
-            # Nix LSP and formatter
-            pkgs.nixd
-            pkgs.alejandra
-
-            pkgs.gcc
-            pkgs.cmake
-          ];
+          packages =
+            extraPackages
+            ++ [
+              # Nix LSP and formatter
+              pkgs.nixd
+              pkgs.alejandra
+            ];
         };
       };
     };
