@@ -75,8 +75,13 @@ local function split_line()
 end
 map("n", "gS", split_line, { desc = "Split Line" })
 
--- Clear search with <esc>
-map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
+-- Clear search and stop snippet with esc
+Snacks.util.on_key("<esc>", function()
+  vim.cmd("cmd")
+  if vim.snippet then
+    vim.snippet.stop()
+  end
+end)
 
 -- Clear search, diff update and redraw
 -- taken from runtime/lua/_editor.lua
