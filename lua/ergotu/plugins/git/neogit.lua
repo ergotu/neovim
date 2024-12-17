@@ -19,6 +19,7 @@ return {
     opts = {
       graph_style = "unicode",
       kind = "split_below_all",
+      auto_show_console = false,
       integrations = {
         telescope = true,
         diffview = true,
