@@ -68,6 +68,7 @@ return {
           { Util.lualine.pretty_path() },
         },
         lualine_x = {
+          Snacks.profiler.status(),
           -- stylua: ignore
           {
             function() return require("noice").api.status.mode.get() end,
