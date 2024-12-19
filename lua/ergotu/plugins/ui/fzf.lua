@@ -188,6 +188,7 @@ return {
     end,
     init = function()
       Util.on_very_lazy(function()
+        ---@diagnostic disable-next-line: duplicate-set-field
         vim.ui.select = function(...)
           require("lazy").load({ plugins = { "fzf-lua" } })
           local opts = Util.opts("fzf-lua") or {}
