@@ -25,6 +25,7 @@ vim.g.trouble_lualine = false
 
 vim.g.use_markview = false
 vim.g.use_blink = true
+vim.g.lazyvim_blink_main = true
 
 vim.g.prettier_needs_config = true
 
