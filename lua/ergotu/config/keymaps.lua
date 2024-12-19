@@ -77,7 +77,7 @@ map("n", "gS", split_line, { desc = "Split Line" })
 
 -- Clear search and stop snippet with esc
 Snacks.util.on_key("<esc>", function()
-  vim.cmd("cmd")
+  vim.cmd("noh")
   if vim.snippet then
     vim.snippet.stop()
   end
