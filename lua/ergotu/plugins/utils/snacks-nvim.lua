@@ -102,11 +102,6 @@ return {
             },
           },
         },
-        zen = {
-          win = {
-            width = 0.6,
-          },
-        },
       }
     end,
     keys = {
@@ -155,7 +150,8 @@ return {
       {
         "<leader>uz",
         function()
-          Snacks.zen()
+          ---@diagnostic disable-next-line: missing-fields
+          Snacks.zen({ win = { width = 0.65 } })
         end,
         desc = "Toggle Zen Mode",
       },
