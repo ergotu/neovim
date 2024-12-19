@@ -13,7 +13,7 @@ return {
       { "<leader>gc", "<cmd>Neogit commit<cr>", desc = "Neogit Commit" },
       { "<leader>gl", "<cmd>Neogit log<cr>", desc = "Neogit Log" },
       { "<leader>gr", "<cmd>Neogit rebase<cr>", desc = "Neogit Rebase" },
-      { "<leader>gB", "<cmd>Telescope git_branches<cr>", desc = "Show Branches" },
+      { "<leader>gb", "<cmd>Neogit branch<cr>", desc = "Neogit Branch" },
     },
     opts = {
       graph_style = "unicode",
