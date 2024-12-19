@@ -38,24 +38,19 @@ return {
     "saghen/blink.cmp",
     opts = {
       sources = {
-        completion = {
-          -- add lazydev to your completion providers
-          enabled_providers = { "lazydev" },
-        },
+        -- add lazydev to your completion providers
+        default = { "lazydev" },
         providers = {
-          lsp = {
-            -- dont show LuaLS require statements when lazydev has items
-            fallback_for = { "lazydev" },
-          },
           lazydev = {
             name = "LazyDev",
             module = "lazydev.integrations.blink",
-            score_offset = 100, -- higher prioty than lsp
+            score_offset = 100, -- show at a higher priority than lsp
           },
         },
       },
     },
   },
+
   {
     "stevearc/conform.nvim",
     opts = {
