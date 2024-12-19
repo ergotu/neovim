@@ -14,11 +14,12 @@ return {
     priority = 1000,
     lazy = false,
     opts = function()
-      ---@type snacks.Config
       -- Toggle the profiler
       Snacks.toggle.profiler():map("<leader>dpp")
       -- Toggle the profiler highlights
       Snacks.toggle.profiler_highlights():map("<leader>dph")
+
+      ---@type snacks.Config
       return {
         notifier = { enabled = true },
         quickfile = { enabled = true },
@@ -90,6 +91,7 @@ return {
           },
         },
         terminal = {
+          ---@diagnostic disable-next-line: missing-fields
           win = {
             height = 0.2,
             keys = {
