@@ -1,3 +1,38 @@
+## 1.3.0 (2024-12-19)
+
+### Feat
+
+- **snacks**: use snacks for maximize
+- **lualine**: add snacks profiler status
+- **git**: change keymaps for branch/blame
+- **blink**: change blink config to work on main
+- **ui**: switch picker to fzf-lua
+- **snacks**: add debugger keymaps
+- **keymap**: allow stopping snippet with esc
+- add health check
+- **blink**: increase lazydev score
+- **autocmds**: add autocmd to set up folding
+- **autocmds**: write to ShaDa on buffer delete
+- **snacks**: replace ibl and indentscope for the snacks version
+- **keymaps**: add keymap to open lazygit
+- **zen**: replace zen-mode.nvim with snacks zen mode
+
+### Fix
+
+- **blink**: only override color symbol kind
+- **fzf**: fix git commits keymap
+- **keymaps**: cmd -> noh
+- **lang/lua**: increase score for lazydev
+- **refactoring**: explicitly pass empty opts
+- **neogit**: disable auto_show_console
+- **blink**: use vim.snippet fix
+- **autocmds**: fix the treesitter folding autocmd
+- **lsp**: actually check for nvim 11 for lsp folding
+
+### Refactor
+
+- **util.ui**: add comments and use local var
+
 ## 1.2.0 (2024-12-11)
 
 ### Feat
