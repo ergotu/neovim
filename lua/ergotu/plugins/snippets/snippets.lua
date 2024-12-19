@@ -32,9 +32,7 @@ return {
     ---@type blink.cmp.Config
     opts = {
       sources = {
-        completion = {
-          enabled_providers = { "snippets" },
-        },
+        default = { "snippets" },
       },
     },
   },
