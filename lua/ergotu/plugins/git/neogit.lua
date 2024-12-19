@@ -4,7 +4,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim",
-      "nvim-telescope/telescope.nvim",
     },
     cmd = "Neogit",
     keys = {
@@ -21,8 +20,10 @@ return {
       kind = "split_below_all",
       auto_show_console = false,
       integrations = {
-        telescope = true,
-        diffview = true,
+        telescope = Util.has("telescope.nvim"),
+        fzf_lua = Util.has("fzf-lua"),
+        mini_pick = Util.has("mini.pick"),
+        diffview = Util.has("diffview.nvim"),
       },
     },
   },

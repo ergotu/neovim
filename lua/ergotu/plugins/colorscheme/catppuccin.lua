@@ -27,6 +27,7 @@ return {
         blink_cmp = true,
         cmp = true,
         flash = true,
+        fzf = true,
         grug_far = true,
         gitsigns = true,
         indent_blankline = {

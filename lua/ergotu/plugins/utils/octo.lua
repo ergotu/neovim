@@ -34,6 +34,13 @@ return {
     "pwntester/octo.nvim",
     opts = function(_, opts)
       vim.treesitter.language.register("markdown", "octo")
+      if Util.has("telescope.nvim") then
+        opts.picker = "telescope"
+      elseif Util.has("fzf-lua") then
+        opts.picker = "fzf-lua"
+      else
+        Util.error("`octo.nvim` requires `telescope.nvim` or `fzf-lua`")
+      end
 
       -- Keep some empty windows in sessions
       vim.api.nvim_create_autocmd("ExitPre", {
