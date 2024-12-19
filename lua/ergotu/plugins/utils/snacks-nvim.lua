@@ -28,6 +28,7 @@ return {
           char = "▎",
           scope = {
             underline = true,
+            char = "▎",
           },
           chunk = {
             enabled = true,
