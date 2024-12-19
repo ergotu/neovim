@@ -2,8 +2,6 @@
 vim.g.nix = vim.uv.fs_stat("/etc/NIXOS") and true or false
 
 if vim.env.PROF then
-  -- example for lazy.nvim
-  -- change this to the correct path for your plugin manager
   local snacks = vim.fn.stdpath("data") .. "/lazy/snacks.nvim"
   vim.opt.rtp:append(snacks)
   ---@diagnostic disable-next-line: missing-fields
