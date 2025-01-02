@@ -29,6 +29,12 @@ vim.g.lazyvim_blink_main = true
 
 vim.g.prettier_needs_config = true
 
+-- for detecting the LSP root
+vim.g.root_lsp_ignore = { "copilot" }
+
+-- Filetypes to ignore LSP keymaps
+vim.g.keymaps_lsp_ignore_ft = {}
+
 local opt = vim.opt
 
 opt.autowrite = true -- Enable auto write
