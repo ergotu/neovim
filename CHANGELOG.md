@@ -1,3 +1,10 @@
+## 2.1.0 (2025-01-02)
+
+### Feat
+
+- add image support
+- **keymaps**: add extra toggles for snacks features
+
 ## 2.0.0 (2024-12-19)
 
 ### Feat
