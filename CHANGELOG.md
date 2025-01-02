@@ -1,3 +1,13 @@
+## 2.2.0 (2025-01-02)
+
+### Feat
+
+- **lualine**: add fzf extensions
+
+### Fix
+
+- **blink**: remove compat
+
 ## 2.1.0 (2025-01-02)
 
 ### Feat
