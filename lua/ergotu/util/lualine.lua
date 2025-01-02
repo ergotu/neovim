@@ -62,9 +62,17 @@ function M.pretty_path(opts)
     local root = Util.root.get({ normalize = true })
     local cwd = Util.root.cwd()
 
-    if opts.relative == "cwd" and path:find(cwd, 1, true) == 1 then
+    local norm_path = path
+
+    if Util.is_win() then
+      norm_path = norm_path:lower()
+      root = root:lower()
+      cwd = cwd:lower()
+    end
+
+    if opts.relative == "cwd" and norm_path:find(cwd, 1, true) == 1 then
       path = path:sub(#cwd + 2)
-    elseif path:find(root, 1, true) == 1 then
+    elseif norm_path:find(root, 1, true) == 1 then
       path = path:sub(#root + 2)
     end
 
