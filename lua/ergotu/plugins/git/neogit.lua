@@ -16,7 +16,7 @@ return {
       { "<leader>gb", "<cmd>Neogit branch<cr>", desc = "Neogit Branch" },
     },
     opts = {
-      graph_style = "unicode",
+      graph_style = "kitty",
       kind = "split_below_all",
       auto_show_console = false,
       integrations = {

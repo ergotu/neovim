@@ -100,6 +100,8 @@
             withPython3 = false;
             withRuby = false;
             wrapperArgs = pkgs.lib.escapeShellArgs ["--suffix" "PATH" ":" "${packagesPath}"];
+            extraPackages = [pkgs.imagemagick];
+            extraLuaPackages = ps: [ps.magick];
           };
       in {
         packages = {
