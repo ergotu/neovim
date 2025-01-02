@@ -108,7 +108,7 @@ return {
           end,
         },
       },
-      extensions = { "neo-tree", "lazy" },
+      extensions = { "neo-tree", "lazy", "fzf" },
     }
 
     -- Allow trouble symbols to be overridden for some buffertypes
