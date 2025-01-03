@@ -1,6 +1,13 @@
 ---@class ergotu.util.lualine
 local M = {}
 
+---@return {fg?:string}?
+function M.fg(name)
+  local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
+  local fg = hl and hl.fg or hl.foreground
+  return fg and { fg = string.format("#%06x", fg) } or nil
+end
+
 ---@param component any
 ---@param text string
 ---@param hl_group? string
@@ -114,7 +121,7 @@ function M.root_dir(opts)
     parent = true,
     other = true,
     icon = "󱉭 ",
-    color = Util.ui.fg("Special"),
+    color = M.fg("Special"),
   }, opts or {})
 
   local function get()
