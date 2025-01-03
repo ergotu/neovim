@@ -1,4 +1,38 @@
----@diagnostic disable: missing-fields
+---@alias Action fun():boolean?
+---@type table<string, Action>
+local cmpActions = {
+  -- Native Snippets
+  snippet_forward = function()
+    if vim.snippet.active({ direction = 1 }) then
+      vim.schedule(function()
+        vim.snippet.jump(1)
+      end)
+      return true
+    end
+  end,
+  snippet_stop = function()
+    if vim.snippet then
+      vim.snippet.stop()
+    end
+  end,
+}
+
+---@param actions string[]
+---@param fallback? string|fun()
+local function map(actions, fallback)
+  return function()
+    for _, name in ipairs(actions) do
+      if cmpActions[name] then
+        local ret = cmpActions[name]()
+        if ret then
+          return true
+        end
+      end
+    end
+    return type(fallback) == "function" and fallback() or fallback
+  end
+end
+
 return {
   {
     "saghen/blink.cmp",
@@ -119,12 +153,12 @@ return {
                 return cmp.select_and_accept()
               end
             end,
-            Util.cmp.map({ "snippet_forward", "ai_accept" }),
+            map({ "snippet_forward", "ai_accept" }),
             "fallback",
           }
         else -- other presets
           opts.keymap["<Tab>"] = {
-            Util.cmp.map({ "snippet_forward", "ai_accept" }),
+            map({ "snippet_forward", "ai_accept" }),
             "fallback",
           }
         end
