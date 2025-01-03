@@ -53,7 +53,7 @@ return {
           enabled = true,
         },
         folding = {
-          enabled = false,
+          enabled = true,
         },
         -- add any global capabilities here
         capabilities = {
