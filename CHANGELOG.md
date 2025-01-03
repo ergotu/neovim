@@ -1,3 +1,15 @@
+## 2.3.0 (2025-01-03)
+
+### Feat
+
+- **lsp**: allow disabling keymaps for specific filetypes
+
+### Fix
+
+- **blink**: make blink.compat no longer optional
+- **blink**: use release instead of building from source
+- **lualine**: pretty path for mixed case paths on windows
+
 ## 2.2.0 (2025-01-02)
 
 ### Feat
