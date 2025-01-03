@@ -57,7 +57,6 @@ opt.fillchars = {
 }
 opt.foldlevel = 99
 opt.foldtext = ""
-opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 opt.formatoptions = "jcroqlnt" -- tcqj
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"

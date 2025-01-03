@@ -53,4 +53,8 @@ return {
       injected = { options = { ignore_errors = true } },
     },
   },
+  init = function()
+    vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+    vim.g.autoformat = true
+  end,
 }
