@@ -24,7 +24,8 @@ end
 ---@param path string
 ---@return boolean
 local function exists(path)
-  return vim.fn.empty(vim.fn.glob(path)) == 0
+  local stat = vim.loop.fs_stat(path)
+  return stat ~= nil
 end
 
 --- Get the real path of a buffer
