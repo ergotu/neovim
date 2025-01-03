@@ -1,3 +1,38 @@
+## 3.0.0 (2025-01-03)
+
+### Feat
+
+- **lightbulb**: update code to handle new util API
+- **neogit**: disable process spinner
+- remove nvim-cmp
+- **blink**: add additional config for providers
+- **blink**: add treesitter highlighting to documentation
+- **conform**: add trim_newlines for files without ft
+- **lang/lua**: add additional config to lua_ls
+- **lang/lua**: add luacheck to linters
+- **lazy**: add keymap to debug plugin spec
+- **autocmds**: only show cursor line in active window
+- remove hardtime.nvim
+- remove last remnants of telescope
+
+### Fix
+
+- **image.nvim**: use magick_cli
+- **lsp**: enable lsp folding by default
+- **lang/lua**: set annotation convention to ldoc
+- **util.root**: switch from glob to fs_stat to check if path exists
+- **lazy**: change spec import order
+
+### Refactor
+
+- **util.cmp**: move functions out of util
+- **snippets**: change file name to blink.lua
+- **blink**: use the enter preset
+- **lightbulb**: rename to on_attach to match with other funcs
+- **formatexpr**: move formatexpr to conform init
+- **lualine**: move ui.fg to lualine.fg
+- **foldexpr**: move foldexpr to Util root
+
 ## 2.3.0 (2025-01-03)
 
 ### Feat
