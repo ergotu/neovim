@@ -38,7 +38,7 @@ return {
       -- ["*"] = { "codespell" },
       -- Use the "_" filetype to run formatters on filetypes that don't
       -- have other formatters configured.
-      ["_"] = { "trim_whitespace" },
+      ["_"] = { "trim_whitespace", "trim_newlines" },
     },
     -- Set up format-on-save
     format_on_save = function(bufnr)
