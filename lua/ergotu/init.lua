@@ -68,6 +68,11 @@ require("lazy").setup({
     },
     border = vim.g.floating_window_options.border,
     title = "Lazy.nvim",
+    custom_keys = {
+      ["<localleader>d"] = function(plugin)
+        dd(plugin)
+      end,
+    },
   },
   diff = {
     cmd = "diffview.nvim",
