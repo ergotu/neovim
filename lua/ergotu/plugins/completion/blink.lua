@@ -57,6 +57,7 @@ return {
         },
         documentation = {
           auto_show = true,
+          treesitter_highlighting = true,
           window = {
             border = vim.g.floating_window_options.border,
             winblend = vim.g.floating_window_options.winblend,
