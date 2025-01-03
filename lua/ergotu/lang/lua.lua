@@ -134,4 +134,14 @@ return {
       },
     },
   },
+  {
+    "danymat/neogen",
+    opts = {
+      languages = {
+        template = {
+          annotation_conventiuon = "ldoc",
+        },
+      },
+    },
+  },
 }
