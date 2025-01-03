@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("FileType", {
     if vim.bo[buf].filetype ~= "bigfile" and pcall(vim.treesitter.start, buf) then
       vim.api.nvim_buf_call(buf, function()
         vim.wo[0][0].foldmethod = "expr"
-        vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.wo[0][0].foldexpr = "v:lua.require'ergotu.util'.foldexpr()"
         vim.cmd.normal("zx")
       end)
     else
