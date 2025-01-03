@@ -92,7 +92,7 @@ return {
 
       -- setup lightbulb
       Util.lsp.on_attach(function(client, buffer)
-        Util.lsp.lightbulb.attach_lightbulb(buffer, client.id)
+        Util.lsp.lightbulb.on_attach(buffer, client.id)
       end)
 
       -- set up border for hover window
