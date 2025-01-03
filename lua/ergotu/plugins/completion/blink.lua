@@ -22,11 +22,6 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
-      snippets = {
-        expand = function(snippet)
-          return Util.cmp.expand(snippet)
-        end,
-      },
       appearance = {
         use_nvim_cmp_as_default = false,
         nerd_font_variant = "mono",
@@ -80,6 +75,19 @@ return {
         compat = {},
         default = { "lsp", "path", "buffer" },
         cmdline = {},
+        providers = {
+          lsp = {
+            min_keyword_length = 2, -- Number of characters to trigger porvider
+            score_offset = 0, -- Boost/penalize the score of the items
+          },
+          path = {
+            min_keyword_length = 0,
+          },
+          buffer = {
+            min_keyword_length = 5,
+            max_items = 5,
+          },
+        },
       },
       keymap = {
         ["<Tab>"] = { "snippet_forward", "fallback" },
