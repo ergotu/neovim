@@ -2,9 +2,8 @@
 return {
   {
     "saghen/blink.cmp",
-    cond = vim.g.use_blink,
-    version = not vim.g.lazyvim_blink_main and "*",
-    build = vim.g.lazyvim_blink_main and "cargo build --release",
+    version = not vim.g.blink_main and "*",
+    build = vim.g.blink_main and "cargo build --release",
     opts_extend = {
       "sources.completion.enabled_providers",
       "sources.compat",
@@ -14,7 +13,7 @@ return {
       {
         "saghen/blink.compat",
         opts = {},
-        version = not vim.g.lazyvim_blink_main and "*",
+        version = not vim.g.blink_main and "*",
       },
     },
     event = "InsertEnter",
