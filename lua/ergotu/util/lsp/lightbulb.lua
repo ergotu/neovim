@@ -62,11 +62,18 @@ end
 --- Queries the LSP servers for code actions and updates the lightbulb
 --- accordingly.
 ---@param bufnr number
-local function render(bufnr)
+---@param client vim.lsp.Client
+local function render(bufnr, client)
+  local winnr = vim.api.nvim_get_current_win()
+  if vim.api.nvim_win_get_buf(winnr) ~= bufnr then
+    return
+  end
+
   local line = vim.api.nvim_win_get_cursor(0)[1] - 1
   local diagnostics = vim.diagnostic.get(bufnr, { lnum = line })
 
-  local params = vim.lsp.util.make_range_params()
+  ---@type lsp.CodeActionParams
+  local params = vim.lsp.util.make_range_params(winnr, client.offset_encoding)
   params.context = {
     diagnostics = diagnostics,
     triggerKind = vim.lsp.protocol.CodeActionTriggerKind.Automatic,
@@ -82,7 +89,8 @@ local function render(bufnr)
 end
 
 ---@param bufnr number
-local function update(bufnr)
+---@param client vim.lsp.Client
+local function update(bufnr, client)
   timer:stop()
 
   -- Remove existing extmarks/signs without waiting for the timer
@@ -100,7 +108,7 @@ local function update(bufnr)
     vim.schedule(function()
       -- Check if the buffer is still valid
       if vim.api.nvim_buf_is_valid(bufnr) then
-        render(bufnr)
+        render(bufnr, client)
       end
     end)
   end)
@@ -112,7 +120,7 @@ end
 M.on_attach = function(bufnr, client_id)
   local client = vim.lsp.get_client_by_id(client_id)
 
-  if not client or not client.supports_method(code_action_method) then
+  if not client or not client:supports_method(code_action_method) then
     return
   end
 
@@ -127,7 +135,7 @@ M.on_attach = function(bufnr, client_id)
     desc = "Update lightbulb when moving the cursor in normal/visual mode",
     buffer = bufnr,
     callback = function()
-      update(bufnr)
+      update(bufnr, client)
     end,
   })
 

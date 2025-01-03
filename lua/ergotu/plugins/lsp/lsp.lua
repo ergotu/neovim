@@ -64,6 +64,7 @@ return {
             },
           },
         },
+        lightbulb = true,
         -- LSP Server Settings
         ---@type lspconfig.options
         ---@diagnostic disable-next-line: missing-fields
@@ -91,9 +92,11 @@ return {
       end)
 
       -- setup lightbulb
-      Util.lsp.on_attach(function(client, buffer)
-        Util.lsp.lightbulb.on_attach(buffer, client.id)
-      end)
+      if opts.lightbulb then
+        Util.lsp.on_attach(function(client, buffer)
+          Util.lsp.lightbulb.on_attach(buffer, client.id)
+        end)
+      end
 
       -- set up border for hover window
       Util.lsp.on_attach(function(client, buffer)
@@ -133,7 +136,7 @@ return {
       if opts.folding.enabled and vim.fn.has("nvim-0.11") then
         Util.lsp.on_attach(function(_, _)
           Util.lsp.on_supports_method(methods.textDocument_foldingRange, function(_, _)
-            vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+            vim.wo[0][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
           end)
         end)
       end
