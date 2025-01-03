@@ -207,6 +207,7 @@ return {
       end
 
       if have_mason then
+        ---@diagnostic disable-next-line: missing-fields
         mlsp.setup({
           ensure_installed = vim.tbl_deep_extend(
             "force",
