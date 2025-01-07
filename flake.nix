@@ -69,6 +69,8 @@
           pkgs.ripgrep
           pkgs.pkg-config
           pkgs.yarn
+
+          pkgs.dwt1-shell-color-scripts
         ];
         packagesPath = pkgs.lib.makeBinPath extraPackages;
 
