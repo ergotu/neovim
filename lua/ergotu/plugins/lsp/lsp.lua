@@ -22,12 +22,11 @@ return {
         diagnostics = {
           underline = true,
           update_in_insert = false,
-          virtual_text = false,
-          -- virtual_text = {
-          --   spacing = 4,
-          --   source = "if_many",
-          --   prefix = "icons",
-          -- },
+          virtual_text = not Util.has("tiny-inline-diagnostic.nvim") and {
+            spacing = 4,
+            source = "if_many",
+            prefix = "icons",
+          } or false,
           virtual_lines = false,
           severity_sort = true,
           signs = {
