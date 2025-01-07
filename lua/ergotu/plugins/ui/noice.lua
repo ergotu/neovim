@@ -21,7 +21,7 @@ return {
           enabled = false,
         },
         signature = {
-          enabled = not vim.g.use_blink,
+          enabled = not Util.has("blink.cmp"),
         },
       },
       routes = {
