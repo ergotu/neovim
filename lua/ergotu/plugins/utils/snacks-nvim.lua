@@ -41,6 +41,7 @@ return {
         },
         input = { enabled = true },
         scope = { enabled = true },
+        scroll = { enabled = true },
         words = { enabled = true },
         toggle = { map = Util.safe_keymap_set },
         dashboard = {
