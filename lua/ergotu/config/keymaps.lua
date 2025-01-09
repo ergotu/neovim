@@ -41,40 +41,6 @@ map("n", "<leader>bo", function()
 end, { desc = "Delete Other Buffers" })
 map("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
--- split lines
-local function split_line()
-  local cnum = vim.fn.col(".")
-  local lnum = vim.fn.line(".")
-
-  if cnum == 1 then
-    vim.fn.append(lnum - 1, "")
-  else
-    local line = vim.fn.getline(".")
-
-    local first_line = line:sub(1, cnum - 2):gsub("%s+$", "")
-    local second_line = line:sub(cnum - 1, -1)
-
-    vim.fn.setline(lnum, first_line)
-    vim.fn.append(lnum, second_line)
-
-    -- Re-indent the new line
-    vim.fn.cursor(lnum + 1, 1)
-    vim.cmd("normal! ==")
-
-    -- Move the cursor to the start of the first word on the new line
-    local new_line_num = lnum + 1
-    local new_line = vim.fn.getline(new_line_num)
-    local first_word_start = new_line:find("%S") -- Find the start of the first non-whitespace character
-
-    if first_word_start then
-      vim.fn.cursor(new_line_num, first_word_start)
-    else
-      vim.fn.cursor(new_line_num, 1) -- If there are no words, move to the start of the line
-    end
-  end
-end
-map("n", "gS", split_line, { desc = "Split Line" })
-
 -- Clear search and stop snippet with esc
 Snacks.util.on_key("<esc>", function()
   vim.cmd("noh")
