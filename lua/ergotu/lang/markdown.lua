@@ -87,31 +87,22 @@ return {
       vim.cmd([[do FileType]])
     end,
   },
-
   {
-    "MeanderingProgrammer/render-markdown.nvim",
-    dependencies = {
-      "echasnovski/mini.icons",
-      "nvim-treesitter/nvim-treesitter",
-    },
+    "OXY2DEV/markview.nvim",
     ft = { "markdown", "norg", "rmd", "org" },
-    opts = {
-      file_types = { "markdown", "norg", "rmd", "org" },
-      preset = "lazy",
-    },
     config = function(_, opts)
-      require("render-markdown").setup(opts)
+      require("markview").setup(opts)
       Snacks.toggle({
         name = "Render Markdown",
         get = function()
-          return require("render-markdown.state").enabled
+          return require("markview").state.enable
         end,
-        set = function(enabled)
-          local m = require("render-markdown")
-          if enabled then
-            m.enable()
+        set = function(disabled)
+          local m = require("markview")
+          if disabled then
+            m.commands.enableAll()
           else
-            m.disable()
+            m.commands.disableAll()
           end
         end,
       }):map("<leader>um")
