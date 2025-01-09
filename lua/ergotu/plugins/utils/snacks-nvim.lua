@@ -143,13 +143,6 @@ return {
         desc = "Dismiss All Notifications",
       },
       {
-        "<leader>ps",
-        function()
-          Snacks.profiler.scratch()
-        end,
-        desc = "Profiler Scratch Bufer",
-      },
-      {
         "<leader>uz",
         function()
           ---@diagnostic disable-next-line: missing-fields
