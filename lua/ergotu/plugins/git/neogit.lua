@@ -14,6 +14,7 @@ return {
       { "<leader>gl", "<cmd>Neogit log<cr>", desc = "Neogit Log" },
       { "<leader>gr", "<cmd>Neogit rebase<cr>", desc = "Neogit Rebase" },
       { "<leader>gb", "<cmd>Neogit branch<cr>", desc = "Neogit Branch" },
+      { "<leader>gw", "<cmd>Neogit worktree<cr>", desc = "Neogit Worktree" },
     },
     opts = {
       process_spinner = false,
