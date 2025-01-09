@@ -276,3 +276,5 @@ end, { noremap = true, silent = true })
 
 -- duplicate line and comment out the original
 map("n", "yc", "yygccp")
+
+map("n", "<C-c>", "ciw")
