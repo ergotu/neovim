@@ -30,6 +30,7 @@ return {
           scope = {
             underline = true,
             char = "▎",
+            only_current = true,
           },
           chunk = {
             enabled = true,
@@ -37,6 +38,7 @@ return {
               corner_top = "╭",
               corner_bottom = "╰",
             },
+            only_current = true,
           },
         },
         input = { enabled = true },
