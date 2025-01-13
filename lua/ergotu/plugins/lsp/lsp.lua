@@ -98,7 +98,7 @@ return {
       end
 
       -- set up border for hover window
-      Util.lsp.on_attach(function(client, buffer)
+      Util.lsp.on_attach(function(_, _)
         vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
           border = vim.g.floating_window_options.border,
         })
