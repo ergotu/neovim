@@ -97,9 +97,12 @@ return {
         end)
       end
 
-      -- set up border for hover window
+      -- set up border for hover and signatureHelp
       Util.lsp.on_attach(function(_, _)
-        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+        vim.lsp.handlers[methods.textDocument_hover] = vim.lsp.with(vim.lsp.handlers.hover, {
+          border = vim.g.floating_window_options.border,
+        })
+        vim.lsp.handlers[methods.textDocument_signatureHelp] = vim.lsp.with(vim.lsp.handlers.hover, {
           border = vim.g.floating_window_options.border,
         })
       end)
