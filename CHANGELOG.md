@@ -1,3 +1,28 @@
+## 3.1.0 (2025-01-13)
+
+### Feat
+
+- **lang/helm**: move to helm-ls.nvim
+- **neogit**: add keymap for worktree
+- add treesj
+- **keymaps**: add keymap for ciw
+- **noice**: add additional routes to noice
+- **lang/markdown**: change to markview
+- **tiny-inline-diagnostic**: update config and make conditionals
+- **flake**: add dwt1-shell-color-scripts package
+- **snacks**: enable input
+
+### Fix
+
+- **lang/golang**: golangci-lint -> golangcilint
+- **keymaps**: remove duplicate keymap
+- **noice**: disable signature if blink.cmp is enabled
+
+### Refactor
+
+- **blink**: color swatch upstreamed
+- **mason**: extract mason to a separate file
+
 ## 3.0.0 (2025-01-03)
 
 ### Feat
