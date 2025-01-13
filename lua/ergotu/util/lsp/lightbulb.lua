@@ -120,7 +120,7 @@ end
 M.on_attach = function(bufnr, client_id)
   local client = vim.lsp.get_client_by_id(client_id)
 
-  if not client or not client:supports_method(code_action_method) then
+  if not client then
     return
   end
 

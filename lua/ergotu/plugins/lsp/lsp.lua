@@ -92,7 +92,7 @@ return {
 
       -- setup lightbulb
       if opts.lightbulb then
-        Util.lsp.on_attach(function(client, buffer)
+        Util.lsp.on_supports_method(methods.textDocument_codeAction, function(client, buffer)
           Util.lsp.lightbulb.on_attach(buffer, client.id)
         end)
       end
