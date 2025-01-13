@@ -79,7 +79,7 @@ return {
     optional = true,
     opts = {
       linters_by_ft = {
-        go = { "golangci-lint" },
+        go = { "golangcilint" },
       },
     },
   },
