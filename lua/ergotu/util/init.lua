@@ -30,6 +30,9 @@ function M.lazy_notify()
   vim.notify = temp
 
   local timer = vim.uv.new_timer()
+  if not timer then
+    return
+  end
   local check = assert(vim.uv.new_check())
 
   local replay = function()
