@@ -27,6 +27,9 @@ return {
             source = "if_many",
             prefix = "icons",
           } or false,
+          float = {
+            border = vim.g.floating_window_options.border,
+          },
           virtual_lines = false,
           severity_sort = true,
           signs = {
