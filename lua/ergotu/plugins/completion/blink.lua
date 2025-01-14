@@ -109,10 +109,6 @@ return {
         default = { "lsp", "path", "buffer" },
         cmdline = {},
         providers = {
-          lsp = {
-            min_keyword_length = 2, -- Number of characters to trigger porvider
-            score_offset = 0, -- Boost/penalize the score of the items
-          },
           path = {
             min_keyword_length = 0,
           },
