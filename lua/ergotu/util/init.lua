@@ -1,6 +1,6 @@
 local LazyUtil = require("lazy.core.util")
 
----@class util
+---@class ergotu.util: LazyUtilCore
 ---@field config UtilOptions
 ---@field lsp ergotu.util.lsp
 ---@field root ergotu.util.root
