@@ -131,6 +131,15 @@ function M.get_kind_filter(buf)
   return type(M.kind_filter) == "table" and type(M.kind_filter.default) == "table" and M.kind_filter.default or nil
 end
 
+local lazy_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }
+local function lazy_file()
+  -- Add support for the LazyFile event
+  local Event = require("lazy.core.handler.event")
+
+  Event.mappings.LazyFile = { id = "LazyFile", event = lazy_file_events }
+  Event.mappings["User LazyFile"] = Event.mappings.LazyFile
+end
+
 local lazy_clipboard
 
 M.did_init = false
@@ -157,7 +166,7 @@ function M.init()
   })
 
   Util.root.setup()
-  Util.plugin.setup()
+  lazy_file()
   Util.format.setup()
 end
 
