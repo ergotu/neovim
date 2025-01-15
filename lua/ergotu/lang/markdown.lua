@@ -90,6 +90,9 @@ return {
   {
     "OXY2DEV/markview.nvim",
     ft = { "markdown", "norg", "rmd", "org" },
+    opts = {
+      filetypes = { "markdown", "norg", "rmd", "org" },
+    },
     config = function(_, opts)
       require("markview").setup(opts)
       Snacks.toggle({
