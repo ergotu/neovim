@@ -138,7 +138,7 @@ return {
       end
 
       -- LSP folding
-      if opts.folding.enabled and vim.fn.has("nvim-0.11") then
+      if opts.folding.enabled and vim.fn.has("nvim-0.11") == 1 then
         Util.lsp.on_supports_method(methods.textDocument_foldingRange, function(_, _)
           vim.wo[0][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
         end)
