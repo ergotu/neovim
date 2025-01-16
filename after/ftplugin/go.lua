@@ -9,3 +9,21 @@ vim.api.nvim_create_user_command("GoModTidy", function()
   vim.cmd.write()
   vim.cmd.LspStart()
 end, {})
+
+Util.config.kind_filter.go = {
+  "Class",
+  "Constant",
+  "Constructor",
+  "Enum",
+  "Field",
+  "Function",
+  "Interface",
+  "Method",
+  "Module",
+  "Namespace",
+  "Package",
+  "Property",
+  "Struct",
+  "Trait",
+  "Variable",
+}
