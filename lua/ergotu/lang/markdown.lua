@@ -111,12 +111,4 @@ return {
       }):map("<leader>um")
     end,
   },
-  {
-    "HakonHarnes/img-clip.nvim",
-    ft = { "markdown", "norg", "rmd", "org" },
-    opts = {},
-    keys = {
-      { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
-    },
-  },
 }
