@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.api.nvim_buf_call(buf, function()
         vim.wo[0][0].foldmethod = "expr"
         vim.wo[0][0].foldexpr = "v:lua.require'ergotu.util'.foldexpr()"
-        vim.cmd.normal("zx")
+        -- vim.cmd.normal("zx")
       end)
     else
       vim.wo[0][0].foldmethod = "indent"
