@@ -1,3 +1,30 @@
+## 3.2.0 (2025-01-20)
+
+### Feat
+
+- **markdown**: add img-clip.nvim to allow image pasting
+- **formatting**: add biome support
+- **snippets**: add extra snippets for golang
+- **grug-far**: add keymaps
+
+### Fix
+
+- **autocmds**: don't run zx on foldexpr set
+- **lsp**: properly check if we are running nvim-0.11 for lsp folding
+- **markview**: add extra filetypes
+- **blink**: allow lsp completion to trigger earlier
+- **util**: add LazyUtilCore to util class
+- **util**: add nil check for lazy_notify timer
+- **lsp**: set border for diagnostic float
+- **lsp**: style signatureHelp as well as hover
+- **lightbulb**: only load if lsp supports codeActions
+- **snakcs**: only show scope in current buffer
+
+### Refactor
+
+- **kind_filter**: move file specific kind filters to ftplugin files
+- **lazyfile**: move lazyfile related code to config
+
 ## 3.1.0 (2025-01-13)
 
 ### Feat
