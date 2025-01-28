@@ -67,6 +67,7 @@ return {
               pane = 2,
               section = "terminal",
               cmd = "colorscript -e square",
+              enabled = vim.fn.executable("colorscript") == 1,
               height = 5,
               padding = 1,
             },
