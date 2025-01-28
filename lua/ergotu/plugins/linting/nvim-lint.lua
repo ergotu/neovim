@@ -8,10 +8,9 @@ return {
     linters_by_ft = {
       fish = { "fish" },
       -- Use the "*" filetype to run linters on all filetypes.
-      -- ['*'] = { 'global linter' },
+      ["*"] = { "cspell" },
       -- Use the "_" filetype to run linters on filetypes that don't have other linters configured.
       -- ['_'] = { 'fallback linter' },
-      -- ["*"] = { "typos" },
     },
     -- Util extension to easily override linter options
     -- or add custom linters.
@@ -25,6 +24,15 @@ return {
       --     return vim.fs.find({ "selene.toml" }, { path = ctx.filename, upward = true })[1]
       --   end,
       -- },
+      cspell = {
+        args = {
+          "lint",
+          "--no-color",
+          "--no-progress",
+          "--no-summary",
+          "--config ~/dotfiles/cspell/cspell.config.yaml",
+        },
+      },
     },
   },
   config = function(_, opts)
