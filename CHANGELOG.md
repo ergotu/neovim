@@ -1,3 +1,17 @@
+## 3.3.0 (2025-01-30)
+
+### Feat
+
+- **nvim-lint**: add cspell as standard linter
+- **lang/markdown**: add image.nvim (again)
+- **keymaps**: add insert keymap to jump to closing element
+
+### Fix
+
+- **snacks**: only enable colorscript section if command is available
+- **blink**: disable completion in certain filetypes
+- **lint**: nil check the timer for debounce
+
 ## 3.2.0 (2025-01-20)
 
 ### Feat
