@@ -46,6 +46,9 @@ return {
 
     function M.debounce(ms, fn)
       local timer = vim.uv.new_timer()
+      if timer == nil then
+        return
+      end
       return function(...)
         local argv = { ... }
         timer:start(ms, 0, function()
