@@ -170,6 +170,8 @@
 - **snacks**: add profiler
 - **snacks**: have snacks deal with LspProgress notifications
 - **keymaps**: add keymap to duplicate line and comment out first
+- **keymaps**: add tabline toggle
+- **flake**: add gcc and update inputs
 
 ### Fix
 
@@ -177,20 +179,6 @@
 - **dot**: kitty ft with bash treesitter
 - **treesitter**: change incremental_selection keymap
 - **keymaps**: move to the safe_keymap_set function
-
-## 1.1.0 (2024-12-06)
-
-### Feat
-
-- **keymaps**: add keymap to duplicate line and comment out first
-- **keymaps**: add tabline toggle
-- **flake**: add gcc and update inputs
-
-### Fix
-
-- **treesitter**: change incremental_selection keymap
-- **keymaps**: move to the safe_keymap_set function
-- **treesitter**: disable treesitter in neogitconsole
 - **blink**: update config for latest version
 - **indentscope**: add extra autocmd to disable on snacks_dashboard
 
