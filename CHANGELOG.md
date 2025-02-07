@@ -1,3 +1,9 @@
+## 3.4.0 (2025-02-07)
+
+### Feat
+
+- **lang/clangd**: add clang support
+
 ## 3.3.0 (2025-01-30)
 
 ### Feat
