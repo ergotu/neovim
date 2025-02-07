@@ -1,10 +1,10 @@
 local pick = function()
+  local refactoring = require("refactoring")
   if Util.has("telescope.nvim") then
     return require("telescope").extensions.refactoring.refactors()
   elseif Util.has("fzf-lua") then
     local fzf_lua = require("fzf-lua")
     local results = require("refactoring").get_refactors()
-    local refactoring = require("refactoring")
 
     local opts = {
       fzf_opts = {},
@@ -16,6 +16,8 @@ local pick = function()
       },
     }
     fzf_lua.fzf_exec(results, opts)
+  else
+    refactoring.select_refactor({})
   end
 end
 
