@@ -1,3 +1,9 @@
+## 4.0.0 (2025-02-12)
+
+### Feat
+
+- **picker**: use snacks picker instead of fzf-lua
+
 ## 3.5.0 (2025-02-12)
 
 ### Feat

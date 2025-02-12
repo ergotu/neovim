@@ -26,6 +26,7 @@ return {
         fzf_lua = Util.has("fzf-lua"),
         mini_pick = Util.has("mini.pick"),
         diffview = Util.has("diffview.nvim"),
+        snacks = Util.has("snacks.nvim"),
       },
     },
   },
