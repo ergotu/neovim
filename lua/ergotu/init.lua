@@ -50,6 +50,7 @@ require("lazy").setup({
     { import = "ergotu.plugins.utils" },
     { import = "ergotu.plugins.zettelkasten" },
     { import = "ergotu.plugins.git" },
+    { import = "ergotu.plugins.ai" },
     { import = "ergotu.lang" },
   },
   defaults = {
