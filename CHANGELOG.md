@@ -1,3 +1,14 @@
+## 3.5.0 (2025-02-12)
+
+### Feat
+
+- **image**: use snacks images instead of image.nvim
+- **lsp**: use snacks picker instead of lspinfo
+
+### Fix
+
+- **keymaps**: remove unneeded keymap
+
 ## 3.4.0 (2025-02-07)
 
 ### Feat

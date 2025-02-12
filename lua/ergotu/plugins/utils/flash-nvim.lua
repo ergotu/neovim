@@ -4,7 +4,8 @@ return {
   vscode = true,
   ---@type Flash.Config
   opts = {
-    labels = "qsdfghjklmazertyuiopwxcvbn", -- azerty
+    -- labels = "qsdfghjklmazertyuiopwxcvbn", -- azerty
+    labels = "arstgmneioqwfpbjluyzxcdvkh", -- colemak-dh
   },
   -- stylua: ignore
   keys = {
