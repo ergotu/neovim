@@ -42,6 +42,7 @@ return {
           },
         },
         input = { enabled = true },
+        image = { enabled = true },
         scope = { enabled = true },
         scroll = { enabled = true },
         words = { enabled = true },
