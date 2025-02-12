@@ -13,42 +13,35 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    opts = function()
-      -- Toggle the profiler
-      Snacks.toggle.profiler():map("<leader>dpp")
-      -- Toggle the profiler highlights
-      Snacks.toggle.profiler_highlights():map("<leader>dph")
-
-      ---@type snacks.Config
-      return {
-        notifier = { enabled = true },
-        quickfile = { enabled = true },
-        bigfile = { enabled = true },
-        indent = {
-          enabled = true,
+    opts = {
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      bigfile = { enabled = true },
+      indent = {
+        enabled = true,
+        char = "▎",
+        scope = {
+          underline = true,
           char = "▎",
-          scope = {
-            underline = true,
-            char = "▎",
-            only_current = true,
-          },
-          chunk = {
-            enabled = true,
-            char = {
-              corner_top = "╭",
-              corner_bottom = "╰",
-            },
-            only_current = true,
-          },
+          only_current = true,
         },
-        input = { enabled = true },
-        image = { enabled = true },
-        scope = { enabled = true },
-        scroll = { enabled = true },
-        words = { enabled = true },
-        toggle = { map = Util.safe_keymap_set },
-        dashboard = {
-          preset = {
+        chunk = {
+          enabled = true,
+          char = {
+            corner_top = "╭",
+            corner_bottom = "╰",
+          },
+          only_current = true,
+        },
+      },
+      input = { enabled = true },
+      image = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      words = { enabled = true },
+      toggle = { map = Util.safe_keymap_set },
+      dashboard = {
+        preset = {
           -- stylua: ignore
           ---@type snacks.dashboard.Item[]
           keys = {
@@ -62,77 +55,55 @@ return {
             { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
             { icon = " ", key = "q", desc = "Quit", action = ":qa" },
           },
+        },
+        sections = {
+          { section = "header" },
+          {
+            pane = 2,
+            section = "terminal",
+            cmd = "colorscript -e square",
+            enabled = vim.fn.executable("colorscript") == 1,
+            height = 5,
+            padding = 1,
           },
-          sections = {
-            { section = "header" },
-            {
-              pane = 2,
-              section = "terminal",
-              cmd = "colorscript -e square",
-              enabled = vim.fn.executable("colorscript") == 1,
-              height = 5,
-              padding = 1,
-            },
-            { section = "keys", gap = 1, padding = 1 },
-            { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-            { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-            {
-              pane = 2,
-              icon = " ",
-              title = "Git Status",
-              section = "terminal",
-              enabled = vim.fn.isdirectory(".git") == 1,
-              cmd = "git status --short --branch --renames",
-              height = 5,
-              padding = 1,
-              ttl = 5 * 60,
-              indent = 3,
-            },
-            { section = "startup" },
+          { section = "keys", gap = 1, padding = 1 },
+          { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+          { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+          {
+            pane = 2,
+            icon = " ",
+            title = "Git Status",
+            section = "terminal",
+            enabled = vim.fn.isdirectory(".git") == 1,
+            cmd = "git status --short --branch --renames",
+            height = 5,
+            padding = 1,
+            ttl = 5 * 60,
+            indent = 3,
+          },
+          { section = "startup" },
+        },
+      },
+      statuscolumn = {
+        folds = {
+          open = true,
+          git_hl = true,
+        },
+      },
+      terminal = {
+        ---@diagnostic disable-next-line: missing-fields
+        win = {
+          height = 0.2,
+          keys = {
+            nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
+            nav_j = { "<C-j>", term_nav("j"), desc = "Go to Lower Window", expr = true, mode = "t" },
+            nav_k = { "<C-k>", term_nav("k"), desc = "Go to Upper Window", expr = true, mode = "t" },
+            nav_l = { "<C-l>", term_nav("l"), desc = "Go to Right Window", expr = true, mode = "t" },
           },
         },
-        statuscolumn = {
-          folds = {
-            open = true,
-            git_hl = true,
-          },
-        },
-        terminal = {
-          ---@diagnostic disable-next-line: missing-fields
-          win = {
-            height = 0.2,
-            keys = {
-              nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
-              nav_j = { "<C-j>", term_nav("j"), desc = "Go to Lower Window", expr = true, mode = "t" },
-              nav_k = { "<C-k>", term_nav("k"), desc = "Go to Upper Window", expr = true, mode = "t" },
-              nav_l = { "<C-l>", term_nav("l"), desc = "Go to Right Window", expr = true, mode = "t" },
-            },
-          },
-        },
-      }
-    end,
+      },
+    },
     keys = {
-      {
-        "<leader>.",
-        function()
-          Snacks.scratch()
-        end,
-        desc = "Toggle Scratch Buffer",
-      },
-      {
-        "<leader>S",
-        function()
-          Snacks.scratch.select()
-        end,
-        desc = "Select Scratch Buffer",
-      },
-      {
-        "<leader>dps",
-        function()
-          Snacks.profiler.scratch()
-        end,
-        desc = "Profiler Scratch Buffer",
-      },
       {
         "<leader>n",
         function()
@@ -224,12 +195,6 @@ return {
           })
         end,
       })
-    end,
-  },
-  {
-    "nvim-lualine/lualine.nvim",
-    opts = function(_, opts)
-      table.insert(opts.sections.lualine_x, Snacks.profiler.status())
     end,
   },
 }
