@@ -262,3 +262,8 @@ map("i", "<C-l>", function()
     vim.api.nvim_win_set_cursor(0, { row, col + 1 })
   end
 end, { desc = "move over a closing element" })
+
+-- Toggle the profiler
+Snacks.toggle.profiler():map("<leader>dpp")
+-- Toggle the profiler highlights
+Snacks.toggle.profiler_highlights():map("<leader>dph")

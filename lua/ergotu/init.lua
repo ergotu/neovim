@@ -37,6 +37,7 @@ require("ergotu.config").init()
 require("lazy").setup({
   spec = {
     { import = "ergotu.plugins.colorscheme" },
+    { import = "ergotu.plugins.snacks" },
     { import = "ergotu.plugins.ui" },
     { import = "ergotu.plugins.treesitter" },
     { import = "ergotu.plugins.lsp" },
