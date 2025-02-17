@@ -58,8 +58,22 @@ return {
     cmd = "DiffviewOpen",
     opts = function()
       local actions = require("diffview.actions")
-      local ret = {
+
+      require("diffview.ui.panel").Panel.default_config_float.border = "rounded"
+
+      return {
+        default_args = { DiffviewFileHistory = { "%" } },
+        icons = {
+          folder_closed = Util.config.icons.kinds.Folder,
+          folder_open = "󰝰",
+        },
+        signs = {
+          fold_closed = "",
+          fold_open = "",
+          done = "",
+        },
         enhanced_diff_hl = true,
+        use_icons = true,
         view = {
           default = {
             disable_diagnostics = true,
@@ -81,14 +95,25 @@ return {
             height = 10,
           },
         },
+        -- stylua: ignore start
         keymaps = {
           disable_defaults = true,
           view = {
+            { "n", "<tab>", actions.select_next_entry, { desc = "Open the diff for the next file" } },
+            { "n", "<s-tab>", actions.select_prev_entry, { desc = "Open the diff for the previous file" } },
             { "n", "<C-f>", actions.toggle_files, { desc = "Toggle the file panel" } },
+            { "n", "[F", actions.select_first_entry, { desc = "Open the diff for the first file" } },
+            { "n", "]F", actions.select_last_entry, { desc = "Open the diff for the last file" } },
+            { "n", "[x", actions.prev_conflict, { desc = "Merge-tool: jump to the previous conflict" } },
+            { "n", "]x", actions.next_conflict, { desc = "Merge-tool: jump to the next conflict" } },
             { "n", "gf", actions.goto_file_edit, { desc = "Open the file in the previous tabpage" } },
-            { "n", "co", actions.conflict_choose_all("ours"), { desc = "Choose conflict --ours" } },
-            { "n", "ct", actions.conflict_choose_all("theirs"), { desc = "Choose conflict --theirs" } },
-            { "n", "cb", actions.conflict_choose_all("base"), { desc = "Choose conflict --base" } },
+            { "n", "co", actions.conflict_choose("ours"), { desc = "Choose conflict --ours" } },
+            { "n", "ct", actions.conflict_choose("theirs"), { desc = "Choose conflict --theirs" } },
+            { "n", "cb", actions.conflict_choose("base"), { desc = "Choose conflict --base" } },
+            { "n", "cd", actions.conflict_choose("none"), { desc = "Delete conflict region" } },
+            { "n", "cO", actions.conflict_choose_all("ours"), { desc = "Choose conflict --ours for the whole file" } },
+            { "n", "cT", actions.conflict_choose_all("theirs"), { desc = "Choose conflict --theirs for the whole file" } },
+            { "n", "cB", actions.conflict_choose_all("base"), { desc = "Choose conflict --base for the whole file" } },
             ["gq"] = function()
               if vim.fn.tabpagenr("$") > 1 then
                 vim.cmd.DiffviewClose()
@@ -96,6 +121,17 @@ return {
                 vim.cmd.quitall()
               end
             end,
+            unpack(actions.compat.fold_cmds),
+          },
+          diff2 = {
+            { "n", "?", actions.help({ "view", "diff2" }), { desc = "Open the help panel" } },
+            { "n", "++", "]c" },
+            { "n", "--", "[c" },
+          },
+          diff3 = {
+            { "n", "?", actions.help({ "view", "diff3" }), { desc = "Open the help panel" } },
+            { "n", "++", "]c" },
+            { "n", "--", "[c" },
           },
           file_panel = {
             { "n", "j", actions.next_entry, { desc = "Bring the cursor to the next file entry" } },
@@ -117,7 +153,7 @@ return {
             { "n", "<Left>", actions.close_fold, { desc = "Collapse fold" } },
             { "n", "l", actions.listing_style, { desc = "Toggle between 'list' and 'tree' views" } },
             { "n", "L", actions.open_commit_log, { desc = "Open the commit log panel" } },
-            { "n", "g?", actions.help("file_panel"), { desc = "Open the help panel" } },
+            { "n", "?", actions.help("file_panel"), { desc = "Open the help panel" } },
             ["gq"] = function()
               if vim.fn.tabpagenr("$") > 1 then
                 vim.cmd.DiffviewClose()
@@ -147,10 +183,6 @@ return {
               end,
             },
           },
-          diff2 = {
-            { "n", "++", "]c" },
-            { "n", "--", "[c" },
-          },
           file_history_panel = {
             { "n", "j", actions.next_entry, { desc = "Bring the cursor to the next log entry" } },
             { "n", "<down>", actions.select_next_entry, { desc = "Select the next log entry" } },
@@ -161,7 +193,7 @@ return {
             { "n", "y", actions.copy_hash, { desc = "Copy the commit hash of the entry under the cursor" } },
             { "n", "L", actions.open_commit_log, { desc = "Show commit details" } },
             { "n", "gf", actions.goto_file_edit, { desc = "Open the file in the previous tabpage" } },
-            { "n", "g?", actions.help("file_history_panel"), { desc = "Open the help panel" } },
+            { "n", "?", actions.help("file_history_panel"), { desc = "Open the help panel" } },
             ["gq"] = function()
               if vim.fn.tabpagenr("$") > 1 then
                 vim.cmd.DiffviewClose()
@@ -170,12 +202,17 @@ return {
               end
             end,
           },
+          option_panel = {
+            { "n", "<tab>", actions.select_entry, { desc = "Change the current option" } },
+            { "n", "q", actions.close, { desc = "Close the panel" } },
+            { "n", "?", actions.help("option_panel"), { desc = "Open the help panel" } },
+          },
           help_panel = {
             { "n", "q", actions.close, { desc = "Close help menu" } },
           },
         },
+        -- stylua: ignore end
       }
-      return ret
     end,
   },
 }
