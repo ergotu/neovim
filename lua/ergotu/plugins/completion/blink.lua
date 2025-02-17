@@ -112,7 +112,6 @@ return {
         -- with blink.compat
         compat = {},
         default = { "lsp", "path", "buffer" },
-        cmdline = {},
         providers = {
           path = {
             min_keyword_length = 0,

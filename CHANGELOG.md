@@ -1,3 +1,22 @@
+## 4.1.0 (2025-02-17)
+
+### Feat
+
+- **diffview-nvim**: add extra configuration
+- **aider**: add plugin for aider
+- make navigation easier on split kb
+- **tree**: use snacks explorer instead of neo-tree
+- Refactor snacks.nvim configuration for improved readability
+
+### Fix
+
+- **snacks.picker**: disable overlapping keymaps
+- **keymaps**: change loclist and qflist keymaps to be toggles
+
+### Refactor
+
+- **snacks**: move all snacks stuff to it's own folder
+
 ## 4.0.0 (2025-02-12)
 
 ### Feat
