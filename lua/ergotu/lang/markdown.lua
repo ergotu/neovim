@@ -91,7 +91,9 @@ return {
     "OXY2DEV/markview.nvim",
     ft = { "markdown", "norg", "rmd", "org" },
     opts = {
-      filetypes = { "markdown", "norg", "rmd", "org" },
+      preview = {
+        filetypes = { "markdown", "norg", "rmd", "org" },
+      },
     },
     config = function(_, opts)
       require("markview").setup(opts)
