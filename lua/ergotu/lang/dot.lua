@@ -19,6 +19,11 @@ return {
     "williamboman/mason.nvim",
     opts = { ensure_installed = { "shellcheck" } },
   },
+  {
+    "bezhermoso/tree-sitter-ghostty",
+    lazy = true,
+    build = "make nvim_install",
+  },
   -- add some stuff to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -38,6 +43,7 @@ return {
           [".*/waybar/config"] = "jsonc",
           [".*/mako/config"] = "dosini",
           [".*/kitty/.+%.conf"] = "kitty",
+          [".*/ghostty/.+"] = "ghostty",
           [".*/hypr/.+%.conf"] = "hyprlang",
           ["%.env%.[%w_.-]+"] = "sh",
         },
