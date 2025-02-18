@@ -32,7 +32,7 @@ return {
       { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
       { "<leader>/", function () Snacks.picker.grep() end, desc = "Grep (Root Dir)" },
       { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
-      { "<leader><space>", function() Snacks.picker.files() end, desc = "Find Files (Root Dir)" },
+      { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Picker (Buffers/Recent/Files)" },
       { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
       -- find
       { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
