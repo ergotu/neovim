@@ -71,6 +71,9 @@ return {
           },
         },
         menu = {
+          auto_show = function(ctx)
+            return ctx.mode ~= "cmdline" or not vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype())
+          end,
           border = vim.g.floating_window_options.border,
           winblend = vim.g.floating_window_options.winblend,
           draw = {
