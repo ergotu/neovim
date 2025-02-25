@@ -7,14 +7,27 @@ return {
     },
     cmd = "Neogit",
     keys = {
-      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
+      {
+        "<leader>gg",
+        function()
+          require("neogit").open({ cwd = Util.root() })
+        end,
+        desc = "Neogit (root)",
+      },
+      {
+        "<leader>gG",
+        function()
+          require("neogit").open()
+        end,
+        desc = "Neogit (cwd)",
+      },
       { "<leader>gp", "<cmd>Neogit pull<cr>", desc = "Neogit Pull" },
       { "<leader>gP", "<cmd>Neogit push<cr>", desc = "Neogit Push" },
       { "<leader>gc", "<cmd>Neogit commit<cr>", desc = "Neogit Commit" },
       { "<leader>gl", "<cmd>Neogit log<cr>", desc = "Neogit Log" },
       { "<leader>gr", "<cmd>Neogit rebase<cr>", desc = "Neogit Rebase" },
       { "<leader>gb", "<cmd>Neogit branch<cr>", desc = "Neogit Branch" },
-      { "<leader>gw", "<cmd>Neogit worktree<cr>", desc = "Neogit Worktree" },
+      { "<leader>gww", "<cmd>Neogit worktree<cr>", desc = "Neogit Worktree" },
     },
     opts = {
       process_spinner = false,
