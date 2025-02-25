@@ -1,3 +1,29 @@
+## 4.2.0 (2025-02-25)
+
+### Feat
+
+- **dashboard**: add keymap to pick worktree
+- **git**: add worktrees
+- **ai**: add codecompanion
+- **ai**: add minuet
+- **firenvim**: add firenvim configuration
+- **snacks.picker**: change to smart picker
+- **blink**: don't show menu when searching
+- **keymaps**: add keymap that deletes buffers not in current tab
+
+### Fix
+
+- **picker**: set root/cwd properly
+- **util.root**: remove redundant cwd lookup
+- **firenvim**: don't automatically take over anymore
+- **neogit**: change keymaps to deal with worktrees easier
+- **blink**: unsure we use Util.config.icons.kinds
+- **markview**: top level filetypes is deprecated
+
+### Refactor
+
+- move dot to lang
+
 ## 4.1.0 (2025-02-17)
 
 ### Feat
