@@ -187,9 +187,6 @@ function M.get(opts)
         end
       end
     end
-
-    -- Fallback to current working directory if no valid root is found
-    root = root or vim.uv.cwd()
     M.cache[buf] = root
   end
 
