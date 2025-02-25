@@ -108,7 +108,7 @@ return {
           cmdline = "firenvim",
           priority = 0,
           selector = 'textarea:not([readonly]):not([class="handsontableInput"]), div[role="textbox"]',
-          takeover = "always",
+          takeover = "never",
         },
         [ [[.*notion\.so.*]] ] = {
           priority = 9,
