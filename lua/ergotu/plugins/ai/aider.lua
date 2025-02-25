@@ -9,14 +9,14 @@ return {
       "AiderHealth",
     },
     keys = {
-      { "<leader>a/", "<cmd>AiderTerminalToggle<cr>", desc = "Open Aider" },
-      { "<leader>aa", "<leader>a/", desc = "Open Aider", remap = true },
-      { "<leader>as", "<cmd>AiderTerminalSend<cr>", desc = "Send to Aider", mode = { "n", "v" } },
-      { "<leader>ac", "<cmd>AiderQuickSendCommand<cr>", desc = "Send Command To Aider" },
-      { "<leader>ab", "<cmd>AiderQuickSendBuffer<cr>", desc = "Send Buffer To Aider" },
-      { "<leader>a+", "<cmd>AiderQuickAddFile<cr>", desc = "Add File to Aider" },
-      { "<leader>a-", "<cmd>AiderQuickDropFile<cr>", desc = "Drop File from Aider" },
-      { "<leader>ar", "<cmd>AiderQuickReadOnlyFile<cr>", desc = "Add File as Read-Only" },
+      { "<leader>aa/", "<cmd>AiderTerminalToggle<cr>", desc = "Toggle Aider" },
+      { "<leader>aaa", "<leader>aa/", desc = "Toggle Aider", remap = true },
+      { "<leader>aas", "<cmd>AiderTerminalSend<cr>", desc = "Send to Aider", mode = { "n", "v" } },
+      { "<leader>aac", "<cmd>AiderQuickSendCommand<cr>", desc = "Send Command To Aider" },
+      { "<leader>aab", "<cmd>AiderQuickSendBuffer<cr>", desc = "Send Buffer To Aider" },
+      { "gaa", "<cmd>AiderQuickAddFile<cr>", desc = "Add File to Aider" },
+      { "gad", "<cmd>AiderQuickDropFile<cr>", desc = "Drop File from Aider" },
+      { "gar", "<cmd>AiderQuickReadOnlyFile<cr>", desc = "Add File as Read-Only" },
     },
     opts = {
       args = {
@@ -33,6 +33,8 @@ return {
     opts = {
       spec = {
         { "<leader>a", group = "AI" },
+        { "<leader>aa", group = "Aider" },
+        { "ga", group = "Aider" },
       },
     },
   },
