@@ -53,6 +53,9 @@ return {
         -- provide the code lenses.
         codelens = {
           enabled = true,
+          throttle = 1000, -- Time in ms to throttle refreshes (default: 250)
+          events = { "BufEnter", "CursorHold", "InsertLeave" }, -- Events that trigger refresh
+          -- Set events = {} to disable automatic refreshes entirely
         },
         folding = {
           enabled = true,
@@ -129,10 +132,50 @@ return {
       -- code lens
       if opts.codelens.enabled and vim.lsp.codelens then
         Util.lsp.on_supports_method(methods.textDocument_codeLens, function(_, buffer)
-          vim.lsp.codelens.refresh()
-          vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+          -- Configuration options with defaults
+          local throttle_ms = opts.codelens.throttle or 250
+          local events = opts.codelens.events or { "BufEnter", "CursorHold", "InsertLeave" }
+
+          -- Skip setup if no events are configured
+          if vim.tbl_isempty(events) then
+            return
+          end
+
+          -- Create a throttled version of the refresh function
+          local timer = vim.uv.new_timer()
+          local debouncing = false
+
+          local throttled_refresh = function()
+            if not debouncing then
+              debouncing = true
+              timer:start(throttle_ms, 0, function()
+                vim.schedule(function()
+                  if vim.api.nvim_buf_is_valid(buffer) then
+                    vim.lsp.codelens.refresh({ bufnr = buffer })
+                  end
+                  debouncing = false
+                end)
+              end)
+            end
+          end
+
+          -- Cleanup timer when buffer is unloaded
+          vim.api.nvim_create_autocmd("BufUnload", {
             buffer = buffer,
-            callback = vim.lsp.codelens.refresh,
+            callback = function()
+              if timer and not timer:is_closing() then
+                timer:close()
+              end
+            end,
+          })
+
+          -- Initial refresh
+          vim.lsp.codelens.refresh({ bufnr = buffer })
+
+          -- Setup autocommands with throttling
+          vim.api.nvim_create_autocmd(events, {
+            buffer = buffer,
+            callback = throttled_refresh,
           })
         end)
       end
