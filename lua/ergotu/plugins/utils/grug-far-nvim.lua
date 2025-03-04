@@ -64,20 +64,5 @@ return {
       mode = { "n", "v" },
       desc = "Search and Replace (Word in Current File)",
     },
-    {
-      "<leader>srw",
-      function()
-        local grug = require("grug-far")
-        grug.open({
-          transient = true,
-          prefills = {
-            paths = vim.fn.expand("%"),
-            search = vim.fn.expand("<cword>"),
-          },
-        })
-      end,
-      mode = { "n", "v" },
-      desc = "Search and Replace (Word in Current File)",
-    },
   },
 }
