@@ -6,6 +6,7 @@ local LazyUtil = require("lazy.core.util")
 ---@field root ergotu.util.root
 ---@field lualine ergotu.util.lualine
 ---@field format ergotu.util.format
+---@field worktrees ergotu.util.worktrees
 local M = {}
 
 setmetatable(M, {

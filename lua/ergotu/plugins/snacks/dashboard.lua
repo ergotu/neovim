@@ -7,7 +7,7 @@ return {
           -- stylua: ignore
           ---@type snacks.dashboard.Item[]
           keys = {
-            { icon = " ", key = "w", desc = "worktrees", action = ":lua Snacks.dashboard.pick('worktrees')" },
+            { icon = " ", key = "w", desc = "Worktrees", action = ":lua Util.worktrees.switch_worktree()" },
             { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
             { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
             { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
