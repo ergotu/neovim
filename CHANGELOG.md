@@ -1,3 +1,18 @@
+## 4.3.0 (2025-03-06)
+
+### Feat
+
+- **treesitter**: add clasp
+- **aider**: configure aider to use architect edit format
+- **diffview**: add keymap to pick all conflicts
+- **util**: add worktree wrapper
+- **lsp**: add throttling to codelens refresh
+
+### Fix
+
+- **picker**: change flash keybind from s to S
+- **grug**: remove duplicate keymap
+
 ## 4.2.0 (2025-02-25)
 
 ### Feat
