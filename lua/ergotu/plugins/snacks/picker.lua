@@ -142,7 +142,7 @@ return {
               input = {
                 keys = {
                   ["<a-s>"] = { "flash", mode = { "n", "i" } },
-                  ["s"] = { "flash" },
+                  ["S"] = { "flash" },
                 },
               },
             },
