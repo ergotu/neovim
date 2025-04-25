@@ -1,26 +1,19 @@
 return {
   {
-    "Juksuu/worktrees.nvim",
+    "ergotu/worktrees.nvim",
+    dev = true,
+    dir = "~/proj/neovim-plugins/worktrees.nvim/main/",
+    dependencies = { "nvim-lua/plenary.nvim" },
     event = "VeryLazy",
-    keys = {
-      {
-        "<leader>gws",
-        function()
-          Snacks.picker.worktrees()
-        end,
-        desc = "Pick Worktree",
-      },
-      {
-        "<leader>gwa",
-        "<cmd>GitWorktreeCreate<cr>",
-        desc = "Create Worktree",
-      },
-      {
-        "<leader>gwA",
-        "<cmd>GitWorktreeCreateExisting<cr>",
-        desc = "Create Worktree (Existing Branch)",
-      },
-    },
     opts = {},
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "WorktreeCreated",
+        group = vim.api.nvim_create_augroup("ergotu", { clear = true }),
+        callback = function(ev)
+          io.popen("direnv allow " .. ev.data.path)
+        end,
+      })
+    end,
   },
 }
