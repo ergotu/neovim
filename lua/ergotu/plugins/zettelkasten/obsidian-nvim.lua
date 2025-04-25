@@ -61,17 +61,6 @@ return {
           path = "~/vaults/personal",
         },
         {
-          name = "aws-for-developers",
-          path = "~/vaults/aws-for-developers",
-          overrides = {
-            preferred_link_style = "markdown",
-            note_id_func = function(title)
-              return title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
-            end,
-            disable_frontmatter = true,
-          },
-        },
-        {
           name = "no-vault",
           path = function()
             return assert(Util.root.cwd())
