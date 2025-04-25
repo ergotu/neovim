@@ -69,6 +69,9 @@ return {
         },
         lualine_x = {
           Snacks.profiler.status(),
+          function()
+            return require("direnv").statusline()
+          end,
           -- stylua: ignore
           {
             function() return require("noice").api.status.mode.get() end,
