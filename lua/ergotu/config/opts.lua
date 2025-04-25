@@ -30,7 +30,7 @@ vim.g.blink_main = false
 vim.g.prettier_needs_config = true
 
 -- for detecting the LSP root
-vim.g.root_lsp_ignore = { "copilot" }
+vim.g.root_lsp_ignore = { "copilot", "ansiblels" }
 
 -- Filetypes to ignore LSP keymaps
 vim.g.keymaps_lsp_ignore_ft = {}
