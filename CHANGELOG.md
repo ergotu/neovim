@@ -1,3 +1,13 @@
+## 4.4.0 (2025-04-25)
+
+### Feat
+
+- **direnv**: add direnv plugin
+- **snacks**: add scratch buffer keymaps
+- **worktrees**: deprecate utils.worktrees in favour of plugin
+- **aider**: update aider to use the new commands
+- **root**: ignore ansiblels for root finding
+
 ## 4.3.0 (2025-03-06)
 
 ### Feat
