@@ -78,6 +78,20 @@ return {
         end,
         desc = "Dismiss All Notifications",
       },
+      {
+        "<leader>.",
+        function()
+          Snacks.scratch()
+        end,
+        desc = "Toggle Scratch Buffer",
+      },
+      {
+        "<leader>S",
+        function()
+          Snacks.scratch.select()
+        end,
+        desc = "Select Scratch Buffer",
+      },
     },
     config = function(_, opts)
       local notify = vim.notify
