@@ -7,7 +7,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        -- nil_ls = {},
+        nil_ls = {},
         nixd = {},
       },
     },
