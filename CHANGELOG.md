@@ -1,3 +1,16 @@
+## 5.0.0 (2025-05-02)
+
+### Feat
+
+- disable mason and related
+- **lang/typescript**: add additional configuration options for vtsls
+- **snippets**: add additional snippets
+- **eslint**: provide customized handlers
+- **zettelkasten**: add presentation plugin
+- **opts**: set winborder to rounded
+- **lang/nix**: enable nil as well
+- enable native document_highlight on nightly
+
 ## 4.4.0 (2025-04-25)
 
 ### Feat
