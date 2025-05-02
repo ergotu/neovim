@@ -113,6 +113,13 @@ return {
         })
       end)
 
+      -- set up document colour highlighting
+      if vim.fn.has("nvim-0.12") == 1 then
+        Util.lsp.on_supports_method(methods.textDocument_documentColor, function(_, buffer)
+          vim.lsp.document_color.enable(true, buffer)
+        end)
+      end
+
       Util.lsp.setup()
       Util.lsp.on_dynamic_capability(Util.lsp.on_attach)
 

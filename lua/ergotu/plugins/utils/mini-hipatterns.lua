@@ -6,6 +6,7 @@ M.hl = {}
 M.plugin = {
   "echasnovski/mini.hipatterns",
   event = "LazyFile",
+  enabled = vim.fn.has("nvim-0.12") == 0,
   opts = function()
     local hi = require("mini.hipatterns")
     return {
