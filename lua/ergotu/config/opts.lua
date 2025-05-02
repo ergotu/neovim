@@ -1,3 +1,5 @@
+vim.g.nix = true
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
