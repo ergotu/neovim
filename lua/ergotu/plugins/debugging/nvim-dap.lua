@@ -14,6 +14,17 @@ return {
   "mfussenegger/nvim-dap",
   dependencies = {
     "rcarriga/nvim-dap-ui",
+    {
+      "igorlfs/nvim-dap-view",
+      enabled = vim.g.dap_ui == "nvim-dap-view",
+      opts = {
+        winbar = {
+          sections = { "scopes", "breakpoints", "threads", "exceptions", "repl", "console" },
+          default_section = "scopes",
+        },
+        windows = { height = 18 },
+      },
+    },
     -- Virtual text for the debugger
     {
       "theHamsta/nvim-dap-virtual-text",
@@ -57,6 +68,26 @@ return {
         "Dap" .. name,
         { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
       )
+    end
+
+    -- Automatically open ui when new session is started
+    if Util.has("dap-view") then
+      local dap = require("dap")
+      local dv = require("dap-view")
+
+      -- Automatically open the UI when a new debug session is created.
+      dap.listeners.before.attach["dap-view-config"] = function()
+        dv.open()
+      end
+      dap.listeners.before.launch["dap-view-config"] = function()
+        dv.open()
+      end
+      dap.listeners.before.event_terminated["dap-view-config"] = function()
+        dv.close()
+      end
+      dap.listeners.before.event_exited["dap-view-config"] = function()
+        dv.close()
+      end
     end
 
     --setup dap config by VsCode launch.json file

@@ -29,6 +29,8 @@ vim.g.use_markview = false
 
 vim.g.blink_main = false
 
+vim.g.dap_ui = "nvim-dap-view"
+
 vim.g.prettier_needs_config = true
 
 -- for detecting the LSP root
