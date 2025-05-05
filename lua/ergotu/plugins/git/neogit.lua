@@ -33,7 +33,7 @@ return {
       process_spinner = false,
       graph_style = "kitty",
       kind = "split_below_all",
-      auto_show_console = false,
+      auto_show_console = true,
       integrations = {
         telescope = Util.has("telescope.nvim"),
         fzf_lua = Util.has("fzf-lua"),
