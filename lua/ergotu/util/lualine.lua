@@ -200,10 +200,7 @@ function M.get_attached_clients()
     end
   end
 
-  local client_names_str = table.concat(buf_client_names, ", ")
-  local language_servers = string.format("[%s]", client_names_str)
-
-  return language_servers
+  return "󱉶 " .. table.concat(buf_client_names, ", ")
 end
 
 return M
