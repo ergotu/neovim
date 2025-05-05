@@ -1,5 +1,6 @@
 return {
   "jay-babu/mason-nvim-dap.nvim",
+  enabled = not vim.g.nix,
   dependencies = {
     "mason.nvim",
   },
