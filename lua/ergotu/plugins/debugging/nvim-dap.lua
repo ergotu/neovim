@@ -90,6 +90,11 @@ return {
       end
     end
 
+    -- Use overseerr for running tasks
+    if Util.has("overseer") then
+      require("overseer").enable_dap()
+    end
+
     --setup dap config by VsCode launch.json file
     local vscode = require("dap.ext.vscode")
     local json = require("plenary")
