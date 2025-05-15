@@ -1,3 +1,20 @@
+## 5.1.0 (2025-05-15)
+
+### Feat
+
+- **keymaps**: show lang when opening treesitter inspect
+- **lang**: add dotnet support
+- **lang/nix**: add linter configuration
+- **debugging**: enable the overseer dap implementation when dap loads
+- **debugging**: disable mason-nvim-dap when running in nix
+- **debugging**: use nvim-dap-view
+
+### Fix
+
+- **envrc**: fix the flake invocation for nix-direnv
+- **neogit**: reenable console auto show
+- **lualine**: change how the client list looks in the statusline
+
 ## 5.0.0 (2025-05-02)
 
 ### Feat
