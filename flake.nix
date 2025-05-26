@@ -144,6 +144,9 @@
               # Lua related packages
               pkgs.selene
               pkgs.luajitPackages.luacheck
+
+              # Additional packages
+              pkgs.nodePackages.cspell
             ];
         };
       };
