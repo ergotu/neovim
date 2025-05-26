@@ -139,6 +139,10 @@
               # Nix LSP and formatter
               pkgs.nixd
               pkgs.alejandra
+
+              # Lua related packages
+              pkgs.selene
+              pkgs.luajitPackages.luacheck
             ];
         };
       };
