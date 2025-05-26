@@ -115,6 +115,7 @@
             src = ./.;
             hooks = {
               statix.enable = true;
+              deadnix.enable = true;
               alejandra.enable = true;
               stylua.enable = true;
               commitizen.enable = true;
