@@ -15,7 +15,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     version = false, -- last release is way too old and doesn't work on Windows
-    build = ":TSUpdate",
+    build = require("nixCatsUtils").lazyAdd(":TSUpdate"),
     event = { "LazyFile" },
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     init = function(plugin)
@@ -32,12 +32,13 @@ return {
       { "<c-space>", desc = "Increment Selection" },
       { "<bs>", desc = "Decrement Selection", mode = "x" },
     },
-    opts_extend = { "ensure_installed" },
+    opts_extend = require("nixCatsUtils").lazyAdd({ "ensure_installed" }, false),
     ---@type TSConfig
     ---@diagnostic disable-next-line: missing-fields
     opts = {
       highlight = { enable = true },
       indent = { enable = true },
+      auto_install = require("nixCatsUtils").lazyAdd(true, false),
       ensure_installed = {
         "bash",
         "c",
@@ -87,6 +88,7 @@ return {
     config = function(_, opts)
       if type(opts.ensure_installed) == "table" then
         opts.ensure_installed = Util.dedup(opts.ensure_installed)
+        opts.ensure_installed = require("nixCatsUtils").lazyAdd(opts.ensure_installed, false)
       end
       require("nvim-treesitter.configs").setup(opts)
     end,
