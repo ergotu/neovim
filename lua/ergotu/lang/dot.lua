@@ -19,11 +19,6 @@ return {
     "williamboman/mason.nvim",
     opts = { ensure_installed = { "shellcheck" } },
   },
-  {
-    "bezhermoso/tree-sitter-ghostty",
-    lazy = true,
-    build = "make nvim_install",
-  },
   -- add some stuff to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
