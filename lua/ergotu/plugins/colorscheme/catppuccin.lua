@@ -6,21 +6,20 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      transparent_background = false,
-      flavor = "macchiato",
-      highlight_overrides = {
-        all = function(colors)
-          return {
-            NormalFloat = {
-              fg = colors.text,
-              bg = colors.none,
-            },
-          }
-        end,
+      flavor = "auto",
+      background = {
+        light = "latte",
+        dark = "mocha",
       },
+      transparent_background = true,
+      float = {
+        transparent = false,
+      },
+      highlight_overrides = {},
       dim_inactive = {
-        enabled = true,
+        enabled = false,
       },
+      auto_integrations = true,
       integrations = {
         aerial = true,
         alpha = true,
@@ -72,7 +71,7 @@ return {
         overseer = true,
         rainbow_delimiters = true,
         semantic_tokens = true,
-        snacks = true,
+        snacks = { enabled = true, scope_color = "mauve" },
         telescope = true,
         treesitter = true,
         treesitter_context = true,
