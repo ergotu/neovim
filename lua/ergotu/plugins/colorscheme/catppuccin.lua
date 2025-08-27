@@ -13,7 +13,7 @@ return {
       },
       transparent_background = true,
       float = {
-        transparent = false,
+        transparent = true,
       },
       highlight_overrides = {},
       dim_inactive = {
