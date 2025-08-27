@@ -2,7 +2,7 @@ return {
   {
     "ergotu/worktrees.nvim",
     dev = true,
-    dir = "~/proj/neovim-plugins/worktrees.nvim/main/",
+    dir = "~/Documents/projects/neovim-plugins/worktrees.nvim/main/",
     dependencies = { "nvim-lua/plenary.nvim" },
     event = "VeryLazy",
     opts = {},
