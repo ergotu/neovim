@@ -21,12 +21,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
-    # neovim-nightly-overlay = {
-    #   url = "github:nix-community/neovim-nightly-overlay";
-    # };
-    #
-    #
-    #
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+    };
+
     plugins-clasp-nvim = {
       url = "github:xzbdmw/clasp.nvim";
       flake = false;
@@ -344,10 +342,33 @@
           suffix-path = true;
           suffix-LD = true;
           wrapRc = true;
-          # IMPORTANT:
-          # your alias may not conflict with your other packages.
-          # aliases = [ "vim" ];
+          aliases = ["vim" "vi"];
           # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+          hosts.python3.enable = true;
+          hosts.node.enable = true;
+        };
+        # and a set of categories that you want
+        # (and other information to pass to lua)
+        categories = {
+          general = true;
+        };
+        extra = {};
+      };
+
+      nvim-nightly = {
+        pkgs,
+        name,
+        mkPlugin,
+        ...
+      }: {
+        # they contain a settings set defined above
+        # see :help nixCats.flake.outputs.settings
+        settings = {
+          suffix-path = true;
+          suffix-LD = true;
+          wrapRc = true;
+          aliases = ["vim" "vi"];
+          neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
           hosts.python3.enable = true;
           hosts.node.enable = true;
         };
