@@ -376,6 +376,7 @@
               suffix-LD = true;
               wrapRc = true;
               aliases = [
+                "nvim"
                 "vim"
                 "vi"
               ];

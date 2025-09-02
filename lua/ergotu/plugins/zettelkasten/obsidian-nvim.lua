@@ -11,6 +11,7 @@ return {
   {
     "epwalsh/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit
+    enabled = false,
     lazy = true,
     event = {
       "BufReadPre " .. vim.fn.expand("~") .. "/vaults/personal/*.md",
