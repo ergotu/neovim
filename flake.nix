@@ -54,6 +54,12 @@
       flake = false;
     };
 
+
+    plugins-worktrees-nvim = {
+      url = "git+ssh://git@github.com/ergotu/worktrees.nvim.git?ref=main";
+      flake = false;
+    };
+
     # see :help nixCats.flake.inputs
     # If you want your plugin to be loaded by the standard overlay,
     # i.e. if it wasnt on nixpkgs, but doesnt have an extra build step.
@@ -275,6 +281,10 @@
               trouble-nvim
               ts-comments-nvim
               which-key-nvim
+              {
+                plugin = pkgs.neovimPlugins.worktrees-nvim;
+                name = "worktrees.nvim";
+              }
               yanky-nvim
             ];
           };

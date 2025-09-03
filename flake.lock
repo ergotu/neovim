@@ -324,6 +324,23 @@
         "type": "github"
       }
     },
+    "plugins-worktrees-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1742366690,
+        "narHash": "sha256-zJn+/Av5+a1IZCl8A5N0T42U9ORUl4uECIf2ADVYl+I=",
+        "ref": "main",
+        "rev": "8b82f007e804b8681a52cf21d3705a8446d74f55",
+        "revCount": 15,
+        "type": "git",
+        "url": "ssh://git@github.com/ergotu/worktrees.nvim.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "ssh://git@github.com/ergotu/worktrees.nvim.git"
+      }
+    },
     "root": {
       "inputs": {
         "neovim-nightly-overlay": "neovim-nightly-overlay",
@@ -334,7 +351,8 @@
         "plugins-helm-ls-nvim": "plugins-helm-ls-nvim",
         "plugins-inc-rename-nvim": "plugins-inc-rename-nvim",
         "plugins-nvim-aider": "plugins-nvim-aider",
-        "plugins-nvim-ansible": "plugins-nvim-ansible"
+        "plugins-nvim-ansible": "plugins-nvim-ansible",
+        "plugins-worktrees-nvim": "plugins-worktrees-nvim"
       }
     },
     "treefmt-nix": {
