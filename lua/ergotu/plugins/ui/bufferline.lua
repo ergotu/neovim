@@ -17,7 +17,7 @@ return {
     { "]B", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer next" },
   },
   opts = {
-    highlights = require("catppuccin.groups.integrations.bufferline").get_theme(),
+    highlights = require("catppuccin.special.bufferline").get_theme(),
     options = {
       -- stylua: ignore
       close_command = function(n) Snacks.bufdelete(n) end,
