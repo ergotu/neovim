@@ -40,7 +40,7 @@ return {
         neogit = true,
         render_markdown = true,
         mini = true,
-        native_lsp = {
+        lsp_styles = {
           enabled = true,
           virtual_text = {
             errors = { "italic" },
