@@ -205,16 +205,15 @@
       "locked": {
         "lastModified": 1742366690,
         "narHash": "sha256-zJn+/Av5+a1IZCl8A5N0T42U9ORUl4uECIf2ADVYl+I=",
-        "ref": "main",
+        "owner": "ergotu",
+        "repo": "worktrees.nvim",
         "rev": "8b82f007e804b8681a52cf21d3705a8446d74f55",
-        "revCount": 15,
-        "type": "git",
-        "url": "ssh://git@github.com/ergotu/worktrees.nvim.git"
+        "type": "github"
       },
       "original": {
-        "ref": "main",
-        "type": "git",
-        "url": "ssh://git@github.com/ergotu/worktrees.nvim.git"
+        "owner": "ergotu",
+        "repo": "worktrees.nvim",
+        "type": "github"
       }
     },
     "root": {

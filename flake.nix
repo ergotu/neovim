@@ -56,7 +56,7 @@
 
 
     plugins-worktrees-nvim = {
-      url = "git+ssh://git@github.com/ergotu/worktrees.nvim.git?ref=main";
+      url = "github:ergotu/worktrees.nvim";
       flake = false;
     };
 
