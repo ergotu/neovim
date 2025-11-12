@@ -221,13 +221,16 @@ return {
       )
 
       local function setup(server)
+        -- `server_opts` are the user's overrides for this server.
         local server_opts = vim.tbl_deep_extend("force", {
           capabilities = vim.deepcopy(capabilities),
         }, servers[server] or {})
+
         if server_opts.enabled == false then
           return
         end
 
+        -- Handle manual setup overrides.
         if opts.setup[server] then
           if opts.setup[server](server, server_opts) then
             return
@@ -237,7 +240,25 @@ return {
             return
           end
         end
-        require("lspconfig")[server].setup(server_opts)
+
+        -- Get the default server configuration from lspconfig.
+        local lspconfig_util = require("lspconfig.util")
+        local success, server_config = pcall(lspconfig_util.get_config, server)
+
+        if not success or not server_config then
+          -- This server is not known to lspconfig.
+          -- Assume it's a custom config and configure it directly.
+          vim.lsp.config(server, server_opts)
+        else
+          -- This server is known to lspconfig.
+          -- Merge user overrides with the default config.
+          -- This mimics what `require("lspconfig")[server].setup()` does.
+          server_config.on_new_config(server_opts)
+          vim.lsp.config(server, server_config)
+        end
+
+        -- Enable the server.
+        vim.lsp.enable(server)
       end
 
       -- get all the servers that are available through mason-lspconfig
