@@ -12,12 +12,12 @@ vim.api.nvim_create_autocmd("FileType", {
 
     if vim.bo[buf].filetype ~= "bigfile" and pcall(vim.treesitter.start, buf) then
       vim.api.nvim_buf_call(buf, function()
-        vim.wo[0][0].foldmethod = "expr"
-        vim.wo[0][0].foldexpr = "v:lua.require'ergotu.util'.foldexpr()"
+        vim.wo[0].foldmethod = "expr"
+        vim.wo[0].foldexpr = "v:lua.require'ergotu.util'.foldexpr()"
         -- vim.cmd.normal("zx")
       end)
     else
-      vim.wo[0][0].foldmethod = "indent"
+      vim.wo[0].foldmethod = "indent"
     end
   end,
 })
@@ -178,6 +178,40 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
     if vim.wo.cursorline then
       vim.w.auto_cursorline = true
       vim.wo.cursorline = false
+    end
+  end,
+})
+
+-- Ensure filetype is detected for real files opened from dashboards
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  group = augroup("ensure_filetype"),
+  desc = "Ensure filetype is detected for real files opened from dashboards",
+  callback = function(args)
+    local b = args.buf
+    if vim.b[b].ensure_filetype_ran or vim.bo[b].buftype ~= "" or vim.bo[b].filetype ~= "" then
+      return
+    end
+    local name = vim.api.nvim_buf_get_name(b)
+    if name ~= "" and vim.fn.filereadable(name) == 1 then
+      vim.b[b].ensure_filetype_ran = true
+      -- Notify and force detection once for real files without a filetype
+      local display = vim.fn.fnamemodify(name, ":~:.")
+      vim.schedule(function()
+        local before = vim.bo[b].filetype
+        vim.cmd("filetype detect")
+        local after = vim.bo[b].filetype
+        if after ~= before then
+          vim.notify(
+            string.format(
+              "ensure_filetype: detected empty filetype for %s; ran :filetype detect (%s -> %s)",
+              display,
+              before ~= "" and before or "<none>",
+              after ~= "" and after or "<none>"
+            ),
+            vim.log.levels.INFO
+          )
+        end
+      end)
     end
   end,
 })
