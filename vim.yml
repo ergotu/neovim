@@ -1,0 +1,35 @@
+---
+base: lua51
+
+globals:
+  # Standard Lua/Neovim globals
+  vim:
+    any: true
+  jit:
+    any: true
+  assert:
+    any: true
+
+  # Test framework globals
+  describe:
+    any: true
+  it:
+    any: true
+  before_each:
+    any: true
+  after_each:
+    any: true
+
+  # Custom application globals
+  Ergovim:
+    any: true
+  LZN:
+    any: true
+  Snacks:
+    any: true
+
+  # Plugin-specific globals
+  nvim_bufferline:
+    any: true
+  MiniHipatterns:
+    any: true
