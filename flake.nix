@@ -1,154 +1,292 @@
 {
-  description = "Provide nixosModules for ergotu/neovim";
+  description = "A custom neovim configuration flake using mnw";
 
   inputs = {
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-    };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
-    home-manager = {
-      url = "github:nix-community/home-manager";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    mnw.url = "github:Gerg-L/mnw";
+
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+
+    lzn-auto-require = {
+      url = "github:horriblename/lzn-auto-require";
+      flake = false;
     };
-    devenv = {
-      url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
+
+    direnv-nvim = {
+      url = "github:NotAShelf/direnv.nvim";
+      flake = false;
     };
-    nix2container = {
-      url = "github:nlewo/nix2container";
-      inputs = {nixpkgs.follows = "nixpkgs";};
+
+    worktrees-nvim = {
+      url = "github:ergotu/worktrees.nvim";
+      flake = false;
     };
   };
 
-  outputs = inputs @ {
+  outputs = {
     self,
-    flake-parts,
-    ...
-  }:
-    flake-parts.lib.mkFlake {inherit inputs;}
-    {
-      imports = [
-        inputs.devenv.flakeModule
-      ];
-
-      flake = {
-        homeManagerModules = {
-          nvimdots = ./nixos;
+    nixpkgs,
+    mnw,
+    neovim-nightly-overlay,
+    lzn-auto-require,
+    direnv-nvim,
+    worktrees-nvim,
+  }: let
+    systems = [
+      "x86_64-linux"
+      "aarch64-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+  in {
+    packages = forAllSystems (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs-nightly = import nixpkgs {
+          inherit system;
+          overlays = [neovim-nightly-overlay.overlays.default];
         };
-      };
 
-      systems = ["aarch64-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin"];
-      perSystem = {
-        system,
-        pkgs,
-        ...
-      }: let
-        extraPackages = [
-          pkgs.ast-grep
-          pkgs.doq
-          pkgs.tree-sitter
-          pkgs.cargo
-          pkgs.zig
-          pkgs.cmake
-          pkgs.curl
-          pkgs.fd
-          pkgs.gcc
-          pkgs.git
-          pkgs.gnumake
-          pkgs.go
-          pkgs.lua51Packages.luarocks
-          pkgs.ninja
-          pkgs.ripgrep
-          pkgs.pkg-config
-          pkgs.yarn
+        # TODO: remove this when next is merged to main
+        vscode-diff-nvim-next = pkgs.vimPlugins.vscode-diff-nvim.overrideAttrs (_: rec {
+          version = "2.0.0-next.12";
+          src = pkgs.fetchFromGitHub {
+            owner = "esmuellert";
+            repo = "vscode-diff.nvim";
+            rev = "v${version}";
+            hash = "sha256-IIZSG3PPgH7P2T36gyH7RXban6M+pMKKTxtCeSjFRA8=";
+          };
+        });
 
-          pkgs.dwt1-shell-color-scripts
+        runtimeDeps = with pkgs; [
+          lazygit
+
+          # Telescope/file finders usually need these
+          ripgrep
+          fd
+
+          # Common requirements
+          git
+          curl
+
+          # Image utils
+          imagemagick
+          ghostscript
+          tectonic
+          nodePackages.mermaid-cli
         ];
-        packagesPath = pkgs.lib.makeBinPath extraPackages;
 
-        initFile = pkgs.writeTextFile {
-          name = "init.lua";
-          text =
-            #lua
-            ''
-              vim.loader.enable()
+        # Factory function to create ergovim with any Neovim version
+        mkErgovim = nvimPkg: mnw.lib.wrap pkgs {
+          neovim = nvimPkg;
 
-              -- lazy.nvim resets rtp for performance reasons, so we need to pass the path of the configuration
-              vim.g.rtp_path = "${./.}"
-              -- add source to rtp_path so we can load our configuration
-              vim.opt.rtp:append(vim.g.rtp_path)
+          aliases = [
+            "vi"
+            "vim"
+          ];
 
-              -- load configuration
-              require("ergotu")
+          providers = {
+            nodeJs.enable = false;
+            perl.enable = false;
+            python3.enable = false;
+            ruby.enable = false;
+          };
+
+          # Set custom app name
+          appName = "ergovim";
+
+          # Add runtime dependencies to PATH
+          extraBinPath = runtimeDeps;
+
+          plugins = with pkgs.vimPlugins; {
+            # Plugins loaded immediately at startup
+            start = [
+              mini-icons
+              friendly-snippets
+              snacks-nvim
+              lz-n
+
+              (pkgs.vimUtils.buildVimPlugin {
+                name = "lzn-auto-require";
+                src = lzn-auto-require;
+                doCheck = false;
+              })
+            ];
+            startAttrs = {
+              nvim-treesitter = null;
+              lspconfig-nvim = null;
+              nvim-dap = null;
+              neotest = null;
+            };
+
+            # Plugins loaded lazily via lz.n
+            opt = [
+              # LSP
+              lazydev-nvim
+              lazy-lsp-nvim
+
+              # Completion
+              blink-cmp
+
+              # Formatting & Linting
+              conform-nvim
+              nvim-lint
+
+              # Debugging (DAP)
+              nvim-dap
+              nvim-dap-ui
+              nvim-dap-virtual-text
+
+              # Testing
+              neotest
+              neotest-go
+              neotest-rust
+              neotest-plenary
+              neotest-jest
+              neotest-vitest
+
+              # Task runner
+              overseer-nvim
+
+              # Treesitter
+              nvim-treesitter.withAllGrammars
+              nvim-treesitter-context
+              nvim-treesitter-textobjects
+              nvim-ts-autotag
+              treesj
+
+              # Colorscheme
+              catppuccin-nvim
+
+              # UI
+              bufferline-nvim
+              lualine-nvim
+              noice-nvim
+              dropbar-nvim
+              indent-blankline-nvim
+              rainbow-delimiters-nvim
+
+              # Editor
+              flash-nvim
+              grug-far-nvim
+              smart-splits-nvim
+              todo-comments-nvim
+              ts-comments-nvim
+              trouble-nvim
+              inc-rename-nvim
+
+              # Git
+              neogit
+              gitsigns-nvim
+              diffview-nvim
+              vscode-diff-nvim-next
+              (pkgs.vimUtils.buildVimPlugin {
+                name = "worktrees.nvim";
+                src = worktrees-nvim;
+                doCheck = false;
+              })
+
+              # Util
+              which-key-nvim
+              persistence-nvim
+              nvim-sops
+              (pkgs.vimUtils.buildVimPlugin {
+                name = "direnv.nvim";
+                src = direnv-nvim;
+                doCheck = false;
+              })
+
+              # Mini plugins
+              mini-ai
+              mini-surround
+              mini-pairs
+              mini-hipatterns
+
+              # Language-specific
+              SchemaStore-nvim # JSON/YAML schemas
+              clangd_extensions-nvim # C/C++
+              omnisharp-extended-lsp-nvim # C#
+              markdown-preview-nvim # Markdown
+              ansible-vim # Ansible
+            ];
+
+            # Development plugin for local configuration
+            dev.ergovim-config = {
+              pure = pkgs.lib.fileset.toSource {
+                root = ./config;
+                fileset = pkgs.lib.fileset.fromSource (pkgs.lib.sources.cleanSource ./config);
+              };
+              impure = "/home/ergotu/Documents/Projects/neovim2/config";
+            };
+          };
+
+          extraBuilderArgs = {
+            doInstallCheck = false;
+            installCheckPhase = ''
+              export HOME="$(mktemp -d)"
+              export NVIM_SILENT=1
+              echo "Verifying Neovim configuration loads correctly..."
+
+              # Capture output to variable
+              output=$($out/bin/nvim --headless '+lua require("ergotu.health").loaded_exit()' '+q' 2>&1)
+              exit_code=$?
+
+              if [ $exit_code -ne 0 ]; then
+                echo "✗ Configuration failed to load"
+                echo "Error output:"
+                echo "$output"
+                exit 1
+              else
+                echo "✓ Configuration loaded successfully"
+              fi
             '';
+          };
         };
 
-        neovimConfig =
-          pkgs.neovimUtils.makeNeovimConfig {
-            customRC = "luafile ${initFile}";
-          }
-          // {
-            viAlias = true;
-            vimAlias = true;
-            withNodeJs = false;
-            withPython3 = false;
-            withRuby = false;
-            wrapperArgs = pkgs.lib.escapeShellArgs ["--suffix" "PATH" ":" "${packagesPath}"];
-            extraPackages = [pkgs.imagemagick];
-            extraLuaPackages = ps: [ps.magick];
-          };
+        # Instantiate both stable and nightly variants
+        ergovim = mkErgovim pkgs.neovim-unwrapped;
+        ergovim-nightly = mkErgovim pkgs-nightly.neovim;
       in {
-        packages = {
-          default = self.packages.${system}.neovim;
+        default = ergovim;
+        inherit ergovim ergovim-nightly;
+      }
+    );
 
-          neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped neovimConfig;
-        };
+    devShells = forAllSystems (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+        runtimeDeps = with pkgs; [
+          # Language Servers (LSPs)
+          lua-language-server
+          nixd
+          nil
 
-        devenv.shells.default = {
-          pre-commit = {
-            src = ./.;
-            hooks = {
-              statix.enable = true;
-              deadnix.enable = true;
-              alejandra.enable = true;
-              stylua.enable = true;
-              commitizen.enable = true;
-            };
-          };
-          enterShell = ''
-            export PATH=${packagesPath}:$PATH
-          '';
-          env.NIX_PATH = "nixpkgs=${inputs.nixpkgs}";
+          # Formatters
+          alejandra
+          stylua
 
-          languages = {
-            nix = {
-              enable = true;
-              lsp.package = pkgs.nixd;
-            };
-            lua.enable = true;
-          };
+          # Linters
+          selene
+          statix
+          deadnix
 
-          packages =
-            extraPackages
+          # Task runner
+          just
+        ];
+      in {
+        default = pkgs.mkShell {
+          buildInputs =
+            runtimeDeps
             ++ [
-              # Nix LSP and formatter
-              pkgs.nixd
-              pkgs.alejandra
-
-              # Lua related packages
-              pkgs.selene
-              pkgs.luajitPackages.luacheck
-
-              # Additional packages
-              pkgs.nodePackages.cspell
+              # Include the dev mode Neovim with live config reloading
+              self.packages.${system}.ergovim.devMode
             ];
         };
-      };
-    };
+      }
+    );
+  };
 }
