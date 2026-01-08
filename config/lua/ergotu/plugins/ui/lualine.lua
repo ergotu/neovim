@@ -29,6 +29,9 @@ return {
         vim.o.laststatus = 0
       end
     end,
+    before = function()
+      require("ergotu.util.lualine.jj").setup()
+    end,
     after = function()
       -- PERF: we don't need this lualine require madness 🤷
       local lualine_require = require("lualine_require")
@@ -60,10 +63,40 @@ return {
         },
         sections = {
           lualine_a = { "mode" },
-          lualine_b = { "branch" },
+          lualine_b = {
+            {
+              function()
+                return require("ergotu.util.lualine.jj").change_id()
+              end,
+              cond = function()
+                return require("ergotu.util.lualine.jj").in_repo()
+              end,
+            },
+            {
+              "branch",
+              cond = function()
+                return not require("ergotu.util.lualine.jj").in_repo()
+              end,
+            },
+          },
 
           lualine_c = {
-            -- LazyVim.lualine.root_dir(),
+            {
+              function()
+                return require("ergotu.util.lualine.jj").indicators()
+              end,
+              cond = function()
+                return require("ergotu.util.lualine.jj").in_repo()
+              end,
+            },
+            {
+              function()
+                return require("ergotu.util.lualine.jj").description()
+              end,
+              cond = function()
+                return require("ergotu.util.lualine.jj").in_repo()
+              end,
+            },
             {
               "diagnostics",
               symbols = {

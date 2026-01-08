@@ -1,4 +1,5 @@
 ---@class ergotu.util.lualine
+---@field jj ergotu.util.lualine.jj
 local M = {}
 
 ---@alias PrettyPathOpts {max_dirs?: number, separator?: string, newfile_status?: string, modified_status?: string, readonly_status?: string}
