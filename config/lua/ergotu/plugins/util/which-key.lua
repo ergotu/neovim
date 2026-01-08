@@ -2,6 +2,22 @@ return {
   {
     "which-key.nvim",
     event = "DeferredUIEnter",
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Keymaps (which-key)",
+      },
+      {
+        "<c-w><space>",
+        function()
+          require("which-key").show({ keys = "<c-w>", loop = true })
+        end,
+        desc = "Window Hydra Mode (which-key)",
+      },
+    },
     after = function()
       require("which-key").setup({
         defaults = {},

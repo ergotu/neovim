@@ -24,6 +24,11 @@
       url = "github:ergotu/worktrees.nvim/next";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hunk-nvim = {
+      url = "github:julienvincent/hunk.nvim";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -34,6 +39,7 @@
     lzn-auto-require,
     direnv-nvim,
     worktrees-nvim,
+    hunk-nvim,
   }: let
     systems = [
       "x86_64-linux"
@@ -186,6 +192,11 @@
                 diffview-nvim
                 vscode-diff-nvim-next
                 worktrees-nvim.packages.${system}.default
+                (pkgs.vimUtils.buildVimPlugin {
+                  name = "hunk.nvim";
+                  src = hunk-nvim;
+                  doCheck = false;
+                })
 
                 # Util
                 which-key-nvim

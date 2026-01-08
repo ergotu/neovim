@@ -75,6 +75,22 @@
         "type": "github"
       }
     },
+    "hunk-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763143018,
+        "narHash": "sha256-GvqD9IggdhZUCzm1BF2yz215AYpJujfOtrJPye4M1O0=",
+        "owner": "julienvincent",
+        "repo": "hunk.nvim",
+        "rev": "029566b4414f79508e6763a80ab6c7eda4a6dd97",
+        "type": "github"
+      },
+      "original": {
+        "owner": "julienvincent",
+        "repo": "hunk.nvim",
+        "type": "github"
+      }
+    },
     "lzn-auto-require": {
       "flake": false,
       "locked": {
@@ -186,6 +202,7 @@
     "root": {
       "inputs": {
         "direnv-nvim": "direnv-nvim",
+        "hunk-nvim": "hunk-nvim",
         "lzn-auto-require": "lzn-auto-require",
         "mnw": "mnw",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
