@@ -213,6 +213,37 @@ timer:start(2000, 0, function()
 end)
 
 require("ergotu.config.snacks").setup()
+require("flatten").setup({
+  hooks = {
+    post_open = function(opts)
+      local bufnr, winnr, ft, is_blocking, is_diff =
+        opts.bufnr, opts.winnr, opts.filetype, opts.is_blocking, opts.is_diff
+
+      if is_blocking then
+        Snacks.terminal.toggle()
+      elseif not is_diff then
+        vim.api.nvim_set_current_win(winnr)
+      end
+
+      if ft == "gitcommit" or ft == "gitrebase" or ft == "jjdescription" then
+        local version = vim.api.nvim_buf_get_changedtick(bufnr)
+
+        vim.api.nvim_create_autocmd("BufWritePost", {
+          buffer = bufnr,
+          callback = vim.schedule_wrap(function()
+            if vim.api.nvim_buf_get_changedtick(bufnr) == version then
+              return
+            end
+            Snacks.bufdelete.delete(bufnr)
+          end),
+        })
+      end
+    end,
+    block_end = vim.schedule_wrap(function(_)
+      Snacks.terminal.toggle()
+    end),
+  },
+})
 
 LZN = require("lz.n")
 
