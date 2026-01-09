@@ -100,6 +100,7 @@ return {
                 return package.loaded["overseer"]
               end,
             },
+            "lsp_status",
             -- stylua: ignore
 						{
 							"diff",
