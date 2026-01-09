@@ -113,6 +113,7 @@
               # Plugins loaded immediately at startup
               start = [
                 mini-icons
+                flatten-nvim
                 friendly-snippets
                 snacks-nvim
                 lz-n
