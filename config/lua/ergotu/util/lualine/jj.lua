@@ -103,7 +103,10 @@ local function start_update(root)
   -- 3) indicators (space-separated, omit empties)
   local template = [[
     change_id.short(8)
-    ++ "\n" ++ description.first_line()
+    ++ "\n" ++ coalesce(
+      truncate_end(48, description.first_line(), "…"),
+      "(no description set)",
+    )
     ++ "\n" ++ separate(" ",
       if(conflict, " conflict", ""),
       if(empty, "󰟢 empty", ""),
