@@ -1,6 +1,7 @@
 return {
   {
     "lazy-lsp.nvim",
+    enabled = false,
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     before = function()
       LZN.trigger_load("nvim-lspconfig")
