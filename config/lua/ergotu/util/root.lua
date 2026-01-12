@@ -10,7 +10,7 @@ local M = setmetatable({}, {
 M.cache = {}
 
 ---@type string[] Root detection patterns
-M.spec = { ".git", "lua", "package.json", "Cargo.toml", "pyproject.toml" }
+M.spec = { ".jj", ".git", "lua", "package.json", "Cargo.toml", "pyproject.toml" }
 
 --- Detect root directory using LSP workspace folders
 ---@param buf? number Buffer number (default: current buffer)

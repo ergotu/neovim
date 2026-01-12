@@ -70,6 +70,7 @@
 
         runtimeDeps = with pkgs; [
           lazygit
+          jjui
 
           # Telescope/file finders usually need these
           ripgrep

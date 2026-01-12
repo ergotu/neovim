@@ -233,6 +233,18 @@ local function set_keys()
   map("n", "<leader>uC", function()
     Snacks.picker.colorschemes()
   end, "Colorschemes")
+
+  -- Jujutsu
+  map("n", "<leader>jj", function()
+    Snacks.terminal.open("jjui", {
+      win = {
+        height = 0.6,
+        width = 0.8,
+        border = true,
+      },
+      interactive = true,
+    })
+  end, "jjui")
 end
 
 function M.setup()
