@@ -91,6 +91,22 @@
         "type": "github"
       }
     },
+    "jj-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769364906,
+        "narHash": "sha256-N1f9Gjmbev11F7Cp60zYodY/NkZXJQreVbnsiY9mfOg=",
+        "owner": "nicolasgb",
+        "repo": "jj.nvim",
+        "rev": "463fd0876aa2e3e991d2453e24557aa956d974d9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nicolasgb",
+        "repo": "jj.nvim",
+        "type": "github"
+      }
+    },
     "lzn-auto-require": {
       "flake": false,
       "locked": {
@@ -203,6 +219,7 @@
       "inputs": {
         "direnv-nvim": "direnv-nvim",
         "hunk-nvim": "hunk-nvim",
+        "jj-nvim": "jj-nvim",
         "lzn-auto-require": "lzn-auto-require",
         "mnw": "mnw",
         "neovim-nightly-overlay": "neovim-nightly-overlay",

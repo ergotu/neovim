@@ -29,6 +29,11 @@
       url = "github:julienvincent/hunk.nvim";
       flake = false;
     };
+
+    jj-nvim = {
+      url = "github:nicolasgb/jj.nvim";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -40,6 +45,7 @@
     direnv-nvim,
     worktrees-nvim,
     hunk-nvim,
+    jj-nvim,
   }: let
     systems = [
       "x86_64-linux"
@@ -197,6 +203,11 @@
                 (pkgs.vimUtils.buildVimPlugin {
                   name = "hunk.nvim";
                   src = hunk-nvim;
+                  doCheck = false;
+                })
+                (pkgs.vimUtils.buildVimPlugin {
+                  name = "jj.nvim";
+                  src = jj-nvim;
                   doCheck = false;
                 })
 
