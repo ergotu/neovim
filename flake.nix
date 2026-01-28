@@ -63,17 +63,6 @@
           overlays = [neovim-nightly-overlay.overlays.default];
         };
 
-        # TODO: remove this when next is merged to main
-        vscode-diff-nvim-next = pkgs.vimPlugins.vscode-diff-nvim.overrideAttrs (_: rec {
-          version = "2.0.0-next.12";
-          src = pkgs.fetchFromGitHub {
-            owner = "esmuellert";
-            repo = "vscode-diff.nvim";
-            rev = "v${version}";
-            hash = "sha256-IIZSG3PPgH7P2T36gyH7RXban6M+pMKKTxtCeSjFRA8=";
-          };
-        });
-
         runtimeDeps = with pkgs; [
           lazygit
           jjui
@@ -198,7 +187,7 @@
                 neogit
                 gitsigns-nvim
                 diffview-nvim
-                vscode-diff-nvim-next
+                codediff-nvim
                 worktrees-nvim.packages.${system}.default
                 (pkgs.vimUtils.buildVimPlugin {
                   name = "hunk.nvim";
