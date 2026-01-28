@@ -7,17 +7,18 @@ local ergotu_dir = vim.fn.fnamemodify(init_path, ":h")
 
 -- Helper to format error messages with context
 local function format_error(module_name, err, category)
+  local err_str = tostring(err)
   local error_parts = {
     string.format("Failed to load %s", module_name),
-    string.format("  Error: %s", tostring(err)),
+    string.format("  Error: %s", err_str),
   }
 
   -- Add context-specific suggestions
-  if tostring(err):match("module '.*' not found") then
+  if err_str:match("module '.*' not found") then
     table.insert(error_parts, "  Suggestion: Check if plugin is added to flake.nix under plugins.opt")
-  elseif tostring(err):match("attempt to index") or tostring(err):match("attempt to call") then
+  elseif err_str:match("attempt to index") or err_str:match("attempt to call") then
     table.insert(error_parts, "  Suggestion: Check for nil values or missing dependencies")
-  elseif tostring(err):match("syntax error") then
+  elseif err_str:match("syntax error") then
     table.insert(error_parts, "  Suggestion: Check Lua syntax in the module file")
   end
 
@@ -33,13 +34,15 @@ local function get_error_level(category, err)
     return vim.log.levels.ERROR
   end
 
+  local err_str = tostring(err)
+
   -- Missing dependencies are warnings
-  if tostring(err):match("module '.*' not found") then
+  if err_str:match("module '.*' not found") then
     return vim.log.levels.WARN
   end
 
   -- Syntax/runtime errors are errors
-  if tostring(err):match("syntax error") or tostring(err):match("attempt to") then
+  if err_str:match("syntax error") or err_str:match("attempt to") then
     return vim.log.levels.ERROR
   end
 
@@ -81,29 +84,26 @@ local function load_modules(dir, module_prefix, category_name)
   end
 
   for _, filename in ipairs(files) do
-    -- Skip init.lua files (redundant check, but keeping for safety)
-    if filename ~= "init" then
-      local module_name = module_prefix .. "." .. filename
-      local ok, module = pcall(require, module_name)
+    local module_name = module_prefix .. "." .. filename
+    local ok, module = pcall(require, module_name)
 
-      if ok then
-        if type(module) == "table" and #module > 0 then
-          -- If module returns a table, merge it
-          vim.list_extend(category_specs, module)
-        end
-        -- Module loaded but didn't return specs (e.g., lang files that only call add_*())
-      else
-        -- Collect error for summary
-        table.insert(load_errors, {
-          module = module_name,
-          error = module,
-          category = category_name,
-        })
-
-        local error_msg = format_error(module_name, module, category_name)
-        local level = get_error_level(category_name, module)
-        vim.notify(error_msg, level)
+    if ok then
+      if type(module) == "table" and #module > 0 then
+        -- If module returns a table, merge it
+        vim.list_extend(category_specs, module)
       end
+      -- Module loaded but didn't return specs (e.g., lang files that only call add_*())
+    else
+      -- Collect error for summary
+      table.insert(load_errors, {
+        module = module_name,
+        error = module,
+        category = category_name,
+      })
+
+      local error_msg = format_error(module_name, module, category_name)
+      local level = get_error_level(category_name, module)
+      vim.notify(error_msg, level)
     end
   end
 
@@ -136,6 +136,7 @@ local categories = {
   "util",
 }
 
+-- Load all plugin categories
 for _, category in ipairs(categories) do
   local category_specs, category_errors = load_modules("plugins/" .. category, "ergotu.plugins." .. category, category)
   vim.list_extend(specs, category_specs)
@@ -144,11 +145,12 @@ end
 
 -- Show error summary if any modules failed to load
 if #all_errors > 0 then
-  local error_summary = { string.format("Failed to load %d modules:", #all_errors) }
-  for _, err in ipairs(all_errors) do
-    table.insert(error_summary, string.format("  - %s", err.module))
+  local error_count = #all_errors
+  local error_summary = { string.format("Failed to load %d modules:", error_count) }
+  for i = 1, error_count do
+    error_summary[i + 1] = string.format("  - %s", all_errors[i].module)
   end
-  table.insert(error_summary, "Check notifications above for details")
+  error_summary[error_count + 2] = "Check notifications above for details"
   vim.notify(table.concat(error_summary, "\n"), vim.log.levels.WARN)
 end
 
@@ -167,18 +169,27 @@ local orig = vim.notify
 vim.notify = temp
 
 local timer = vim.uv.new_timer()
-if not timer then
-  -- If timer creation fails, restore original notify and replay immediately
+local check = timer and vim.uv.new_check()
+
+if not timer or not check then
+  -- If timer or check creation fails, restore original notify and replay immediately
   vim.notify = orig
   for _, notif in ipairs(notifs) do
     pcall(function()
       orig(vim.F.unpack_len(notif))
     end)
   end
-  orig("Warning: Failed to create notification buffer timer", vim.log.levels.WARN)
-  return
+  orig("Warning: Failed to create notification buffer timer or check", vim.log.levels.WARN)
+
+  -- Clean up any created resources
+  if timer then
+    timer:close()
+  end
+  if check then
+    check:close()
+  end
+  return specs
 end
-local check = assert(vim.uv.new_check())
 
 local replay = function()
   timer:stop()
