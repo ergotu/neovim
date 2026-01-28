@@ -225,6 +225,7 @@
 
                 # AI
                 avante-nvim
+                opencode-nvim
               ];
 
               # Development plugin for local configuration
