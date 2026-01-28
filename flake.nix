@@ -222,6 +222,9 @@
                 omnisharp-extended-lsp-nvim # C#
                 markdown-preview-nvim # Markdown
                 ansible-vim # Ansible
+
+                # AI
+                avante-nvim
               ];
 
               # Development plugin for local configuration

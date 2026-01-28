@@ -122,6 +122,7 @@ vim.list_extend(all_errors, lang_errors)
 
 -- Load plugin categories
 local categories = {
+  "ai",
   "coding",
   "colorscheme",
   "dap",
