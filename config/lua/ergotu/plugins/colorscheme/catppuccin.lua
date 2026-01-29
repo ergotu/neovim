@@ -52,7 +52,6 @@ return {
             scope_color = "mauve",
             colored_indent_levels = true,
           },
-          lualine = true,
           markdown = true,
           mini = true,
           neogit = true,
