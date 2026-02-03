@@ -122,7 +122,7 @@ return {
             },
             -- stylua: ignore
             {
-              function() return "  " .. require("dap").status() end,
+              function() return "  " .. require("dap").status() end,
               cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
               color = function() return { fg = Snacks.util.color("Debug") } end,
             },
@@ -132,6 +132,13 @@ return {
               cond = function()
                 return package.loaded["overseer"]
               end,
+            },
+            -- Opencode status
+            -- stylua: ignore
+            {
+              function() return require("opencode").statusline() end,
+              cond = function() return package.loaded["opencode"] ~= nil end,
+              color = function() return { fg = Snacks.util.color("Special") } end,
             },
             "lsp_status",
             -- stylua: ignore
