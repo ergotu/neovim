@@ -2,18 +2,9 @@ return {
   {
     "opencode.nvim",
     before = function()
-      -- ============================================================================
-      -- OPENCODE.NVIM ENHANCED CONFIGURATION
-      -- Comprehensive productivity setup with custom prompts, contexts, and keymaps
-      -- ============================================================================
-
       ---@type opencode.Opts
       vim.g.opencode_opts = {
-        -- ========================================================================
-        -- CUSTOM PROMPTS (16 total)
-        -- ========================================================================
         prompts = {
-          -- Debugging & Analysis (4 prompts)
           debug = {
             prompt = "Debug @this and explain what's happening, including potential issues",
             submit = true,
@@ -30,8 +21,18 @@ return {
             prompt = "Validate @this against edge cases and assumptions - identify potential bugs",
             submit = true,
           },
-
-          -- Code Quality (5 prompts)
+          explain = {
+            prompt = "Explain @this in detail, including how it works and why",
+            submit = true,
+          },
+          review = {
+            prompt = "Review @this for code quality, bugs, and best practices",
+            submit = true,
+          },
+          fix = {
+            prompt = "Fix diagnostics and issues in @this",
+            submit = true,
+          },
           types = {
             prompt = "Add type annotations and type safety improvements to @this",
             submit = true,
@@ -53,8 +54,6 @@ return {
             prompt = "Modernize @this to use current language/framework features and patterns",
             submit = true,
           },
-
-          -- Testing (2 prompts)
           testspec = {
             prompt = "Write comprehensive test specifications for @this (describe what tests needed)",
             submit = true,
@@ -63,8 +62,6 @@ return {
             prompt = "Implement tests for @this using the testing patterns in @buffer",
             submit = true,
           },
-
-          -- Documentation (3 prompts)
           docstring = {
             prompt = "Add comprehensive docstrings/comments documenting @this",
             submit = true,
@@ -77,8 +74,6 @@ return {
             prompt = "Document the architecture and design decisions for @this",
             submit = true,
           },
-
-          -- Integration (2 prompts)
           implement = {
             prompt = "Implement: ",
             ask = true,
@@ -91,19 +86,13 @@ return {
           },
         },
 
-        -- ========================================================================
-        -- CUSTOM CONTEXTS (6 total)
-        -- ========================================================================
         contexts = {
-          -- Treesitter-based contexts
           ["@function"] = function(context)
-            local ok, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
-            if not ok then return nil end
+            local node = vim.treesitter.get_node()
+            if not node then
+              return nil
+            end
 
-            local node = ts_utils.get_node_at_cursor()
-            if not node then return nil end
-
-            -- Find parent function node
             while node do
               local node_type = node:type()
               if node_type:match("function") or node_type:match("method") then
@@ -120,13 +109,11 @@ return {
           end,
 
           ["@class"] = function(context)
-            local ok, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
-            if not ok then return nil end
+            local node = vim.treesitter.get_node()
+            if not node then
+              return nil
+            end
 
-            local node = ts_utils.get_node_at_cursor()
-            if not node then return nil end
-
-            -- Find parent class/module node
             while node do
               local node_type = node:type()
               if node_type:match("class") or node_type:match("module") or node_type:match("struct") then
@@ -143,13 +130,11 @@ return {
           end,
 
           ["@block"] = function(context)
-            local ok, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
-            if not ok then return nil end
+            local node = vim.treesitter.get_node()
+            if not node then
+              return nil
+            end
 
-            local node = ts_utils.get_node_at_cursor()
-            if not node then return nil end
-
-            -- Find current block node
             while node do
               local node_type = node:type()
               if node_type:match("block") or node_type:match("body") then
@@ -165,7 +150,6 @@ return {
             return nil
           end,
 
-          -- Project-aware contexts
           ["@todos"] = function(context)
             local lines = vim.api.nvim_buf_get_lines(context.buf, 0, -1, false)
             local todos = {}
@@ -174,15 +158,18 @@ return {
                 table.insert(todos, string.format("L%d: %s", i, line:gsub("^%s+", "")))
               end
             end
-            if #todos == 0 then return nil end
+            if #todos == 0 then
+              return nil
+            end
             return "TODO items in buffer:\n" .. table.concat(todos, "\n")
           end,
 
-          -- LSP-based contexts
           ["@hover"] = function(context)
-            local params = vim.lsp.util.make_position_params(context.win)
+            local params = vim.lsp.util.make_position_params(context.win, "utf-16")
             local result = vim.lsp.buf_request_sync(context.buf, "textDocument/hover", params, 1000)
-            if not result or vim.tbl_isempty(result) then return nil end
+            if not result or vim.tbl_isempty(result) then
+              return nil
+            end
 
             for _, res in pairs(result) do
               if res.result and res.result.contents then
@@ -200,7 +187,9 @@ return {
           ["@symbols"] = function(context)
             local params = { textDocument = vim.lsp.util.make_text_document_params(context.buf) }
             local result = vim.lsp.buf_request_sync(context.buf, "textDocument/documentSymbol", params, 1000)
-            if not result or vim.tbl_isempty(result) then return nil end
+            if not result or vim.tbl_isempty(result) then
+              return nil
+            end
 
             local symbols = {}
             for _, res in pairs(result) do
@@ -211,14 +200,13 @@ return {
                 end
               end
             end
-            if #symbols == 0 then return nil end
+            if #symbols == 0 then
+              return nil
+            end
             return "Document symbols:\n" .. table.concat(symbols, "\n")
           end,
         },
 
-        -- ========================================================================
-        -- ASK CONFIGURATION
-        -- ========================================================================
         ask = {
           prompt = "Ask opencode: ",
           snacks = {
@@ -226,9 +214,6 @@ return {
           },
         },
 
-        -- ========================================================================
-        -- SELECT CONFIGURATION
-        -- ========================================================================
         select = {
           prompt = "opencode: ",
           sections = {
@@ -244,178 +229,145 @@ return {
           },
         },
 
-        -- ========================================================================
-        -- EVENTS CONFIGURATION
-        -- ========================================================================
         events = {
           enabled = true,
-          reload = true, -- Auto-reload edited buffers
+          reload = true,
           permissions = {
             enabled = true,
             idle_delay_ms = 500,
           },
         },
 
-        -- ========================================================================
-        -- PROVIDER CONFIGURATION
-        -- ========================================================================
         provider = {
           cmd = "opencode --port",
           snacks = {
             auto_insert = true,
-            -- win = {
-            --   position = 'right'  -- Already default, keeping right side
-            -- }
           },
         },
       }
 
-      -- Required for auto-reload functionality
       vim.opt.autoread = true
 
-      -- ========================================================================
-      -- KEYMAPS (26 total)
-      -- ========================================================================
-
-      local opencode = function()
-        return require("opencode")
+      local opencode
+      local function get_opencode()
+        if not opencode then
+          opencode = require("opencode")
+        end
+        return opencode
       end
 
-      -- ------------------------------------------------------------------------
-      -- Core Operations (4 maps)
-      -- ------------------------------------------------------------------------
       vim.keymap.set({ "n", "x" }, "<leader>aa", function()
-        opencode().ask("@this: ", { submit = true })
-      end, { desc = "Ask opencode with @this" })
+        get_opencode().ask("", { submit = true })
+      end, { desc = "Ask opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>as", function()
-        opencode().select()
+        get_opencode().select()
       end, { desc = "Select opencode action" })
 
       vim.keymap.set({ "n", "t" }, "<leader>at", function()
-        opencode().toggle()
+        get_opencode().toggle()
       end, { desc = "Toggle opencode" })
 
       vim.keymap.set("n", "<leader>az", function()
-        opencode().command("session.compact")
+        get_opencode().command("session.compact")
       end, { desc = "Compact opencode session" })
 
-      -- ------------------------------------------------------------------------
-      -- Quick Prompts (12 maps)
-      -- ------------------------------------------------------------------------
       vim.keymap.set({ "n", "x" }, "<leader>ad", function()
-        opencode().prompt("debug")
+        get_opencode().prompt("debug")
       end, { desc = "Debug with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>ax", function()
-        opencode().prompt("explain")
+        get_opencode().prompt("explain")
       end, { desc = "Explain with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>ar", function()
-        opencode().prompt("review")
+        get_opencode().prompt("review")
       end, { desc = "Review with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>af", function()
-        opencode().prompt("fix")
+        get_opencode().prompt("fix")
       end, { desc = "Fix diagnostics with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>aT", function()
-        opencode().prompt("testimpl")
+        get_opencode().prompt("testimpl")
       end, { desc = "Implement tests with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>ac", function()
-        opencode().prompt("refactor")
+        get_opencode().prompt("refactor")
       end, { desc = "Refactor with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>ap", function()
-        opencode().prompt("profile")
+        get_opencode().prompt("profile")
       end, { desc = "Profile performance with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>aS", function()
-        opencode().prompt("security")
+        get_opencode().prompt("security")
       end, { desc = "Security audit with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>am", function()
-        opencode().prompt("modernize")
+        get_opencode().prompt("modernize")
       end, { desc = "Modernize code with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>av", function()
-        opencode().prompt("validate")
+        get_opencode().prompt("validate")
       end, { desc = "Validate code with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>ai", function()
-        opencode().prompt("implement")
+        get_opencode().prompt("implement")
       end, { desc = "Implement with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>al", function()
-        opencode().prompt("simplify")
+        get_opencode().prompt("simplify")
       end, { desc = "Simplify code with opencode" })
 
-      -- ------------------------------------------------------------------------
-      -- Documentation (3 maps)
-      -- ------------------------------------------------------------------------
       vim.keymap.set({ "n", "x" }, "<leader>adc", function()
-        opencode().prompt("docstring")
+        get_opencode().prompt("docstring")
       end, { desc = "Add docstrings with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>adg", function()
-        opencode().prompt("guide")
+        get_opencode().prompt("guide")
       end, { desc = "Create usage guide with opencode" })
 
       vim.keymap.set({ "n", "x" }, "<leader>ada", function()
-        opencode().prompt("architecture")
+        get_opencode().prompt("architecture")
       end, { desc = "Document architecture with opencode" })
 
-      -- ------------------------------------------------------------------------
-      -- Session Management (4 maps)
-      -- ------------------------------------------------------------------------
       vim.keymap.set("n", "<leader>an", function()
-        opencode().command("session.new")
+        get_opencode().command("session.new")
       end, { desc = "New opencode session" })
 
       vim.keymap.set("n", "<leader>aL", function()
-        opencode().command("session.list")
+        get_opencode().command("session.list")
       end, { desc = "List opencode sessions" })
 
       vim.keymap.set("n", "<leader>aj", function()
-        opencode().command("session.undo")
+        get_opencode().command("session.undo")
       end, { desc = "Undo opencode session action" })
 
       vim.keymap.set("n", "<leader>ak", function()
-        opencode().command("session.redo")
+        get_opencode().command("session.redo")
       end, { desc = "Redo opencode session action" })
 
-      -- ------------------------------------------------------------------------
-      -- Operator Mappings (2 maps)
-      -- ------------------------------------------------------------------------
       vim.keymap.set({ "n", "x" }, "go", function()
-        return opencode().operator("@this ")
+        return get_opencode().operator("@this ")
       end, { desc = "Add range to opencode", expr = true })
 
       vim.keymap.set("n", "goo", function()
-        return opencode().operator("@this ") .. "_"
+        return get_opencode().operator("@this ") .. "_"
       end, { desc = "Add line to opencode", expr = true })
 
-      -- ------------------------------------------------------------------------
-      -- Context-Specific Quick Access (3 maps)
-      -- ------------------------------------------------------------------------
       vim.keymap.set({ "n", "x" }, "<leader>ab", function()
-        opencode().ask("@buffer: ", { submit = true })
+        get_opencode().ask("@buffer: ", { submit = true })
       end, { desc = "Ask about buffer with opencode" })
 
       vim.keymap.set("n", "<leader>ag", function()
-        opencode().ask("@diagnostics: ", { submit = true })
+        get_opencode().ask("@diagnostics: ", { submit = true })
       end, { desc = "Ask about diagnostics with opencode" })
 
       vim.keymap.set("n", "<leader>ao", function()
-        opencode().ask("@todos: ", { submit = true })
+        get_opencode().ask("@todos: ", { submit = true })
       end, { desc = "Ask about TODOs with opencode" })
 
-      -- ========================================================================
-      -- EVENT HANDLERS (3 events)
-      -- ========================================================================
-
-      -- Session completion notification
       vim.api.nvim_create_autocmd("User", {
         pattern = "OpencodeEvent:session.idle",
         callback = function()
@@ -423,7 +375,6 @@ return {
         end,
       })
 
-      -- Error logging
       vim.api.nvim_create_autocmd("User", {
         pattern = "OpencodeEvent:error",
         callback = function(args)
@@ -432,7 +383,6 @@ return {
         end,
       })
 
-      -- Permission request notification (optional - complements built-in handling)
       vim.api.nvim_create_autocmd("User", {
         pattern = "OpencodeEvent:permission.asked",
         callback = function(args)
@@ -445,19 +395,3 @@ return {
     end,
   },
 }
-
--- ============================================================================
--- STATUSLINE INTEGRATION
--- ============================================================================
--- To add opencode status to lualine, add this to your lualine sections:
---
--- {
---   function()
---     return require("opencode").statusline()
---   end,
---   cond = function()
---     return package.loaded["opencode"] ~= nil
---   end,
--- }
---
--- ============================================================================
