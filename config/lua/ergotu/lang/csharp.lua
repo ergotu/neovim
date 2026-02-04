@@ -3,7 +3,20 @@ local lsp = require("ergotu.config.lsp")
 
 -- C# LSP Server (omnisharp) with custom handlers
 lsp.add_server("omnisharp", {
-  cmd = { "Omnisharp" },
+  cmd = function()
+    -- Try to find OmniSharp in PATH (capital O, capital S - nix package name)
+    local omnisharp_bin = vim.fn.exepath("OmniSharp")
+    if omnisharp_bin and #omnisharp_bin > 0 then
+      return { omnisharp_bin }
+    end
+    -- Fallback to lowercase version (some installations use this)
+    omnisharp_bin = vim.fn.exepath("omnisharp")
+    if omnisharp_bin and #omnisharp_bin > 0 then
+      return { omnisharp_bin }
+    end
+    -- If not found, return the expected name and let LSP fail with clear error
+    return { "OmniSharp" }
+  end,
   handlers = {
     ["textDocument/definition"] = function(...)
       return require("omnisharp_extended").handler(...)
