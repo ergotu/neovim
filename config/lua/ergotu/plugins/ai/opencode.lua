@@ -264,7 +264,7 @@ return {
         get_opencode().select()
       end, { desc = "Select opencode action" })
 
-      vim.keymap.set({ "n", "t" }, "<leader>at", function()
+      vim.keymap.set({ "n" }, "<leader>at", function()
         get_opencode().toggle()
       end, { desc = "Toggle opencode" })
 
