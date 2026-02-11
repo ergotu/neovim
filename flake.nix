@@ -167,6 +167,7 @@
                 catppuccin-nvim
 
                 # UI
+                smart-splits-nvim
                 bufferline-nvim
                 lualine-nvim
                 noice-nvim
