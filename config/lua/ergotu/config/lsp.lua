@@ -7,26 +7,27 @@ M.config = {
   setup = {},
 }
 
+--- Add LSP server configuration
+---@param server_name string
+---@param config table|nil
 function M.add_server(server_name, config)
-  assert(type(server_name) == "string" and server_name ~= "", "server_name must be non-empty string")
+  Ergovim.assert_string(server_name, "server_name")
   assert(type(config) == "table" or config == nil, "config must be a table or nil")
-
-  if M.config.servers[server_name] then
-    vim.notify(string.format("Warning: Overwriting LSP server '%s'", server_name), vim.log.levels.WARN)
-  end
-
-  M.config.servers[server_name] = vim.tbl_deep_extend("force", M.config.servers[server_name] or {}, config or {})
+  Ergovim.set_with_warning(M.config.servers, server_name, config or {}, {
+    merge = true,
+    registry_name = "LSP server",
+  })
 end
 
+--- Add custom LSP setup handler
+---@param server_name string
+---@param handler function
 function M.add_setup(server_name, handler)
-  assert(type(server_name) == "string" and server_name ~= "", "server_name must be non-empty string")
+  Ergovim.assert_string(server_name, "server_name")
   assert(type(handler) == "function", "handler must be a function")
-
-  if M.config.setup[server_name] then
-    vim.notify(string.format("Warning: Overwriting LSP setup handler for '%s'", server_name), vim.log.levels.WARN)
-  end
-
-  M.config.setup[server_name] = handler
+  Ergovim.set_with_warning(M.config.setup, server_name, handler, {
+    registry_name = "LSP setup handler",
+  })
 end
 
 return M

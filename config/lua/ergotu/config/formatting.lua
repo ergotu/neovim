@@ -31,28 +31,23 @@ M.config = {
 ---@param filetype string
 ---@param formatters string[]
 function M.add_formatter(filetype, formatters)
-  assert(type(filetype) == "string" and filetype ~= "", "filetype must be non-empty string")
-  assert(type(formatters) == "table", "formatters must be a table")
-
-  if M.config.formatters_by_ft[filetype] then
-    vim.notify(string.format("Warning: Overwriting formatters for filetype '%s'", filetype), vim.log.levels.WARN)
-  end
-
-  M.config.formatters_by_ft[filetype] = formatters
+  Ergovim.assert_string(filetype, "filetype")
+  Ergovim.assert_table(formatters, "formatters")
+  Ergovim.set_with_warning(M.config.formatters_by_ft, filetype, formatters, {
+    registry_name = "formatter",
+  })
 end
 
 --- Add formatter override configuration
 ---@param formatter_name string
 ---@param config table
 function M.add_formatter_config(formatter_name, config)
-  assert(type(formatter_name) == "string" and formatter_name ~= "", "formatter_name must be non-empty string")
-  assert(type(config) == "table", "config must be a table")
-
-  if M.config.formatters[formatter_name] then
-    vim.notify(string.format("Warning: Overwriting formatter config for '%s'", formatter_name), vim.log.levels.WARN)
-  end
-
-  M.config.formatters[formatter_name] = vim.tbl_deep_extend("force", M.config.formatters[formatter_name] or {}, config)
+  Ergovim.assert_string(formatter_name, "formatter_name")
+  Ergovim.assert_table(config, "config")
+  Ergovim.set_with_warning(M.config.formatters, formatter_name, config, {
+    merge = true,
+    registry_name = "formatter config",
+  })
 end
 
 return M

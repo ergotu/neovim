@@ -16,235 +16,465 @@ local function term_nav(dir)
   end
 end
 
-local function set_keys()
-  local Snacks = require("snacks")
-
-  local function map(mode, lhs, rhs, desc, opts)
-    opts = opts or {}
-    opts.desc = desc
-    vim.keymap.set(mode, lhs, rhs, opts)
-  end
-
+-- Keymap definitions organized by category
+-- Each entry: { mode, lhs, rhs_or_fn, desc, opts? }
+local keymaps = {
   -- Notifications
-  map("n", "<leader>n", function()
-    Snacks.notifier.show_history()
-  end, "Notification History")
-
-  map("n", "<leader>un", function()
-    Snacks.notifier.hide()
-  end, "Dismiss All Notifications")
+  notifications = {
+    {
+      "n",
+      "<leader>n",
+      function()
+        Snacks.notifier.show_history()
+      end,
+      "Notification History",
+    },
+    {
+      "n",
+      "<leader>un",
+      function()
+        Snacks.notifier.hide()
+      end,
+      "Dismiss All Notifications",
+    },
+  },
 
   -- Scratch
-  map("n", "<leader>.", function()
-    Snacks.scratch()
-  end, "Toggle Scratch Buffer")
-
-  map("n", "<leader>S", function()
-    Snacks.scratch.select()
-  end, "Select Scratch Buffer")
+  scratch = {
+    {
+      "n",
+      "<leader>.",
+      function()
+        Snacks.scratch()
+      end,
+      "Toggle Scratch Buffer",
+    },
+    {
+      "n",
+      "<leader>S",
+      function()
+        Snacks.scratch.select()
+      end,
+      "Select Scratch Buffer",
+    },
+  },
 
   -- Zen Mode
-  map("n", "<leader>uz", function()
-    ---@diagnostic disable-next-line: missing-fields
-    Snacks.zen({ win = { width = 0.65 } })
-  end, "Zen Mode")
+  zen = {
+    {
+      "n",
+      "<leader>uz",
+      function()
+        Snacks.zen({ win = { width = 0.65 } })
+      end,
+      "Zen Mode",
+    },
+  },
 
   -- Profiler
-  map("n", "<leader>dps", function()
-    Snacks.profiler.scratch()
-  end, "Profiler Scratch Buffer")
+  profiler = {
+    {
+      "n",
+      "<leader>dps",
+      function()
+        Snacks.profiler.scratch()
+      end,
+      "Profiler Scratch Buffer",
+    },
+  },
 
   -- Explorer
-  map("n", "<leader>fe", function()
-    local root = Ergovim.root.get()
-    ---@diagnostic disable-next-line: missing-fields
-    Snacks.explorer({ cwd = root })
-  end, "Explorer Snacks (root dir)")
-
-  map("n", "<leader>fE", function()
-    Snacks.explorer()
-  end, "Explorer Snacks (cwd)")
-
-  map("n", "<leader>e", "<leader>fe", "Explorer Snacks (root dir)", { remap = true })
-  map("n", "<leader>E", "<leader>fE", "Explorer Snacks (cwd)", { remap = true })
+  explorer = {
+    {
+      "n",
+      "<leader>fe",
+      function()
+        Snacks.explorer({ cwd = Ergovim.root.get() })
+      end,
+      "Explorer Snacks (root dir)",
+    },
+    {
+      "n",
+      "<leader>fE",
+      function()
+        Snacks.explorer()
+      end,
+      "Explorer Snacks (cwd)",
+    },
+    { "n", "<leader>e", "<leader>fe", "Explorer Snacks (root dir)", { remap = true } },
+    { "n", "<leader>E", "<leader>fE", "Explorer Snacks (cwd)", { remap = true } },
+  },
 
   -- Picker: General
-  map("n", "<leader>,", function()
-    Snacks.picker.buffers()
-  end, "Buffers")
-
-  map("n", "<leader>/", function()
-    Snacks.picker.grep({ cwd = Ergovim.root.get() })
-  end, "Grep (Root Dir)")
-
-  map("n", "<leader>:", function()
-    Snacks.picker.command_history()
-  end, "Command History")
-
-  map("n", "<leader><space>", function()
-    Snacks.picker.smart({ cwd = Ergovim.root.get() })
-  end, "Smart Picker (Buffers/Recent/Files)")
+  picker_general = {
+    {
+      "n",
+      "<leader>,",
+      function()
+        Snacks.picker.buffers()
+      end,
+      "Buffers",
+    },
+    {
+      "n",
+      "<leader>/",
+      function()
+        Snacks.picker.grep({ cwd = Ergovim.root.get() })
+      end,
+      "Grep (Root Dir)",
+    },
+    {
+      "n",
+      "<leader>:",
+      function()
+        Snacks.picker.command_history()
+      end,
+      "Command History",
+    },
+    {
+      "n",
+      "<leader><space>",
+      function()
+        Snacks.picker.smart({ cwd = Ergovim.root.get() })
+      end,
+      "Smart Picker (Buffers/Recent/Files)",
+    },
+  },
 
   -- Picker: Find
-  map("n", "<leader>fb", function()
-    Snacks.picker.buffers()
-  end, "Buffers")
-
-  map("n", "<leader>fB", function()
-    Snacks.picker.buffers({ hidden = true, nofile = true })
-  end, "Buffers (all)")
-
-  map("n", "<leader>fc", function()
-    Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
-  end, "Find Config File")
-
-  map("n", "<leader>ff", function()
-    Snacks.picker.files({ cwd = Ergovim.root.get() })
-  end, "Find Files (Root Dir)")
-
-  map("n", "<leader>fF", function()
-    Snacks.picker.files({ cwd = get_cwd() })
-  end, "Find Files (cwd)")
-
-  map("n", "<leader>fg", function()
-    Snacks.picker.git_files()
-  end, "Find Files (git-files)")
-
-  map("n", "<leader>fr", function()
-    Snacks.picker.recent()
-  end, "Recent")
-
-  map("n", "<leader>fR", function()
-    Snacks.picker.recent({ filter = { cwd = true } })
-  end, "Recent (cwd)")
-
-  map("n", "<leader>fp", function()
-    Snacks.picker.projects()
-  end, "Projects")
+  picker_find = {
+    {
+      "n",
+      "<leader>fb",
+      function()
+        Snacks.picker.buffers()
+      end,
+      "Buffers",
+    },
+    {
+      "n",
+      "<leader>fB",
+      function()
+        Snacks.picker.buffers({ hidden = true, nofile = true })
+      end,
+      "Buffers (all)",
+    },
+    {
+      "n",
+      "<leader>fc",
+      function()
+        Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+      end,
+      "Find Config File",
+    },
+    {
+      "n",
+      "<leader>ff",
+      function()
+        Snacks.picker.files({ cwd = Ergovim.root.get() })
+      end,
+      "Find Files (Root Dir)",
+    },
+    {
+      "n",
+      "<leader>fF",
+      function()
+        Snacks.picker.files({ cwd = get_cwd() })
+      end,
+      "Find Files (cwd)",
+    },
+    {
+      "n",
+      "<leader>fg",
+      function()
+        Snacks.picker.git_files()
+      end,
+      "Find Files (git-files)",
+    },
+    {
+      "n",
+      "<leader>fr",
+      function()
+        Snacks.picker.recent()
+      end,
+      "Recent",
+    },
+    {
+      "n",
+      "<leader>fR",
+      function()
+        Snacks.picker.recent({ filter = { cwd = true } })
+      end,
+      "Recent (cwd)",
+    },
+    {
+      "n",
+      "<leader>fp",
+      function()
+        Snacks.picker.projects()
+      end,
+      "Projects",
+    },
+  },
 
   -- Picker: Git
-  map("n", "<leader>gs", function()
-    Snacks.picker.git_status()
-  end, "Git Status")
-
-  map("n", "<leader>gS", function()
-    Snacks.picker.git_stash()
-  end, "Git Stash")
+  picker_git = {
+    {
+      "n",
+      "<leader>gs",
+      function()
+        Snacks.picker.git_status()
+      end,
+      "Git Status",
+    },
+    {
+      "n",
+      "<leader>gS",
+      function()
+        Snacks.picker.git_stash()
+      end,
+      "Git Stash",
+    },
+  },
 
   -- Picker: Grep
-  map("n", "<leader>sb", function()
-    Snacks.picker.lines()
-  end, "Buffer Lines")
-
-  map("n", "<leader>sB", function()
-    Snacks.picker.grep_buffers()
-  end, "Grep Open Buffers")
-
-  map("n", "<leader>sg", function()
-    Snacks.picker.grep({ cwd = Ergovim.root.get() })
-  end, "Grep (Root Dir)")
-
-  map("n", "<leader>sG", function()
-    Snacks.picker.grep({ cwd = get_cwd() })
-  end, "Grep (cwd)")
-
-  map({ "n", "x" }, "<leader>sw", function()
-    Snacks.picker.grep_word({ cwd = Ergovim.root.get() })
-  end, "Visual selection or word (Root Dir)")
-
-  map({ "n", "x" }, "<leader>sW", function()
-    Snacks.picker.grep_word({ cwd = get_cwd() })
-  end, "Visual selection or word (cwd)")
+  picker_grep = {
+    {
+      "n",
+      "<leader>sb",
+      function()
+        Snacks.picker.lines()
+      end,
+      "Buffer Lines",
+    },
+    {
+      "n",
+      "<leader>sB",
+      function()
+        Snacks.picker.grep_buffers()
+      end,
+      "Grep Open Buffers",
+    },
+    {
+      "n",
+      "<leader>sg",
+      function()
+        Snacks.picker.grep({ cwd = Ergovim.root.get() })
+      end,
+      "Grep (Root Dir)",
+    },
+    {
+      "n",
+      "<leader>sG",
+      function()
+        Snacks.picker.grep({ cwd = get_cwd() })
+      end,
+      "Grep (cwd)",
+    },
+    {
+      { "n", "x" },
+      "<leader>sw",
+      function()
+        Snacks.picker.grep_word({ cwd = Ergovim.root.get() })
+      end,
+      "Visual selection or word (Root Dir)",
+    },
+    {
+      { "n", "x" },
+      "<leader>sW",
+      function()
+        Snacks.picker.grep_word({ cwd = get_cwd() })
+      end,
+      "Visual selection or word (cwd)",
+    },
+  },
 
   -- Picker: Search
-  map("n", '<leader>s"', function()
-    Snacks.picker.registers()
-  end, "Registers")
-
-  map("n", "<leader>s/", function()
-    Snacks.picker.search_history()
-  end, "Search History")
-
-  map("n", "<leader>sa", function()
-    Snacks.picker.autocmds()
-  end, "Autocmds")
-
-  map("n", "<leader>sc", function()
-    Snacks.picker.command_history()
-  end, "Command History")
-
-  map("n", "<leader>sC", function()
-    Snacks.picker.commands()
-  end, "Commands")
-
-  map("n", "<leader>sd", function()
-    Snacks.picker.diagnostics()
-  end, "Diagnostics")
-
-  map("n", "<leader>sD", function()
-    Snacks.picker.diagnostics_buffer()
-  end, "Buffer Diagnostics")
-
-  map("n", "<leader>sh", function()
-    Snacks.picker.help()
-  end, "Help Pages")
-
-  map("n", "<leader>sH", function()
-    Snacks.picker.highlights()
-  end, "Highlights")
-
-  map("n", "<leader>si", function()
-    Snacks.picker.icons()
-  end, "Icons")
-
-  map("n", "<leader>sj", function()
-    Snacks.picker.jumps()
-  end, "Jumps")
-
-  map("n", "<leader>sk", function()
-    Snacks.picker.keymaps()
-  end, "Keymaps")
-
-  map("n", "<leader>sl", function()
-    Snacks.picker.loclist()
-  end, "Location List")
-
-  map("n", "<leader>sM", function()
-    Snacks.picker.man()
-  end, "Man Pages")
-
-  map("n", "<leader>sm", function()
-    Snacks.picker.marks()
-  end, "Marks")
-
-  map("n", "<leader>sR", function()
-    Snacks.picker.resume()
-  end, "Resume")
-
-  map("n", "<leader>sq", function()
-    Snacks.picker.qflist()
-  end, "Quickfix List")
-
-  map("n", "<leader>su", function()
-    Snacks.picker.undo()
-  end, "Undotree")
+  picker_search = {
+    {
+      "n",
+      '<leader>s"',
+      function()
+        Snacks.picker.registers()
+      end,
+      "Registers",
+    },
+    {
+      "n",
+      "<leader>s/",
+      function()
+        Snacks.picker.search_history()
+      end,
+      "Search History",
+    },
+    {
+      "n",
+      "<leader>sa",
+      function()
+        Snacks.picker.autocmds()
+      end,
+      "Autocmds",
+    },
+    {
+      "n",
+      "<leader>sc",
+      function()
+        Snacks.picker.command_history()
+      end,
+      "Command History",
+    },
+    {
+      "n",
+      "<leader>sC",
+      function()
+        Snacks.picker.commands()
+      end,
+      "Commands",
+    },
+    {
+      "n",
+      "<leader>sd",
+      function()
+        Snacks.picker.diagnostics()
+      end,
+      "Diagnostics",
+    },
+    {
+      "n",
+      "<leader>sD",
+      function()
+        Snacks.picker.diagnostics_buffer()
+      end,
+      "Buffer Diagnostics",
+    },
+    {
+      "n",
+      "<leader>sh",
+      function()
+        Snacks.picker.help()
+      end,
+      "Help Pages",
+    },
+    {
+      "n",
+      "<leader>sH",
+      function()
+        Snacks.picker.highlights()
+      end,
+      "Highlights",
+    },
+    {
+      "n",
+      "<leader>si",
+      function()
+        Snacks.picker.icons()
+      end,
+      "Icons",
+    },
+    {
+      "n",
+      "<leader>sj",
+      function()
+        Snacks.picker.jumps()
+      end,
+      "Jumps",
+    },
+    {
+      "n",
+      "<leader>sk",
+      function()
+        Snacks.picker.keymaps()
+      end,
+      "Keymaps",
+    },
+    {
+      "n",
+      "<leader>sl",
+      function()
+        Snacks.picker.loclist()
+      end,
+      "Location List",
+    },
+    {
+      "n",
+      "<leader>sM",
+      function()
+        Snacks.picker.man()
+      end,
+      "Man Pages",
+    },
+    {
+      "n",
+      "<leader>sm",
+      function()
+        Snacks.picker.marks()
+      end,
+      "Marks",
+    },
+    {
+      "n",
+      "<leader>sR",
+      function()
+        Snacks.picker.resume()
+      end,
+      "Resume",
+    },
+    {
+      "n",
+      "<leader>sq",
+      function()
+        Snacks.picker.qflist()
+      end,
+      "Quickfix List",
+    },
+    {
+      "n",
+      "<leader>su",
+      function()
+        Snacks.picker.undo()
+      end,
+      "Undotree",
+    },
+  },
 
   -- UI
-  map("n", "<leader>uC", function()
-    Snacks.picker.colorschemes()
-  end, "Colorschemes")
+  ui = {
+    {
+      "n",
+      "<leader>uC",
+      function()
+        Snacks.picker.colorschemes()
+      end,
+      "Colorschemes",
+    },
+  },
 
   -- Jujutsu
-  map("n", "<leader>jj", function()
-    Snacks.terminal.open("jjui", {
-      win = {
-        height = 0.6,
-        width = 0.8,
-        border = true,
-      },
-      interactive = true,
-    })
-  end, "jjui")
+  jujutsu = {
+    {
+      "n",
+      "<leader>jj",
+      function()
+        Snacks.terminal.open("jjui", {
+          win = { height = 0.6, width = 0.8, border = true },
+          interactive = true,
+        })
+      end,
+      "jjui",
+    },
+  },
+}
+
+--- Register all keymaps
+local function set_keys()
+  Snacks = require("snacks")
+  for _, category in pairs(keymaps) do
+    for _, entry in ipairs(category) do
+      local mode, lhs, rhs, desc, opts = entry[1], entry[2], entry[3], entry[4], entry[5] or {}
+      opts.desc = desc
+      vim.keymap.set(mode, lhs, rhs, opts)
+    end
+  end
 end
 
 function M.setup()
