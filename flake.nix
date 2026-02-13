@@ -220,7 +220,7 @@
                 # Language-specific
                 SchemaStore-nvim # JSON/YAML schemas
                 clangd_extensions-nvim # C/C++
-                omnisharp-extended-lsp-nvim # C#
+                roslyn-nvim # C#
                 markdown-preview-nvim # Markdown
                 ansible-vim # Ansible
 
