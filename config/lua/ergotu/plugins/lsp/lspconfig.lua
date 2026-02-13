@@ -182,9 +182,29 @@ return {
 
       vim.diagnostic.config(vim.deepcopy(config.diagnostics))
 
+      local function normalize_server_opts(opts)
+        opts = vim.deepcopy(opts or {})
+
+        -- not part of vim.lsp.config()
+        opts.keys = nil
+        opts.enabled = nil
+
+        if type(opts.cmd) == "function" then
+          opts.cmd = opts.cmd()
+        end
+        if type(opts.cmd) == "string" then
+          opts.cmd = { opts.cmd }
+        end
+        if opts.cmd ~= nil and type(opts.cmd) ~= "table" then
+          error("LSP server cmd must be a table of strings (or nil), got: " .. type(opts.cmd))
+        end
+
+        return opts
+      end
+
       -- Configure and enable LSP servers
       if config.servers["*"] then
-        vim.lsp.config("*", config.servers["*"])
+        vim.lsp.config("*", normalize_server_opts(config.servers["*"]))
       end
 
       for server, server_opts in pairs(config.servers) do
@@ -197,7 +217,7 @@ return {
             -- If custom setup returns true, it has handled everything
             local handled_by_custom = setup and setup(server, server_opts)
             if not handled_by_custom then
-              vim.lsp.config(server, server_opts)
+              vim.lsp.config(server, normalize_server_opts(server_opts))
               vim.lsp.enable(server)
             end
           end
