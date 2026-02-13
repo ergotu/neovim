@@ -224,7 +224,7 @@ timer:start(2000, 0, function()
   end
 end)
 
-require("ergotu.config.snacks").setup()
+require("ergotu.snacks").setup()
 require("flatten").setup({
   hooks = {
     post_open = function(opts)
