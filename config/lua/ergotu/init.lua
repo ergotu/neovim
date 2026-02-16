@@ -130,6 +130,7 @@ local categories = {
   "formatting",
   "linting",
   "lsp",
+  "notes",
   "testing",
   "treesitter",
   "ui",

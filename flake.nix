@@ -227,6 +227,9 @@
                 # AI
                 avante-nvim
                 opencode-nvim
+
+                # Note Taking
+                zk-nvim
               ];
 
               # Development plugin for local configuration
