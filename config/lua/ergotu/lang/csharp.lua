@@ -1,5 +1,5 @@
-local formatting = require("ergotu.config.formatting")
-local lsp = require("ergotu.config.lsp")
+local formatting = Ergovim.langs.formatting
+local lsp = Ergovim.langs.lsp
 
 -- C# Formatter
 formatting.add_formatter("cs", { "csharpier" })

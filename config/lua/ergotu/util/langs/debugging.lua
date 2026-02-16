@@ -1,5 +1,6 @@
--- lua/ergotu/config/debugging.lua
+-- lua/ergotu/util/langs/debugging.lua
 -- Pure data registry for debug adapter configurations
+---@class ergotu.util.langs.debugging
 local M = {}
 
 M.config = {

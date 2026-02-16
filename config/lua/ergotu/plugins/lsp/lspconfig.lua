@@ -38,7 +38,8 @@ return {
       LZN.trigger_load("inc-rename.nvim")
     end,
     after = vim.schedule_wrap(function()
-      local config = require("ergotu.config.lsp").config
+      local langs = require("ergotu.util.langs")
+      local config = langs.lsp.config
       local icons = require("ergotu.config.icons")
 
       config = vim.tbl_deep_extend("force", {

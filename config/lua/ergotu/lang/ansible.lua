@@ -1,4 +1,4 @@
-local linting = require("ergotu.config.linting")
+local linting = Ergovim.langs.linting
 
 -- Ansible Linter
 linting.add_linter("ansible", { "ansible_lint" })

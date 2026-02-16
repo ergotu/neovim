@@ -1,6 +1,7 @@
-local formatting = require("ergotu.config.formatting")
-local linting = require("ergotu.config.linting")
-local lsp = require("ergotu.config.lsp")
+local langs = require("ergotu.util.langs")
+local formatting = langs.formatting
+local linting = langs.linting
+local lsp = langs.lsp
 
 -- Go LSP Server with extensive configuration
 lsp.add_server("gopls", {
@@ -69,7 +70,7 @@ formatting.add_formatter("go", { "goimports", "gofumpt" })
 linting.add_linter("go", { "golangcilint" })
 
 -- Debug adapter for Go (Delve)
-local debugging = require("ergotu.config.debugging")
+local debugging = langs.debugging
 debugging.add_adapter("delve", {
   type = "server",
   port = "${port}",
@@ -103,5 +104,5 @@ debugging.add_configuration("go", {
 })
 
 -- Test adapter for Go
-local testing = require("ergotu.config.testing")
+local testing = langs.testing
 testing.add_adapter("neotest-go", "neotest-go")

@@ -1,5 +1,6 @@
--- lua/ergotu/config/lsp.lua
+-- lua/ergotu/util/langs/lsp.lua
 -- Pure data registry for LSP configurations
+---@class ergotu.util.langs.lsp
 local M = {}
 
 M.config = {

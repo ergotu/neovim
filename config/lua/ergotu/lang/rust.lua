@@ -1,7 +1,8 @@
-local debugging = require("ergotu.config.debugging")
-local formatting = require("ergotu.config.formatting")
-local lsp = require("ergotu.config.lsp")
-local testing = require("ergotu.config.testing")
+local langs = Ergovim.langs
+local debugging = langs.debugging
+local formatting = langs.formatting
+local lsp = langs.lsp
+local testing = langs.testing
 
 -- LSP
 lsp.add_server("rust_analyzer", {

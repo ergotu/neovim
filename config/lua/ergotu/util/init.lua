@@ -1,6 +1,7 @@
 ---@class ergotu.util
 ---@field root ergotu.util.root
 ---@field lualine ergotu.util.lualine
+---@field langs ergotu.util.langs
 local M = {}
 
 setmetatable(M, {

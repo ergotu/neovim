@@ -1,5 +1,6 @@
-local linting = require("ergotu.config.linting")
-local lsp = require("ergotu.config.lsp")
+local langs = Ergovim.langs
+local linting = langs.linting
+local lsp = langs.lsp
 
 -- Docker LSP Servers
 lsp.add_server("dockerls", {})

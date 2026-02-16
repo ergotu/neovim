@@ -7,7 +7,8 @@ return {
     after = function()
       local dap = require("dap")
       local dapui = require("dapui")
-      local config = require("ergotu.config.debugging").config
+      local langs = require("ergotu.util.langs")
+      local config = langs.debugging.config
 
       dapui.setup({
         icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },

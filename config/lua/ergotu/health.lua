@@ -26,7 +26,8 @@ M.check = function()
 
   -- Check LSP servers
   vim.health.start("LSP Servers")
-  local lsp_config = require("ergotu.config.lsp").config
+  local langs = require("ergotu.util.langs")
+  local lsp_config = langs.lsp.config
   local lsp_checked = {}
   for server_name, _ in pairs(lsp_config.servers) do
     if server_name ~= "*" and not lsp_checked[server_name] then
@@ -42,7 +43,7 @@ M.check = function()
 
   -- Check formatters
   vim.health.start("Formatters")
-  local formatting_config = require("ergotu.config.formatting").config
+  local formatting_config = langs.formatting.config
   local formatters_checked = {}
   for _, formatters in pairs(formatting_config.formatters_by_ft) do
     for _, formatter in ipairs(formatters) do
@@ -60,7 +61,7 @@ M.check = function()
 
   -- Check linters
   vim.health.start("Linters")
-  local linting_config = require("ergotu.config.linting").config
+  local linting_config = langs.linting.config
   local linters_checked = {}
   for _, linters in pairs(linting_config.linters_by_ft) do
     for _, linter in ipairs(linters) do
@@ -78,7 +79,7 @@ M.check = function()
 
   -- Check debug adapters
   vim.health.start("Debug Adapters")
-  local debugging = require("ergotu.config.debugging")
+  local debugging = langs.debugging
   for name, _ in pairs(debugging.config.adapters) do
     vim.health.ok(string.format("Adapter '%s' configured", name))
   end
@@ -95,7 +96,7 @@ M.check = function()
 
   -- Check test adapters
   vim.health.start("Test Adapters")
-  local testing = require("ergotu.config.testing")
+  local testing = langs.testing
   for name, _ in pairs(testing.config.adapters) do
     vim.health.ok(string.format("Test adapter '%s' configured", name))
   end

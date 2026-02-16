@@ -142,7 +142,8 @@ return {
     },
     after = function()
       local dap = require("dap")
-      local config = require("ergotu.config.debugging").config
+      local langs = require("ergotu.util.langs")
+      local config = langs.debugging.config
       local icons = require("ergotu.config.icons")
 
       -- Populate icons

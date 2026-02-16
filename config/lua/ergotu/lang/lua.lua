@@ -1,6 +1,7 @@
-local formatting = require("ergotu.config.formatting")
-local linting = require("ergotu.config.linting")
-local lsp = require("ergotu.config.lsp")
+local langs = require("ergotu.util.langs")
+local formatting = langs.formatting
+local linting = langs.linting
+local lsp = langs.lsp
 
 --- Find a plugin's absolute path by name from the expanded runtime paths.
 --- This is needed because in Nix environments, vim.opt.rtp:get() contains
@@ -94,7 +95,7 @@ linting.add_linter_config("luacheck", {
 })
 
 -- Test adapter for Lua (neotest-plenary for plugin tests)
-local testing = require("ergotu.config.testing")
+local testing = langs.testing
 testing.add_adapter("neotest-plenary", "neotest-plenary")
 
 -- Debug adapter for Lua - Optional, requires local-lua-debugger-vscode setup

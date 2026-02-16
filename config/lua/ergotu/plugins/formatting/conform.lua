@@ -64,7 +64,8 @@ return {
     after = function()
       -- Get registered formatter configuration
       -- (language configs are already loaded in ergotu.init)
-      local config = require("ergotu.config.formatting").config
+      local langs = require("ergotu.util.langs")
+      local config = langs.formatting.config
 
       -- Setup toggles
       snacks_toggle():map("<leader>uf")

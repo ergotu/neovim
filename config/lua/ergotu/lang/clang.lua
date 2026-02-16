@@ -1,4 +1,4 @@
-local lsp = require("ergotu.config.lsp")
+local lsp = Ergovim.langs.lsp
 
 -- C/C++ LSP Server (clangd) with complex configuration
 lsp.add_server("clangd", {

@@ -1,5 +1,6 @@
--- lua/ergotu/config/linting.lua
+-- lua/ergotu/util/langs/linting.lua
 -- Pure data registry for linter configurations
+---@class ergotu.util.langs.linting
 local M = {}
 
 M.config = {

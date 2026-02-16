@@ -1,6 +1,7 @@
-local formatting = require("ergotu.config.formatting")
-local linting = require("ergotu.config.linting")
-local lsp = require("ergotu.config.lsp")
+local langs = require("ergotu.util.langs")
+local formatting = langs.formatting
+local linting = langs.linting
+local lsp = langs.lsp
 
 -- Markdown LSP Servers
 lsp.add_server("marksman", {})

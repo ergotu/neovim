@@ -84,7 +84,8 @@ return {
     cmd = { "Neotest" },
     after = function()
       local neotest = require("neotest")
-      local config = require("ergotu.config.testing").config
+      local langs = require("ergotu.util.langs")
+      local config = langs.testing.config
       local icons = require("ergotu.config.icons")
 
       -- Build adapter list

@@ -1,4 +1,5 @@
-local lsp = require("ergotu.config.lsp")
+local langs = require("ergotu.util.langs")
+local lsp = langs.lsp
 
 lsp.add_server("eslint", {
   settings = {
@@ -224,7 +225,7 @@ lsp.add_setup("vtsls", function(_server, opts)
 end)
 
 -- Debug adapter for Node.js/TypeScript
-local debugging = require("ergotu.config.debugging")
+local debugging = langs.debugging
 debugging.add_adapter("pwa-node", {
   type = "server",
   host = "localhost",
@@ -268,6 +269,6 @@ debugging.add_configuration("javascript", {
 })
 
 -- Test adapters for JS/TS
-local testing = require("ergotu.config.testing")
+local testing = langs.testing
 testing.add_adapter("neotest-jest", "neotest-jest")
 testing.add_adapter("neotest-vitest", "neotest-vitest")

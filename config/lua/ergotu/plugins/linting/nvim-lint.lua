@@ -4,7 +4,8 @@ return {
     "nvim-lint",
     event = { "BufReadPost", "BufNewFile" },
     after = function()
-      local config = require("ergotu.config.linting").config
+      local langs = require("ergotu.util.langs")
+      local config = langs.linting.config
       local lint = require("lint")
 
       -- Configure linters

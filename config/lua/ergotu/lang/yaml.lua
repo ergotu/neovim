@@ -1,4 +1,5 @@
-local lsp = require("ergotu.config.lsp")
+local langs = require("ergotu.util.langs")
+local lsp = langs.lsp
 
 -- YAML LSP Server with SchemaStore integration
 lsp.add_server("yamlls", {

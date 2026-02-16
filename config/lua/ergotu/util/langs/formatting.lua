@@ -1,5 +1,6 @@
--- lua/ergotu/config/formatting.lua
+-- lua/ergotu/util/langs/formatting.lua
 -- Pure data registry for formatter configurations
+---@class ergotu.util.langs.formatting
 local M = {}
 
 M.config = {

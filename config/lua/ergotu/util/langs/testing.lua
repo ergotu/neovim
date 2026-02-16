@@ -1,5 +1,6 @@
--- lua/ergotu/config/testing.lua
+-- lua/ergotu/util/langs/testing.lua
 -- Pure data registry for test adapter configurations
+---@class ergotu.util.langs.testing
 local M = {}
 
 M.config = {
